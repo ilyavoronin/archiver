@@ -5,6 +5,7 @@
 class Symbol {
 private:
     char ch;
+public:
     Symbol(char ch_ = 0) {
         ch = ch_;
     }
