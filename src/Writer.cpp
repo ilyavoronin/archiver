@@ -1,11 +1,18 @@
 #include "Writer.h"
+#include <iostream>
 
 Writer::Writer(std::string outputFileName, int bufSize_, Mode mode = STD) {
-    switch (mode) {
-        case 0 : out.open(outputFileName);
-        case 1 : out.open(outputFileName, std::ios::binary);
-        case 2 : out.open(outputFileName, std::ios::app);
-        case 3 : out.open(outputFileName, std::ios::binary | std::ios::app);
+    if (mode == STD) {
+        out.open(outputFileName);
+    }
+    if (mode == BIN) {
+        out.open(outputFileName, std::ios::binary);
+    }
+    if (mode == APP) {
+        out.open(outputFileName, std::ios::app);
+    }
+    if (mode == BINAPP) {
+        out.open(outputFileName, std::ios::binary | std::ios::app);
     }
     bufSize = bufSize_;
     buf = new char[bufSize];
