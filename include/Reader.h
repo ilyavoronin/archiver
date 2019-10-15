@@ -13,7 +13,9 @@ private:
     bool eof;
     std::ifstream in;
 public:
-    Reader(std::string inputFileName, bool isBinary, int bufSize_);
+    enum Mode{STD = 0, BIN = 1};
+    Reader(std::string inputFileName, int bufSize_, Mode mode);
+    ~Reader();
     bool read(std::vector <Symbol> &input);
     bool isEOF();
 };

@@ -6,10 +6,10 @@
 
 void Archiver::zip(std::string inputFileName, std::string outputFileName) {
     std::vector <Symbol> block(BLOCK_SIZE);
-    Reader reader(inputFileName, true, BLOCK_SIZE);
+    Reader reader(inputFileName, BLOCK_SIZE, Reader::Mode::BIN);
     while(!reader.isEOF()) {
         reader.read(block);
-        
+
     }
 }
 
