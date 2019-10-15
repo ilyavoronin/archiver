@@ -8,7 +8,7 @@ Reader::Reader(std::string inputFileName, bool isBinary, int bufSize_) {
         in.open(inputFileName);
     }
     sucRead = 0;
-    isEOF = false;
+    eof = false;
     bufSize = bufSize_;
     buf = new char[bufSize];
 }

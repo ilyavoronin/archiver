@@ -9,6 +9,7 @@ public:
     Symbol(char ch_ = 0) {
         ch = ch_;
     }
+    char toChar();
 };
 
 
