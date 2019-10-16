@@ -1,0 +1,10 @@
+#ifndef ARCHIVER_BYTETRANSSFORM_H
+#define ARCHIVER_BYTETRANSSFORM_H
+
+
+class byteTranssform {
+
+};
+
+
+#endif //ARCHIVER_BYTETRANSSFORM_H
