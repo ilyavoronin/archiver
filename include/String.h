@@ -8,6 +8,7 @@ class String {
 private:
     std::vector <T> str;
 public:
+    String(int size = 0);
     String& add(T symb);
     String& operator+=(String &ot);
     String operator+(String &ot);

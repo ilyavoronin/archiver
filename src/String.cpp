@@ -1,6 +1,11 @@
 #include "String.h"
 
 template <typename T>
+String<T>::String(int size) {
+    str.resize(size);
+}
+
+template <typename T>
 String<T>& String<T>::add(T symb) {
     str.push_back(symb);
     return *this;
