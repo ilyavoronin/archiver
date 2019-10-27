@@ -16,6 +16,7 @@ public:
     String& operator+=(T symb);
     T& operator[](int i);
     int size();
+    void clear();
 };
 
 #endif //ARCHIVER_STRING_H

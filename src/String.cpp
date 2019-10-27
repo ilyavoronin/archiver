@@ -46,3 +46,8 @@ template <typename T>
 int String<T>::size() {
     return str.size();
 }
+
+template <typename T>
+void String<T>::clear() {
+    str.clear();
+}

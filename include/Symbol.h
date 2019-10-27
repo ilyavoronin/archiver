@@ -11,7 +11,7 @@ public:
         ch = ch_;
     }
     char toChar();
-    int get();
+    int get() const;
 };
 
 

@@ -4,6 +4,6 @@ char Symbol::toChar() {
     return ch;
 }
 
-int Symbol::get() {
+int Symbol::get() const {
     return ch;
 }
