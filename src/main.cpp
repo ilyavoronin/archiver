@@ -1,4 +1,5 @@
 #include <Archiver.h>
+#include <String.h>
 
 #include <iostream>
 

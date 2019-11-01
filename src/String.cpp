@@ -51,3 +51,48 @@ template <typename T>
 void String<T>::clear() {
     str.clear();
 }
+
+
+
+String<bool>::String(int size) {
+    str.resize(size);
+}
+
+String<bool>& String<bool>::add(bool bit) {
+    str.push_back(bit);
+    return *this;
+}
+
+String<bool>& String<bool>::operator+=(String<bool> &ot) {
+    this->str.insert(this->str.begin(), ot.str.begin(), ot.str.end());
+    return *this;
+}
+
+String<bool> String<bool>::operator+(String<bool> &ot) {
+    String<bool> tmp = *this;
+    tmp += ot;
+    return tmp;
+}
+
+String<bool>& String<bool>::operator+=(bool bit) {
+    add(bit);
+    return *this;
+}
+
+String<bool> String<bool>::operator+(bool symb) {
+    String<bool> tmp = *this;
+    tmp.add(symb);
+    return tmp;
+}
+
+const bool String<bool>::operator[](int i) const {
+    return str[i];
+}
+
+int String<bool>::size() {
+    return str.size();
+}
+
+void String<bool>::clear() {
+    str.clear();
+}

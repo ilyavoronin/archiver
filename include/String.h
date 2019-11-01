@@ -2,13 +2,15 @@
 #define ARCHIVER_STRING_H
 
 #include <vector>
+#include <bitset>
+#include "Symbol.h"
 
 template <typename T>
 class String {
 private:
     std::vector <T> str;
 public:
-    String(int size = 0);
+    explicit String(int size = 0);
     String& add(T symb);
     String& operator+=(String &ot);
     String operator+(String &ot);
@@ -18,5 +20,24 @@ public:
     int size();
     void clear();
 };
+
+template <>
+class String<bool> {
+private:
+    std::vector <bool> str;
+public:
+    explicit String<bool>(int size = 0);
+    String<bool>& add(bool bit);
+    String<bool>& operator+=(String<bool> &ot);
+    String<bool> operator+(String<bool> &ot);
+    String<bool> operator+(bool bit);
+    String<bool>& operator+=(bool bit);
+    const bool operator[](int i) const;
+    int size();
+    void clear();
+};
+
+template class String<Symbol>;
+template class String<bool>;
 
 #endif //ARCHIVER_STRING_H
