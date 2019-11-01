@@ -2,29 +2,34 @@
 #define ARCHIVER_HUFFMANCODING_H
 
 #include "Symbol.h"
+#include "String.h"
+#include "DataInfo.h"
 
 #include <vector>
+#include <map>
 
 class HuffmanCoding {
 private:
-    class Tree {
-    private:
-        class Node {
-        public:
-            bool isLeaf;
-            Symbol symb;
-            Node *left, *right;
-            Node();
-        };
-
-        Node *root;
-        Tree();
+    const int ALPH_SIZE = 256;
+    class Node {
+    public:
+        inline static int curNum = 0;
+        bool isLeaf;
+        Symbol symb;
+        int num;
+        Node *left, *right;
+        Node* pr; //previous vertex
+        Node(Symbol symb_ = 0, Node* left = nullptr, Node* right = nullptr);
     };
-
-    Tree buildTree(std::vector <Symbol> &data);
+    Node* buildTree(String <Symbol> &data);
+    std::map <Symbol, String<bool> > getCodes(Node *root);
+    void getCodesDfs(Node *curVert, String<bool> curStr, std::map <Symbol, String<bool> > &res);
+    void getByteString(String <bool> &bstr, String <Symbol> &res);
+    void getNodesDfs(Node *curVert, std::vector<Node *> &nodes, Node *pr);  //get nodes vector and find prevs
+    void writeTree(Node *root, DataInfo &dataInfo);
 public:
-    void enocde(std::vector <Symbol> &data);
-    void decode(std::vector <Symbol> &data);
+    void encode(String <Symbol> &data, DataInfo &dataInfo);   //overwriting data
+    void decode(String <Symbol> &data);   //overwriting data
 };
 
 

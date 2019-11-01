@@ -12,6 +12,7 @@ public:
     }
     char toChar();
     int get() const;
+    bool operator<(const Symbol &ot) const;
 };
 
 
