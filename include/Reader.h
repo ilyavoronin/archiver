@@ -17,8 +17,9 @@ public:
     enum Mode{STD = 0, BIN = 1};
     Reader(std::string inputFileName, int bufSize_, Mode mode);
     ~Reader();
-    bool read(String <Symbol> &input);
+    bool read(String <Symbol> &input, int inputSize);
     bool isEOF();
+    void read(int &n);
 };
 
 

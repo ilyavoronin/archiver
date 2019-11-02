@@ -16,6 +16,7 @@ public:
     void write(int n);
     void write(Symbol c);
     void writeToFile(Writer &writer);
+    void readFromFile(Reader &reader);
 };
 
 

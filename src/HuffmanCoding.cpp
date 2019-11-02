@@ -129,3 +129,7 @@ void HuffmanCoding::encode(String<Symbol> &data, DataInfo &dataInfo) {
     getByteString(res, data);
     writeTree(root, dataInfo);
 }
+
+void HuffmanCoding::decode(String<Symbol> &data, DataInfo &dataInfo) {
+
+}

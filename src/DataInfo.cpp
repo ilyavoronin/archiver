@@ -36,3 +36,9 @@ void DataInfo::writeToFile(Writer &writer) {
     writer.write(str.size());
     writer.write(str);
 }
+
+void DataInfo::readFromFile(Reader &reader) {
+    int inputSize;
+    reader.read(inputSize);
+    reader.read(str, inputSize);
+}

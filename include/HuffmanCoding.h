@@ -29,7 +29,7 @@ private:
     void writeTree(Node *root, DataInfo &dataInfo);
 public:
     void encode(String <Symbol> &data, DataInfo &dataInfo);   //overwriting data
-    void decode(String <Symbol> &data);   //overwriting data
+    void decode(String <Symbol> &data, DataInfo &dataInfo);   //overwriting data
 };
 
 

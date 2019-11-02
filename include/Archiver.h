@@ -11,6 +11,7 @@ class Archiver {
 private:
     const int BLOCK_SIZE = (1 << 22);
     void zip_block(String <Symbol> &block, DataInfo &dataInfo);
+    void unzip_block(String <Symbol> &block, DataInfo &dataInfo);
 public:
     void zip(std::string inputFileName, std::string outputFileName);
     void unzip(std::string inputFileName, std::string outputFileName);

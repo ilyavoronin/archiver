@@ -18,10 +18,10 @@ Reader::~Reader() {
     in.close();
 }
 
-bool Reader::read(String <Symbol> &input) {
-    in.read(buf, bufSize);
+bool Reader::read(String <Symbol> &input, int inputSize) {
+    in.read(buf, inputSize);
     sucRead = (int)in.gcount();
-    if (sucRead < bufSize) {
+    if (sucRead < inputSize) {
         eof = true;
     }
     input.resize(sucRead);
@@ -32,5 +32,17 @@ bool Reader::read(String <Symbol> &input) {
 }
 
 bool Reader::isEOF() {
-    return eof;
+    return in.eof();
 }
+
+void Reader::read(int &n) {
+    n = 0;
+    for (int i = 0; i < 4; i++) {
+        char c = in.get();
+        for (int j = 0; j < 8; j++) {
+            if (((1 << j) & c) != 0) {
+                n |= (1 << (8 * i + j));
+            }
+        }
+    }
+ }
