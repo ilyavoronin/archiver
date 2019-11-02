@@ -30,3 +30,15 @@ void Writer::write(String <Symbol> &output) {
     }
     out.write(buf, output.size());
 }
+
+void Writer::write(int n) {
+    for (int i = 0; i < 4; i++) {
+        char c = 0;
+        for (int j = 0; j < 8; j++) {
+            if (((1 << (i * 8 + j)) & n) != 0) {
+                c |= (1 << j);
+            }
+        }
+        out << c;
+    }
+}

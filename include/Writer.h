@@ -18,6 +18,7 @@ public:
     Writer(std::string outputFileName, int bufSize_, Mode mode);
     ~Writer();
     void write(String <Symbol> &output);
+    void write(int n);
 };
 
 

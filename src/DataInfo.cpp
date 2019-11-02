@@ -31,3 +31,8 @@ void DataInfo::write(int n) {
 void DataInfo::write(Symbol c) {
     str += c;
 }
+
+void DataInfo::writeToFile(Writer &writer) {
+    writer.write(str.size());
+    writer.write(str);
+}

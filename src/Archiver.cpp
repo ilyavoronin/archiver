@@ -17,7 +17,9 @@ void Archiver::zip(std::string inputFileName, std::string outputFileName) {
     while(!reader.isEOF()) {
         reader.read(block);
         zip_block(block, dataInfo);
+        writer.write(block.size());
         writer.write(block);
+        dataInfo.writeToFile(writer);
     }
 }
 
