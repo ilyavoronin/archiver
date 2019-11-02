@@ -52,6 +52,10 @@ void String<T>::clear() {
     str.clear();
 }
 
+template <typename T>
+void String<T>::resize(int n) {
+    str.resize(n);
+}
 
 
 String<bool>::String(int size) {
@@ -95,4 +99,8 @@ int String<bool>::size() {
 
 void String<bool>::clear() {
     str.clear();
+}
+
+void String<bool>::resize(int n) {
+    str.resize(n);
 }

@@ -5,6 +5,7 @@
 #include <fstream>
 #include <vector>
 #include <Symbol.h>
+#include "String.h"
 
 
 class Writer {
@@ -16,7 +17,7 @@ public:
     enum Mode{STD = 0, BIN = 1, APP = 2, BINAPP = 3};
     Writer(std::string outputFileName, int bufSize_, Mode mode);
     ~Writer();
-    void write(std::vector <Symbol> &output);
+    void write(String <Symbol> &output);
 };
 
 

@@ -19,6 +19,7 @@ public:
     T& operator[](int i);
     int size();
     void clear();
+    void resize(int n);
 };
 
 template <>
@@ -35,6 +36,7 @@ public:
     const bool operator[](int i) const;
     int size();
     void clear();
+    void resize(int n);
 };
 
 template class String<Symbol>;

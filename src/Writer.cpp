@@ -1,4 +1,5 @@
 #include "Writer.h"
+#include "String.h"
 #include <iostream>
 
 Writer::Writer(std::string outputFileName, int bufSize_, Mode mode = STD) {
@@ -23,7 +24,7 @@ Writer::~Writer() {
     out.close();
 }
 
-void Writer::write(std::vector<Symbol> &output) {
+void Writer::write(String <Symbol> &output) {
     for (int i = 0; i < (int)output.size(); i++) {
         buf[i] = output[i].toChar();
     }

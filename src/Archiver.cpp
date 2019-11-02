@@ -2,19 +2,21 @@
 #include "Symbol.h"
 #include "Reader.h"
 #include "Writer.h"
-#include <fstream>
+#include "HuffmanCoding.h"
 
-void Archiver::zip_block(std::vector <Symbol> &block) {
 
+void Archiver::zip_block(String <Symbol> &block, DataInfo &dataInfo) {
+    HuffmanCoding().encode(block, dataInfo);
 }
 
 void Archiver::zip(std::string inputFileName, std::string outputFileName) {
-    std::vector <Symbol> block(BLOCK_SIZE);
+    String <Symbol> block(BLOCK_SIZE);
     Reader reader(inputFileName, BLOCK_SIZE, Reader::Mode::BIN);
     Writer writer(outputFileName, BLOCK_SIZE, Writer::Mode::BIN);
+    DataInfo dataInfo;
     while(!reader.isEOF()) {
         reader.read(block);
-        zip_block(block);
+        zip_block(block, dataInfo);
         writer.write(block);
     }
 }

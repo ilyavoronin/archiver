@@ -3,7 +3,8 @@
 
 #include <fstream>
 #include <vector>
-#include <Symbol.h>
+#include "Symbol.h"
+#include "String.h"
 
 class Reader {
 private:
@@ -16,7 +17,7 @@ public:
     enum Mode{STD = 0, BIN = 1};
     Reader(std::string inputFileName, int bufSize_, Mode mode);
     ~Reader();
-    bool read(std::vector <Symbol> &input);
+    bool read(String <Symbol> &input);
     bool isEOF();
 };
 

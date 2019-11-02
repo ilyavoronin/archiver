@@ -18,7 +18,7 @@ Reader::~Reader() {
     in.close();
 }
 
-bool Reader::read(std::vector <Symbol> &input) {
+bool Reader::read(String <Symbol> &input) {
     in.read(buf, bufSize);
     sucRead = (int)in.gcount();
     if (sucRead < bufSize) {
