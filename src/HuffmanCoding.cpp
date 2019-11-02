@@ -1,6 +1,7 @@
 #include "HuffmanCoding.h"
 
 #include <set>
+#include <iostream>
 
 HuffmanCoding::Node::Node(Symbol symb_, Node *left_, Node *right_) {
     isLeaf = false;
@@ -48,13 +49,13 @@ void HuffmanCoding::getCodesDfs(HuffmanCoding::Node *curVert, String<bool> curSt
 }
 
 void HuffmanCoding::getByteString(String<bool> &bstr, String<Symbol> &res) {
+    while (bstr.size() % 8 != 0) {
+        bstr.add(0);
+    }
     for (int i = 0; i < bstr.size(); i += 8) {
         uint8_t c = 0;
-        while (bstr.size() % 8 != 0) {
-            bstr.add(0);
-        }
         for (int j = 0; j < 8; j++) {
-            if (bstr[j] == 1) {
+            if (bstr[i + j] == 1) {
                 c |= (1 << j);
             }
         }
