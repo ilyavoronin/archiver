@@ -58,8 +58,25 @@ void String<T>::resize(int n) {
 }
 
 
+
+
+
 String<bool>::String(int size) {
     str.resize(size);
+}
+
+String<Symbol> String<bool>::toSymb() {
+    String<Symbol> res(((int)str.size() - 1) / 8 + 1);
+    for (int i = 0; i < (int)this->size(); i += 8) {
+        uint8_t c = 0;
+        for (int j = 0; j < 8; j++) {
+            if (i + j < str.size() && str[i + j] == 1) {
+                c |= (1 << j);
+            }
+        }
+        res[i / 8] = c;
+    }
+    return res;
 }
 
 String<bool>& String<bool>::add(bool bit) {

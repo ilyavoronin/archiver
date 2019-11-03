@@ -15,8 +15,13 @@ public:
     void write(short int n);
     void write(int n);
     void write(Symbol c);
+    void write(String <Symbol> &newStr);
+    void write(String <bool> &newStr);
     void writeToFile(Writer &writer);
     void readFromFile(Reader &reader);
+    void read(int &n);
+    void read(short int &n);
+    Symbol read();
 };
 
 

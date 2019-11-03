@@ -32,6 +32,15 @@ void DataInfo::write(Symbol c) {
     str += c;
 }
 
+void DataInfo::write(String <Symbol> &newStr) {
+    str += newStr;
+}
+
+void DataInfo::write(String <bool> &newStr) {
+    auto charStr = newStr.toSymb();
+    str += charStr;
+}
+
 void DataInfo::writeToFile(Writer &writer) {
     writer.write(str.size());
     writer.write(str);
@@ -41,4 +50,32 @@ void DataInfo::readFromFile(Reader &reader) {
     int inputSize;
     reader.read(inputSize);
     reader.read(str, inputSize);
+}
+
+void DataInfo::read(int &n) {
+    n = 0;
+    for (int i = 0; i < 4; i++) {
+        char c = str[pos++].toChar();
+        for (int j = 0; j < 8; j++) {
+            if (((1 << j) & c) != 0) {
+                n |= (1 << (i * 8 + j));
+            }
+        }
+    }
+}
+
+void DataInfo::read(short int &n) {
+    n = 0;
+    for (int i = 0; i < 2; i++) {
+        char c = str[pos++].toChar();
+        for (int j = 0; j < 8; j++) {
+            if (((1 << j) & c) != 0) {
+                n |= (1 << (i * 8 + j));
+            }
+        }
+    }
+}
+
+Symbol DataInfo::read() {
+    return str[pos++];
 }

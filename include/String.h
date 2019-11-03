@@ -28,6 +28,7 @@ private:
     std::vector <bool> str;
 public:
     explicit String<bool>(int size = 0);
+    String <Symbol> toSymb();
     String<bool>& add(bool bit);
     String<bool>& operator+=(String<bool> &ot);
     String<bool> operator+(String<bool> &ot);
