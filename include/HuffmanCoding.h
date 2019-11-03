@@ -25,8 +25,9 @@ private:
     std::map <Symbol, String<bool> > getCodes(Node *root);
     void getCodesDfs(Node *curVert, String<bool> curStr, std::map <Symbol, String<bool> > &res);
     void getByteString(String <bool> &bstr, String <Symbol> &res);
-    void getNodesDfs(Node *curVert, std::vector<Node *> &nodes, Node *pr);  //get nodes vector and find prevs
+    void getEulerDfs(Node *curVert, String <Symbol> &symb, String <bool> euler);
     void writeTree(Node *root, DataInfo &dataInfo);
+    Node* readTree(DataInfo &dataInfo);
 public:
     void encode(String <Symbol> &data, DataInfo &dataInfo);   //overwriting data
     void decode(String <Symbol> &data, DataInfo &dataInfo);   //overwriting data

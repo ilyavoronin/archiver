@@ -63,48 +63,27 @@ void HuffmanCoding::getByteString(String<bool> &bstr, String<Symbol> &res) {
     }
 }
 
-void HuffmanCoding::getNodesDfs(Node *curVert, std::vector<Node *> &nodes, Node *pr) {
-    if (curVert == nullptr) {
-        return;
+void HuffmanCoding::getEulerDfs(Node *curVert, String <Symbol> &chars, String <bool> euler) {
+    if (curVert->isLeaf) {
+        chars.add(curVert->symb);
     }
-    curVert->pr = pr;
-    nodes.push_back(curVert);
-    getNodesDfs(curVert->left, nodes, curVert);
-    getNodesDfs(curVert->right, nodes, curVert);
+    else {
+        euler.add(1);
+        getEulerDfs(curVert->left, chars, euler);
+        euler.add(1);
+        getEulerDfs(curVert->right, chars, euler);
+    }
+    euler.add(0);
 }
 
 void HuffmanCoding::writeTree(Node *root, DataInfo &dataInfo) {
-    std::vector <Node* > nodes;   //List of nodes
-    getNodesDfs(root, nodes, 0);
-    std::vector <Node* > leafNodes;
-    std::vector <Node* > addNodes;
-    for (auto node : nodes) {
-        if (node->isLeaf) {
-            leafNodes.push_back(node);
-        }
-        else {
-            addNodes.push_back(node);
-        }
-    }
-    for (auto node : addNodes) {
-        node->num = Node::curNum++;
-    }
-    for (auto node : leafNodes) {
-        node->num = Node::curNum++;
-    }
-    dataInfo.write(int(leafNodes.size()));
-    for (auto node : addNodes) {
-        if (node->pr != nullptr) {
-            dataInfo.write(short(node->pr->num));
-        }
-        else {
-            dataInfo.write(short(0));
-        }
-    }
-    for (auto node : leafNodes) {
-        dataInfo.write(short(node->pr->num));
-        dataInfo.write(node->symb);
-    }
+    String <Symbol> chars;
+    String <bool> euler;
+    getEulerDfs(root, chars, euler);
+    dataInfo.write((int)euler.size());
+    dataInfo.write(euler);
+    dataInfo.write((int)chars.size());
+    dataInfo.write(chars);
 }
 
 std::map<Symbol, String<bool> > HuffmanCoding::getCodes(HuffmanCoding::Node *root) {
@@ -113,6 +92,9 @@ std::map<Symbol, String<bool> > HuffmanCoding::getCodes(HuffmanCoding::Node *roo
     return res;
 }
 
+HuffmanCoding::Node* HuffmanCoding::readTree(DataInfo &dataInfo) {
+
+}
 
 void HuffmanCoding::encode(String<Symbol> &data, DataInfo &dataInfo) {
     Node *root = buildTree(data);
@@ -132,5 +114,5 @@ void HuffmanCoding::encode(String<Symbol> &data, DataInfo &dataInfo) {
 }
 
 void HuffmanCoding::decode(String<Symbol> &data, DataInfo &dataInfo) {
-
+    Node *root = readTree(dataInfo);
 }
