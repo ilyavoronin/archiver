@@ -21,7 +21,7 @@ HuffmanCoding::Node* HuffmanCoding::buildTree(String <Symbol> &data) {
     for (auto elem : freqs) {
         Node *newNode = new Node(elem.first);
         newNode->isLeaf = true;
-        sortedFreqs.insert({-elem.second, newNode});    //sorting in descending order
+        sortedFreqs.insert({elem.second, newNode});
     }
     while (sortedFreqs.size() > 1) {
         auto freq1 = *(sortedFreqs.begin());
