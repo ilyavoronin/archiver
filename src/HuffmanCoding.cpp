@@ -1,7 +1,6 @@
 #include "HuffmanCoding.h"
 
 #include <set>
-#include <iostream>
 
 HuffmanCoding::Node::Node(Symbol symb_, Node *left_, Node *right_) {
     isLeaf = false;
@@ -9,7 +8,7 @@ HuffmanCoding::Node::Node(Symbol symb_, Node *left_, Node *right_) {
     right = right_;
     symb = symb_;
     num = 0;
-    pr = 0;
+    pr = nullptr;
 }
 
 HuffmanCoding::Node* HuffmanCoding::buildTree(String <Symbol> &data) {
@@ -63,7 +62,7 @@ void HuffmanCoding::getByteString(String<bool> &bstr, String<Symbol> &res) {
     }
 }
 
-void HuffmanCoding::getEulerDfs(Node *curVert, String <Symbol> &chars, String <bool> euler) {
+void HuffmanCoding::getEulerDfs(Node *curVert, String <Symbol> &chars, String <bool> &euler) {
     if (curVert->isLeaf) {
         chars.add(curVert->symb);
     }
@@ -80,9 +79,7 @@ void HuffmanCoding::writeTree(Node *root, DataInfo &dataInfo) {
     String <Symbol> chars;
     String <bool> euler;
     getEulerDfs(root, chars, euler);
-    dataInfo.write((int)euler.size());
     dataInfo.write(euler);
-    dataInfo.write((int)chars.size());
     dataInfo.write(chars);
 }
 
@@ -93,7 +90,39 @@ std::map<Symbol, String<bool> > HuffmanCoding::getCodes(HuffmanCoding::Node *roo
 }
 
 HuffmanCoding::Node* HuffmanCoding::readTree(DataInfo &dataInfo) {
-
+    String <Symbol> chars;
+    String <bool> euler;
+    dataInfo.read(euler);
+    dataInfo.read(chars);
+    Node *root = new Node;
+    Node *cur = root;
+    int curSymb = 0;
+    int pos = 0;
+    while (pos < euler.size() && cur != nullptr) {
+        if (pos == 0 || euler[pos] == 1 && euler[pos - 1] == 1) {
+            Node *newNode = new Node;
+            newNode->pr = cur;
+            cur->left = newNode;
+            cur = newNode;
+            pos++;
+            continue;
+        }
+        if (euler[pos] == 1 && euler[pos - 1] == 0) {
+            Node *newNode = new Node;
+            newNode->pr = cur;
+            cur->right = newNode;
+            cur = newNode;
+        }
+        if (euler[pos] == 0) {
+            if (euler[pos - 1] == 1) {
+                cur->symb = chars[curSymb++];
+                cur->isLeaf = true;
+            }
+            cur = cur->pr;
+        }
+        pos++;
+    }
+    return root;
 }
 
 void HuffmanCoding::encode(String<Symbol> &data, DataInfo &dataInfo) {
@@ -108,11 +137,42 @@ void HuffmanCoding::encode(String<Symbol> &data, DataInfo &dataInfo) {
     for (int i = 0; i < data.size(); i++) {
         res += codes[data[i].get()];
     }
-    data.clear();
-    getByteString(res, data);
     writeTree(root, dataInfo);
+    dataInfo.write((int)res.size());
+    data = res.toSymb();
 }
 
 void HuffmanCoding::decode(String<Symbol> &data, DataInfo &dataInfo) {
     Node *root = readTree(dataInfo);
+
+    std::map <Symbol, String<bool> > codesMap = getCodes(root);
+
+    std::vector <String<bool> > codes(ALPH_SIZE);
+    for (auto elem : codesMap) {
+        codes[(elem.first).get()] = elem.second;    //index is the symbol number
+    }
+    String <bool> binData = data.toBool();
+    int dataSize;
+    dataInfo.read(dataSize);
+    int pos = 0;
+    data.clear();
+    Node *cur = root;
+    while (pos < dataSize) {
+        if (cur->isLeaf) {
+            data.add(cur->symb);
+            cur = root;
+        }
+        else {
+            if (binData[pos] == 0) {
+                cur = cur->left;
+            }
+            else {
+                cur = cur->right;
+            }
+            pos++;
+        }
+    }
+    if (cur->isLeaf) {
+        data.add(cur->symb);
+    }
 }

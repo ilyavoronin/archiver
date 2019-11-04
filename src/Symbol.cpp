@@ -1,6 +1,6 @@
 #include "Symbol.h"
 
-char Symbol::toChar() {
+char Symbol::toChar() const {
     return ch;
 }
 

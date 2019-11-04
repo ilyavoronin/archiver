@@ -11,6 +11,7 @@ private:
     char *buf;
     int bufSize;
     int sucRead;
+    int cntRead;
     bool eof;
     std::ifstream in;
 public:

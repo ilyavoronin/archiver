@@ -8,6 +8,7 @@ Reader::Reader(std::string inputFileName, int bufSize_, Mode mode  = STD) {
         in.open(inputFileName);
     }
     sucRead = 0;
+    cntRead = 0;
     eof = false;
     bufSize = bufSize_;
     buf = new char[bufSize];
@@ -28,10 +29,12 @@ bool Reader::read(String <Symbol> &input, int inputSize) {
     for (int i = 0; i < sucRead; i++) {
         input[i] = buf[i];
     }
-    return sucRead == bufSize;
+    cntRead += sucRead;
+    return sucRead == inputSize;
 }
 
 bool Reader::isEOF() {
+    in.peek();
     return in.eof();
 }
 
@@ -45,4 +48,5 @@ void Reader::read(int &n) {
             }
         }
     }
+    cntRead += 4;
  }

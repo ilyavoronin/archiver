@@ -10,7 +10,7 @@ public:
     Symbol(uint8_t ch_ = 0) {
         ch = ch_;
     }
-    char toChar();
+    char toChar() const;
     int get() const;
     bool operator<(const Symbol &ot) const;
 };

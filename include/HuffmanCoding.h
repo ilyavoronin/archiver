@@ -25,7 +25,7 @@ private:
     std::map <Symbol, String<bool> > getCodes(Node *root);
     void getCodesDfs(Node *curVert, String<bool> curStr, std::map <Symbol, String<bool> > &res);
     void getByteString(String <bool> &bstr, String <Symbol> &res);
-    void getEulerDfs(Node *curVert, String <Symbol> &symb, String <bool> euler);
+    void getEulerDfs(Node *curVert, String <Symbol> &symb, String <bool> &euler);
     void writeTree(Node *root, DataInfo &dataInfo);
     Node* readTree(DataInfo &dataInfo);
 public:

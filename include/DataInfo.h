@@ -21,6 +21,8 @@ public:
     void readFromFile(Reader &reader);
     void read(int &n);
     void read(short int &n);
+    void read(String <Symbol> &chars);
+    void read(String <bool> &bin);
     Symbol read();
 };
 
