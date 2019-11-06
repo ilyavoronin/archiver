@@ -11,14 +11,15 @@ private:
     std::vector <T> str;
 public:
     explicit String(int size = 0);
-    String <bool> toBool();
+    String <bool> toBool() const;
     String& add(T symb);
-    String& operator+=(String &ot);
-    String operator+(String &ot);
-    String operator+(T symb);
+    String& operator+=(const String &ot);
+    String operator+(const String &ot) const;
+    String operator+(T symb) const;
     String& operator+=(T symb);
     T& operator[](int i);
-    int size();
+    const T& operator[](int i) const;
+    int size() const;
     void clear();
     void resize(int n);
 };
@@ -29,15 +30,15 @@ private:
     std::vector <bool> str;
 public:
     explicit String<bool>(int size = 0);
-    String <Symbol> toSymb();
+    String <Symbol> toSymb() const;
     void set(int i, bool bit);
     String<bool>& add(bool bit);
-    String<bool>& operator+=(String<bool> &ot);
-    String<bool> operator+(String<bool> &ot);
-    String<bool> operator+(bool bit);
+    String<bool>& operator+=(const String<bool> &ot);
+    String<bool> operator+(const String<bool> &ot) const;
+    String<bool> operator+(bool bit) const;
     String<bool>& operator+=(bool bit);
-    const bool operator[](int i) const;
-    int size();
+    bool operator[](int i) const;
+    int size() const;
     void clear();
     void resize(int n);
 };

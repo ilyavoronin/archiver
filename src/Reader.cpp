@@ -7,9 +7,7 @@ Reader::Reader(std::string inputFileName, int bufSize_, Mode mode  = STD) {
     else {
         in.open(inputFileName);
     }
-    sucRead = 0;
     cntRead = 0;
-    eof = false;
     bufSize = bufSize_;
     buf = new char[bufSize];
 }
@@ -21,10 +19,7 @@ Reader::~Reader() {
 
 bool Reader::read(String <Symbol> &input, int inputSize) {
     in.read(buf, inputSize);
-    sucRead = (int)in.gcount();
-    if (sucRead < inputSize) {
-        eof = true;
-    }
+    int sucRead = (int)in.gcount();
     input.resize(sucRead);
     for (int i = 0; i < sucRead; i++) {
         input[i] = buf[i];

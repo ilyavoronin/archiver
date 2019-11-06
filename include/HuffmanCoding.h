@@ -2,7 +2,7 @@
 #define ARCHIVER_HUFFMANCODING_H
 
 #include "Symbol.h"
-#include "String.h"
+#include "AString.h"
 #include "DataInfo.h"
 
 #include <vector>
@@ -21,13 +21,13 @@ private:
         Node* pr; //previous vertex
         Node(Symbol symb_ = 0, Node* left = nullptr, Node* right = nullptr);
     };
-    Node* buildTree(String <Symbol> &data);
+    Node* buildTree(const String <Symbol> &data);
     std::map <Symbol, String<bool> > getCodes(Node *root);
     void getCodesDfs(Node *curVert, String<bool> curStr, std::map <Symbol, String<bool> > &res);
-    void getByteString(String <bool> &bstr, String <Symbol> &res);
     void getEulerDfs(Node *curVert, String <Symbol> &symb, String <bool> &euler);
     void writeTree(Node *root, DataInfo &dataInfo);
     Node* readTree(DataInfo &dataInfo);
+    void deleteTree(Node *vert);
 public:
     void encode(String <Symbol> &data, DataInfo &dataInfo);   //overwriting data
     void decode(String <Symbol> &data, DataInfo &dataInfo);   //overwriting data

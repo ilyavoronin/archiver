@@ -4,15 +4,13 @@
 #include <fstream>
 #include <vector>
 #include "Symbol.h"
-#include "String.h"
+#include "AString.h"
 
 class Reader {
 private:
     char *buf;
     int bufSize;
-    int sucRead;
     int cntRead;
-    bool eof;
     std::ifstream in;
 public:
     enum Mode{STD = 0, BIN = 1};

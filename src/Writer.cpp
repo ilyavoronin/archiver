@@ -1,5 +1,5 @@
 #include "Writer.h"
-#include "String.h"
+#include "AString.h"
 #include <iostream>
 
 Writer::Writer(std::string outputFileName, int bufSize_, Mode mode = STD) {

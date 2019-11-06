@@ -11,6 +11,7 @@ add_executable(archiver src/main.cpp
         src/Reader.cpp include/Reader.h
         src/Writer.cpp include/Writer.h
         src/HuffmanCoding.cpp include/HuffmanCoding.h
-        src/byteTranssform.cpp include/byteTranssform.h
         src/DataInfo.cpp include/DataInfo.h
-        src/String.cpp include/String.h)
+        src/AString.cpp include/AString.h)
+
+add_subdirectory(tests)

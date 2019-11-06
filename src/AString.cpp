@@ -1,4 +1,4 @@
-#include "String.h"
+#include "AString.h"
 
 template <typename T>
 String<T>::String(int size) {
@@ -6,7 +6,7 @@ String<T>::String(int size) {
 }
 
 template <typename T>
-String<bool> String<T>::toBool() {
+String<bool> String<T>::toBool() const {
     String <bool> res(str.size() * 8);
     for (int i = 0; i < str.size(); i++) {
         for (int j = 0; j < 8; j++) {
@@ -28,13 +28,13 @@ String<T>& String<T>::add(T symb) {
 }
 
 template <typename T>
-String<T>& String<T>::operator+=(String &ot) {
+String<T>& String<T>::operator+=(const String &ot) {
     this->str.insert(this->str.end(), ot.str.begin(), ot.str.end());
     return *this;
 }
 
 template <typename T>
-String<T> String<T>::operator+(String &ot) {
+String<T> String<T>::operator+(const String &ot) const {
     String<T> tmp = *this;
     tmp += ot;
     return tmp;
@@ -47,7 +47,7 @@ String<T>& String<T>::operator+=(T symb) {
 }
 
 template <typename T>
-String<T> String<T>::operator+(T symb) {
+String<T> String<T>::operator+(T symb) const {
     String<T> tmp = *this;
     tmp.add(symb);
     return tmp;
@@ -59,7 +59,12 @@ T& String<T>::operator[](int i) {
 }
 
 template <typename T>
-int String<T>::size() {
+const T& String<T>::operator[](int i) const {
+    return str[i];
+}
+
+template <typename T>
+int String<T>::size() const {
     return str.size();
 }
 
@@ -85,7 +90,7 @@ void String<bool>::set(int i, bool bit) {
     str[i] = bit;
 }
 
-String<Symbol> String<bool>::toSymb() {
+String<Symbol> String<bool>::toSymb() const {
     String<Symbol> res(((int)str.size() - 1) / 8 + 1);
     for (int i = 0; i < (int)this->size(); i += 8) {
         uint8_t c = 0;
@@ -104,12 +109,12 @@ String<bool>& String<bool>::add(bool bit) {
     return *this;
 }
 
-String<bool>& String<bool>::operator+=(String<bool> &ot) {
+String<bool>& String<bool>::operator+=(const String<bool> &ot) {
     this->str.insert(this->str.end(), ot.str.begin(), ot.str.end());
     return *this;
 }
 
-String<bool> String<bool>::operator+(String<bool> &ot) {
+String<bool> String<bool>::operator+(const String<bool> &ot) const {
     String<bool> tmp = *this;
     tmp += ot;
     return tmp;
@@ -120,17 +125,17 @@ String<bool>& String<bool>::operator+=(bool bit) {
     return *this;
 }
 
-String<bool> String<bool>::operator+(bool symb) {
+String<bool> String<bool>::operator+(bool symb) const {
     String<bool> tmp = *this;
     tmp.add(symb);
     return tmp;
 }
 
-const bool String<bool>::operator[](int i) const {
+bool String<bool>::operator[](int i) const {
     return str[i];
 }
 
-int String<bool>::size() {
+int String<bool>::size() const {
     return str.size();
 }
 

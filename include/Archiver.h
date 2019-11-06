@@ -3,6 +3,7 @@
 
 #include "Symbol.h"
 #include "DataInfo.h"
+#include "AString.h"
 
 #include <vector>
 #include <string>

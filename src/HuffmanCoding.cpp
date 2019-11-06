@@ -11,7 +11,7 @@ HuffmanCoding::Node::Node(Symbol symb_, Node *left_, Node *right_) {
     pr = nullptr;
 }
 
-HuffmanCoding::Node* HuffmanCoding::buildTree(String <Symbol> &data) {
+HuffmanCoding::Node* HuffmanCoding::buildTree(const String <Symbol> &data) {
     std::map <Symbol, int> freqs;
     for (int i = 0; i < (int)data.size(); i++) {
         freqs[data[i]]++;
@@ -44,21 +44,6 @@ void HuffmanCoding::getCodesDfs(HuffmanCoding::Node *curVert, String<bool> curSt
     }
     if (curVert->right != nullptr) {
         getCodesDfs(curVert->right, curStr + bool(1), res);
-    }
-}
-
-void HuffmanCoding::getByteString(String<bool> &bstr, String<Symbol> &res) {
-    while (bstr.size() % 8 != 0) {
-        bstr.add(0);
-    }
-    for (int i = 0; i < bstr.size(); i += 8) {
-        uint8_t c = 0;
-        for (int j = 0; j < 8; j++) {
-            if (bstr[i + j] == 1) {
-                c |= (1 << j);
-            }
-        }
-        res += Symbol(c);
     }
 }
 
@@ -125,6 +110,15 @@ HuffmanCoding::Node* HuffmanCoding::readTree(DataInfo &dataInfo) {
     return root;
 }
 
+void HuffmanCoding::deleteTree(Node *vert) {
+    if (vert == nullptr) {
+        return;
+    }
+    deleteTree(vert->left);
+    deleteTree(vert->right);
+    delete vert;
+}
+
 void HuffmanCoding::encode(String<Symbol> &data, DataInfo &dataInfo) {
     Node *root = buildTree(data);
     std::map <Symbol, String<bool> > codesMap = getCodes(root);
@@ -140,7 +134,9 @@ void HuffmanCoding::encode(String<Symbol> &data, DataInfo &dataInfo) {
     writeTree(root, dataInfo);
     dataInfo.write((int)res.size());
     data = res.toSymb();
+    deleteTree(root);
 }
+
 
 void HuffmanCoding::decode(String<Symbol> &data, DataInfo &dataInfo) {
     Node *root = readTree(dataInfo);
@@ -175,4 +171,5 @@ void HuffmanCoding::decode(String<Symbol> &data, DataInfo &dataInfo) {
     if (cur->isLeaf) {
         data.add(cur->symb);
     }
+    deleteTree(root);
 }

@@ -5,7 +5,7 @@
 #include <fstream>
 #include <vector>
 #include <Symbol.h>
-#include "String.h"
+#include "AString.h"
 
 
 class Writer {

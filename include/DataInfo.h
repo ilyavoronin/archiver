@@ -1,7 +1,7 @@
 #ifndef ARCHIVER_DATAINFO_H
 #define ARCHIVER_DATAINFO_H
 
-#include "String.h"
+#include "AString.h"
 #include "Symbol.h"
 #include "Reader.h"
 #include "Writer.h"
