@@ -13,6 +13,8 @@ public:
     char toChar() const;
     int get() const;
     bool operator<(const Symbol &ot) const;
+    bool operator==(const Symbol &ot) const;
+    bool operator!=(const Symbol &ot) const;
 };
 
 

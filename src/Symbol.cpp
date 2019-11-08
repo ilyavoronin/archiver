@@ -11,3 +11,11 @@ int Symbol::get() const {
 bool Symbol::operator<(const Symbol &ot) const {
     return ch < ot.ch;
 }
+
+bool Symbol::operator==(const Symbol &ot) const {
+    return ch == ot.ch;
+}
+
+bool Symbol::operator!=(const Symbol &ot) const {
+    return ch != ot.ch;
+}

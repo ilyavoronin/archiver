@@ -19,6 +19,7 @@ public:
     String& operator+=(T symb);
     T& operator[](int i);
     const T& operator[](int i) const;
+    bool operator==(const String &ot) const;
     int size() const;
     void clear();
     void resize(int n);

@@ -64,6 +64,19 @@ const T& String<T>::operator[](int i) const {
 }
 
 template <typename T>
+bool String<T>::operator==(const String &ot) const {
+    if (ot.size() != this->size()) {
+        return false;
+    }
+    for (int i = 0; i < ot.size(); i++) {
+        if (ot[i] != this->str[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
+template <typename T>
 int String<T>::size() const {
     return str.size();
 }
