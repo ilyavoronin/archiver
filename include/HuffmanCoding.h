@@ -11,23 +11,6 @@
 class HuffmanCoding {
 private:
     const int ALPH_SIZE = 256;
-    class Node {
-    public:
-        inline static int curNum = 0;
-        bool isLeaf;
-        Symbol symb;
-        int num;
-        Node *left, *right;
-        Node* pr; //previous vertex
-        Node(Symbol symb_ = 0, Node* left = nullptr, Node* right = nullptr);
-    };
-    Node* buildTree(const String <Symbol> &data);
-    std::map <Symbol, String<bool> > getCodes(Node *root);
-    void getCodesDfs(Node *curVert, String<bool> curStr, std::map <Symbol, String<bool> > &res);
-    void getEulerDfs(Node *curVert, String <Symbol> &symb, String <bool> &euler);
-    void writeTree(Node *root, DataInfo &dataInfo);
-    Node* readTree(DataInfo &dataInfo);
-    void deleteTree(Node *vert);
 public:
     void encode(String <Symbol> &data, DataInfo &dataInfo);   //overwriting data
     void decode(String <Symbol> &data, DataInfo &dataInfo);   //overwriting data
