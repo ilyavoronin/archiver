@@ -14,7 +14,9 @@ Reader::Reader(std::string inputFileName, int bufSize_, Mode mode  = STD) {
 
 Reader::~Reader() {
     delete[] buf;
-    in.close();
+    if (in.is_open()) {
+        in.close();
+    }
 }
 
 bool Reader::read(String <Symbol> &input, int inputSize) {
@@ -45,3 +47,7 @@ void Reader::read(int &n) {
     }
     cntRead += 4;
  }
+
+ void Reader::close() {
+    in.close();
+}

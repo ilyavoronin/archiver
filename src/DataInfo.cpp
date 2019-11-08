@@ -45,7 +45,7 @@ void DataInfo::write(String <bool> &newStr) {
 }
 
 void DataInfo::writeToFile(Writer &writer) {
-    writer.write(str.size());
+    writer.write((int)str.size());
     writer.write(str);
 }
 

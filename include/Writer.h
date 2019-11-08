@@ -19,6 +19,7 @@ public:
     ~Writer();
     void write(String <Symbol> &output);
     void write(int n);
+    void close();
 };
 
 

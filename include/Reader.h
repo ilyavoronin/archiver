@@ -19,6 +19,7 @@ public:
     bool read(String <Symbol> &input, int inputSize);
     bool isEOF();
     void read(int &n);
+    void close();
 };
 
 

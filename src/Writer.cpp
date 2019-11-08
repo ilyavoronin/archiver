@@ -21,7 +21,9 @@ Writer::Writer(std::string outputFileName, int bufSize_, Mode mode = STD) {
 
 Writer::~Writer() {
     delete[] buf;
-    out.close();
+    if (out.is_open()) {
+        out.close();
+    }
 }
 
 void Writer::write(String <Symbol> &output) {
@@ -41,4 +43,8 @@ void Writer::write(int n) {
         }
         out << c;
     }
+}
+
+void Writer::close() {
+    out.close();
 }
