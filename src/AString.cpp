@@ -148,6 +148,18 @@ bool String<bool>::operator[](int i) const {
     return str[i];
 }
 
+bool String<bool>::operator==(const String<bool> &ot) const {
+    if (ot.size() != this->size()) {
+        return false;
+    }
+    for (int i = 0; i < ot.size(); i++) {
+        if (ot[i] != this->str[i]) {
+            return false;
+        }
+    }
+    return true;
+}
+
 int String<bool>::size() const {
     return str.size();
 }

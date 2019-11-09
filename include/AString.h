@@ -38,6 +38,7 @@ public:
     String<bool> operator+(const String<bool> &ot) const;
     String<bool> operator+(bool bit) const;
     String<bool>& operator+=(bool bit);
+    bool operator==(const String<bool> &ot) const;
     bool operator[](int i) const;
     int size() const;
     void clear();
