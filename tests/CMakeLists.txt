@@ -11,5 +11,5 @@ add_executable(archiver_tests_run
         ../src/HuffmanCoding.cpp ../include/HuffmanCoding.h
         ../src/DataInfo.cpp ../include/DataInfo.h
         ../src/AString.cpp ../include/AString.h
-        test.cpp TestSymbol.cpp TestString.cpp TestDataInfo.cpp TestReaderWriter.cpp ../src/HuffmanTree.cpp ../include/HuffmanTree.h TestHuffmanTree.cpp)
+        test.cpp TestSymbol.cpp TestString.cpp TestDataInfo.cpp TestReaderWriter.cpp ../src/HuffmanTree.cpp ../include/HuffmanTree.h TestHuffmanTree.cpp TestArchiver.cpp)
 target_link_libraries(archiver_tests_run gtest gtest_main)
