@@ -54,6 +54,7 @@ void DataInfo::readFromFile(Reader &reader) {
     pos = 0;
     reader.read(inputSize);
     reader.read(str, inputSize);
+
 }
 
 void DataInfo::read(int &n) {
