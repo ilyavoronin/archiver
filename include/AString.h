@@ -47,5 +47,6 @@ public:
 
 template class String<Symbol>;
 template class String<bool>;
+template class String<int>;
 
 #endif //ARCHIVER_STRING_H
