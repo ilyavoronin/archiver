@@ -5,8 +5,8 @@ String<T>::String(int size) {
     str.resize(size);
 }
 
-template <typename T>
-String<bool> String<T>::toBool() const {
+template <>
+String<bool> String<Symbol>::toBool() const {
     String <bool> res(str.size() * 8);
     for (int i = 0; i < str.size(); i++) {
         for (int j = 0; j < 8; j++) {
