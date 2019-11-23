@@ -5,6 +5,7 @@
 #include "DataInfo.h"
 
 class BWT {
+public:
     void encode(String <Symbol> &data, DataInfo &dataInfo); //overwriting data
     void decode(String <Symbol> &data, DataInfo &dataInfo); //overwriting data
 };

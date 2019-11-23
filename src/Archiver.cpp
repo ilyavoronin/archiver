@@ -3,14 +3,17 @@
 #include "Reader.h"
 #include "Writer.h"
 #include "HuffmanCoding.h"
+#include "BWT.h"
 
 
 void Archiver::zip_block(String <Symbol> &block, DataInfo &dataInfo) {
+    BWT().encode(block, dataInfo);
     HuffmanCoding().encode(block, dataInfo);
 }
 
 void Archiver::unzip_block(String <Symbol> &block, DataInfo &dataInfo) {
     HuffmanCoding().decode(block, dataInfo);
+    BWT().decode(block, dataInfo);
 }
 
 void Archiver::zip(std::string inputFileName, std::string outputFileName) {

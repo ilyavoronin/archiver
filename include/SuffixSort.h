@@ -5,6 +5,9 @@
 
 
 class SuffixSort {
+private:
+    void qsort(String <Symbol> &data, String <int> &sortedSuffixes, int L, int R);
+    bool cmp(int i, int j, String <Symbol> &data);
 public:
     void sort(String <Symbol> &data, String <int> &sortedSuffixes);
 };
