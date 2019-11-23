@@ -23,6 +23,7 @@ public:
     int size() const;
     void clear();
     void resize(int n);
+    void insertBegin(const String <T> &other);
 };
 
 template <>

@@ -1,5 +1,4 @@
 #include "DataInfo.h"
-#include <iostream>
 
 DataInfo::DataInfo() {
     pos = 0;
@@ -13,7 +12,7 @@ void DataInfo::write(short int n) {
                 c |= (1 << j);
             }
         }
-        str += Symbol(c);
+        buf_str += Symbol(c);
     }
 }
 
@@ -25,26 +24,27 @@ void DataInfo::write(int n) {
                 c |= (1 << j);
             }
         }
-        str += c;
+        buf_str += c;
     }
 }
 
 void DataInfo::write(Symbol c) {
-    str += c;
+    buf_str += c;
 }
 
 void DataInfo::write(String <Symbol> &newStr) {
     write((int)newStr.size());
-    str += newStr;
+    buf_str += newStr;
 }
 
 void DataInfo::write(String <bool> &newStr) {
     auto charStr = newStr.toSymb();
     write((int)charStr.size());
-    str += charStr;
+    buf_str += charStr;
 }
 
 void DataInfo::writeToFile(Writer &writer) {
+    beginNewBlock();
     writer.write((int)str.size());
     writer.write(str);
 }
@@ -111,4 +111,9 @@ void DataInfo::read(String <bool> &bin) {
         }
     }
     pos += size;
+}
+
+void DataInfo::beginNewBlock() {
+    str.insertBegin(buf_str);
+    buf_str.clear();
 }

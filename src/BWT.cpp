@@ -3,8 +3,9 @@
 
 void BWT::encode(String<Symbol> &data, DataInfo &dataInfo) {
     String <int> sortedSuffixes;
-    String <Symbol> newData(data.size());
     data.add(Symbol(255)); //In sort and in decoding we consider that new Symbol is > than others
+    String <Symbol> newData(data.size());
+    int nnn = data.size();
     SuffixSort().sort(data, sortedSuffixes);
     int n = data.size();
     int firstSuffixNumber;
@@ -22,7 +23,7 @@ void BWT::decode(String<Symbol> &data, DataInfo &dataInfo) {
     int n = data.size();
     int firstSuffixNumber;
     dataInfo.read(firstSuffixNumber);
-    int cntLess[257];
+    std::vector <int> cntLess(257, 0);
     String <int> cntEqPrev(data.size());
     String <Symbol> resData((int)data.size() - 1);
     for (int i = 0; i < n; i++) {
@@ -44,8 +45,8 @@ void BWT::decode(String<Symbol> &data, DataInfo &dataInfo) {
     int prevSymbol = 256;
     for (int i = 1; i < n; i++) {
         int newIndex = cntEqPrev[curIndex] + cntLess[prevSymbol];
-        resData[n - i] = data[newIndex];
-        prevSymbol = resData[n - i].get();
+        resData[n - i - 1] = data[newIndex];
+        prevSymbol = resData[n - i - 1].get();
         curIndex = newIndex;
     }
     std::swap(data, resData);

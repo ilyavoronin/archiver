@@ -9,6 +9,7 @@
 class DataInfo {
 private:
     String <Symbol> str;
+    String <Symbol> buf_str;
     int pos;
 public:
     DataInfo();
@@ -23,6 +24,7 @@ public:
     void read(short int &n);
     void read(String <Symbol> &chars);
     void read(String <bool> &bin);
+    void beginNewBlock();
     Symbol read();
 };
 

@@ -7,7 +7,9 @@
 
 
 void Archiver::zip_block(String <Symbol> &block, DataInfo &dataInfo) {
+    dataInfo.beginNewBlock();
     BWT().encode(block, dataInfo);
+    dataInfo.beginNewBlock();
     HuffmanCoding().encode(block, dataInfo);
 }
 

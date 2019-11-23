@@ -1,5 +1,7 @@
 #include "HuffmanCoding.h"
 #include "HuffmanTree.h"
+
+
 void HuffmanCoding::encode(String<Symbol> &data, DataInfo &dataInfo) {
     HuffmanTree huffmanTree(data);
     std::map <Symbol, String<bool> > codesMap = huffmanTree.getCodes();

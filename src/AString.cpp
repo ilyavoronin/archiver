@@ -5,6 +5,12 @@ String<T>::String(int size) {
     str.resize(size);
 }
 
+template <typename T>
+String<bool> String<T>::toBool() const {
+    String <bool> res(str.size() * 8);
+    return res;
+}
+
 template <>
 String<bool> String<Symbol>::toBool() const {
     String <bool> res(str.size() * 8);
@@ -91,6 +97,10 @@ void String<T>::resize(int n) {
     str.resize(n);
 }
 
+template <typename T>
+void String<T>::insertBegin(const String<T> &other) {
+    str.insert(str.begin(), other.str.begin(), other.str.end());
+}
 
 
 
@@ -105,7 +115,7 @@ void String<bool>::set(int i, bool bit) {
 
 String<Symbol> String<bool>::toSymb() const {
     String<Symbol> res(((int)str.size() - 1) / 8 + 1);
-    for (int i = 0; i < (int)this->size(); i += 8) {
+    for (int i = 0; i < (int)str.size(); i += 8) {
         uint8_t c = 0;
         for (int j = 0; j < 8; j++) {
             if (i + j < str.size() && str[i + j] == 1) {
