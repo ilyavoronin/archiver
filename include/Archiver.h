@@ -10,7 +10,7 @@
 
 class Archiver {
 private:
-    const int BLOCK_SIZE = (1 << 22);
+    const int BLOCK_SIZE = (1 << 9);
     void zip_block(String <Symbol> &block, DataInfo &dataInfo);
     void unzip_block(String <Symbol> &block, DataInfo &dataInfo);
 public:

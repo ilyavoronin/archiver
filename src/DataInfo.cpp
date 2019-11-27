@@ -58,6 +58,7 @@ void DataInfo::readFromFile(Reader &reader) {
 }
 
 void DataInfo::read(int &n) {
+    beginNewBlock();
     n = 0;
     for (int i = 0; i < 4; i++) {
         uint8_t c = str[pos++].get();
@@ -70,6 +71,7 @@ void DataInfo::read(int &n) {
 }
 
 void DataInfo::read(short int &n) {
+    beginNewBlock();
     n = 0;
     for (int i = 0; i < 2; i++) {
         char c = str[pos++].toChar();
@@ -82,10 +84,12 @@ void DataInfo::read(short int &n) {
 }
 
 Symbol DataInfo::read() {
+    beginNewBlock();
     return str[pos++];
 }
 
 void DataInfo::read(String <Symbol> &chars) {
+    beginNewBlock();
     int size;
     read(size);
     chars.resize(size);
@@ -96,6 +100,7 @@ void DataInfo::read(String <Symbol> &chars) {
 }
 
 void DataInfo::read(String <bool> &bin) {
+    beginNewBlock();
     int size;
     read(size);
     bin.resize(size * 8);
@@ -114,6 +119,9 @@ void DataInfo::read(String <bool> &bin) {
 }
 
 void DataInfo::beginNewBlock() {
+    if (buf_str.size() == 0) {
+        return;
+    }
     str.insertBegin(buf_str);
     buf_str.clear();
 }

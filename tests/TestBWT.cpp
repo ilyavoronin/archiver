@@ -2,7 +2,7 @@
 #include "BWT.h"
 
 TEST(BWTTests, testEncode) {
-    std::vector <char> vdata = {'a', 'b', 'a', 'c', 'a', 'b', 'a', char(255)};
+    std::vector <char> vdata = {'a', 'b', 'a', 'c', 'a', 'b', 'a'};
     DataInfo dataInfo;
     String <Symbol> data;
     for (auto z : vdata) {
@@ -13,7 +13,7 @@ TEST(BWTTests, testEncode) {
     BWT().encode(data, dataInfo);
 
     for (int i = 0; i < 8; i++) {
-        ASSERT_EQ(data[i], expected[i]);
+        ASSERT_EQ(data[i].toChar(), expected[i]);
     }
     int firstSuffixNumber;
     dataInfo.read(firstSuffixNumber);
@@ -29,10 +29,25 @@ TEST(BWTTests, testDecode) {
         data.add(z);
     }
 
-    std::vector <char> expected = {'a', 'b', 'a', 'c', 'a', 'b', 'a', char(255)};
+    std::vector <char> expected = {'a', 'b', 'a', 'c', 'a', 'b', 'a'};
     BWT().decode(data, dataInfo);
 
-    for (int i = 0; i < 8; i++) {
-        ASSERT_EQ(data[i], expected[i]);
+    for (int i = 0; i < 7; i++) {
+        ASSERT_EQ(data[i].toChar(), expected[i]);
     }
+}
+
+TEST(BWTTests, testEncodeDecode) {
+    srand(17);
+    DataInfo dataInfo;
+    String <Symbol> data(1000);
+    for (int i = 0; i < 1000; i++) {
+        data[i] = Symbol((char)(rand() % 256));
+    }
+
+    String <Symbol> dataCopy = data;
+    BWT().encode(data, dataInfo);
+    BWT().decode(data, dataInfo);
+
+    ASSERT_EQ(data, dataCopy);
 }

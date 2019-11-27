@@ -35,6 +35,7 @@ void BWT::decode(String<Symbol> &data, DataInfo &dataInfo) {
         cntLess[data[i].get()]++;
     }
     int cntPrev = cntLess[0];
+    cntLess[0] = 0;
     for (int i = 1; i < 256; i++) {
         int tmp = cntLess[i];
         cntLess[i] = cntLess[i - 1] + cntPrev;
