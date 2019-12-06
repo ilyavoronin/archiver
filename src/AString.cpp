@@ -2,53 +2,24 @@
 
 template <typename T>
 String<T>::String(int size) {
-    str.resize(size);
-}
-
-template <typename T>
-String<bool> String<T>::toBool() const {
-    String <bool> res(str.size() * 8);
-    return res;
-}
-
-template <>
-String<bool> String<Symbol>::toBool() const {
-    String <bool> res(str.size() * 8);
-    for (int i = 0; i < str.size(); i++) {
-        for (int j = 0; j < 8; j++) {
-            if (((str[i].toChar()) & (1 << j)) != 0) {
-                res.set(i * 8 + j, 1);
-            }
-            else {
-                res.set(i * 8 + j, 0);
-            }
-        }
-    }
-    return res;
+    str_.resize(size);
 }
 
 template <typename T>
 String<T>& String<T>::add(T symb) {
-    str.push_back(symb);
+    str_.push_back(symb);
     return *this;
-}
-
-template <typename T>
-String<T>& String<T>::operator+=(const String &ot) {
-    this->str.insert(this->str.end(), ot.str.begin(), ot.str.end());
-    return *this;
-}
-
-template <typename T>
-String<T> String<T>::operator+(const String &ot) const {
-    String<T> tmp = *this;
-    tmp += ot;
-    return tmp;
 }
 
 template <typename T>
 String<T>& String<T>::operator+=(T symb) {
     add(symb);
+    return *this;
+}
+
+template <typename T>
+String<T>& String<T>::operator+=(const String &ot) {
+    this->str_.insert(this->str_.end(), ot.str_.begin(), ot.str_.end());
     return *this;
 }
 
@@ -60,13 +31,20 @@ String<T> String<T>::operator+(T symb) const {
 }
 
 template <typename T>
+String<T> String<T>::operator+(const String &ot) const {
+    String<T> tmp = *this;
+    tmp += ot;
+    return tmp;
+}
+
+template <typename T>
 T& String<T>::operator[](int i) {
-    return str[i];
+    return str_[i];
 }
 
 template <typename T>
 const T& String<T>::operator[](int i) const {
-    return str[i];
+    return str_[i];
 }
 
 template <typename T>
@@ -75,7 +53,7 @@ bool String<T>::operator==(const String &ot) const {
         return false;
     }
     for (int i = 0; i < ot.size(); i++) {
-        if (ot[i] != this->str[i]) {
+        if (ot[i] != this->str_[i]) {
             return false;
         }
     }
@@ -84,67 +62,65 @@ bool String<T>::operator==(const String &ot) const {
 
 template <typename T>
 int String<T>::size() const {
-    return str.size();
+    return str_.size();
 }
 
 template <typename T>
 void String<T>::clear() {
-    str.clear();
+    str_.clear();
 }
 
 template <typename T>
 void String<T>::resize(int n) {
-    str.resize(n);
+    str_.resize(n);
 }
 
 template <typename T>
 void String<T>::insertBegin(const String<T> &other) {
-    str.insert(str.begin(), other.str.begin(), other.str.end());
+    str_.insert(this->str_.begin(), other.str_.begin(), other.str_.end());
+}
+
+template <typename T>
+String<bool> String<T>::toBool() const {
+    String <bool> res(0);
+    return res;
+}
+
+template <>
+String<bool> String<Symbol>::toBool() const {
+    String <bool> res(str_.size() * 8);
+    for (int i = 0; i < str_.size(); i++) {
+        for (int j = 0; j < 8; j++) {
+            if (((str_[i].toChar()) & (1 << j)) != 0) {
+                res.set(i * 8 + j, 1);
+            }
+            else {
+                res.set(i * 8 + j, 0);
+            }
+        }
+    }
+    return res;
 }
 
 
 
 
 String<bool>::String(int size) {
-    str.resize(size);
-}
-
-void String<bool>::set(int i, bool bit) {
-    str[i] = bit;
-}
-
-String<Symbol> String<bool>::toSymb() const {
-    String<Symbol> res(((int)str.size() - 1) / 8 + 1);
-    for (int i = 0; i < (int)str.size(); i += 8) {
-        uint8_t c = 0;
-        for (int j = 0; j < 8; j++) {
-            if (i + j < str.size() && str[i + j] == 1) {
-                c |= (1 << j);
-            }
-        }
-        res[i / 8] = c;
-    }
-    return res;
+    str_.resize(size);
 }
 
 String<bool>& String<bool>::add(bool bit) {
-    str.push_back(bit);
+    str_.push_back(bit);
     return *this;
-}
-
-String<bool>& String<bool>::operator+=(const String<bool> &ot) {
-    this->str.insert(this->str.end(), ot.str.begin(), ot.str.end());
-    return *this;
-}
-
-String<bool> String<bool>::operator+(const String<bool> &ot) const {
-    String<bool> tmp = *this;
-    tmp += ot;
-    return tmp;
 }
 
 String<bool>& String<bool>::operator+=(bool bit) {
     add(bit);
+    return *this;
+}
+
+String<bool>& String<bool>::operator+=(const String<bool> &ot) {
+    str_.insert(this->str_.end(), ot.str_.begin(), ot.str_.end());
     return *this;
 }
 
@@ -154,8 +130,10 @@ String<bool> String<bool>::operator+(bool symb) const {
     return tmp;
 }
 
-bool String<bool>::operator[](int i) const {
-    return str[i];
+String<bool> String<bool>::operator+(const String<bool> &ot) const {
+    String<bool> tmp = *this;
+    tmp += ot;
+    return tmp;
 }
 
 bool String<bool>::operator==(const String<bool> &ot) const {
@@ -163,21 +141,43 @@ bool String<bool>::operator==(const String<bool> &ot) const {
         return false;
     }
     for (int i = 0; i < ot.size(); i++) {
-        if (ot[i] != this->str[i]) {
+        if (ot[i] != this->str_[i]) {
             return false;
         }
     }
     return true;
 }
 
+bool String<bool>::operator[](int i) const {
+    return str_[i];
+}
+
+void String<bool>::set(int i, bool bit) {
+    str_[i] = bit;
+}
+
 int String<bool>::size() const {
-    return str.size();
+    return str_.size();
 }
 
 void String<bool>::clear() {
-    str.clear();
+    str_.clear();
 }
 
 void String<bool>::resize(int n) {
-    str.resize(n);
+    str_.resize(n);
+}
+
+String<Symbol> String<bool>::toSymb() const {
+    String<Symbol> res(((int)str_.size() - 1) / 8 + 1);
+    for (int i = 0; i < (int)str_.size(); i += 8) {
+        uint8_t c = 0;
+        for (int j = 0; j < 8; j++) {
+            if (i + j < str_.size() && str_[i + j] == 1) {
+                c |= (1 << j);
+            }
+        }
+        res[i / 8] = c;
+    }
+    return res;
 }

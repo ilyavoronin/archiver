@@ -2,48 +2,64 @@
 #define ARCHIVER_STRING_H
 
 #include <vector>
-#include <bitset>
+
 #include "Symbol.h"
 
 template <typename T>
 class String {
-private:
-    std::vector <T> str;
-public:
+  public:
     explicit String(int size = 0);
-    String <bool> toBool() const;
+
+    String(const String<T> &ot) = default;
+    String <T>& operator=(const String<T> &ot) = default;
+
+    ~String() = default;
+
     String& add(T symb);
-    String& operator+=(const String &ot);
-    String operator+(const String &ot) const;
-    String operator+(T symb) const;
     String& operator+=(T symb);
+    String& operator+=(const String &ot);
+    String operator+(T symb) const;
+    String operator+(const String &ot) const;
     T& operator[](int i);
     const T& operator[](int i) const;
     bool operator==(const String &ot) const;
+
     int size() const;
     void clear();
     void resize(int n);
     void insertBegin(const String <T> &other);
+    String <bool> toBool() const;
+
+  private:
+    std::vector <T> str_;
 };
 
 template <>
 class String<bool> {
-private:
-    std::vector <bool> str;
-public:
+  public:
     explicit String<bool>(int size = 0);
-    String <Symbol> toSymb() const;
-    void set(int i, bool bit);
+
+    String(const String <bool> &ot) = default;
+    String <bool>& operator=(const String <bool> &ot) = default;
+
+    ~String() = default;
+
     String<bool>& add(bool bit);
-    String<bool>& operator+=(const String<bool> &ot);
-    String<bool> operator+(const String<bool> &ot) const;
-    String<bool> operator+(bool bit) const;
     String<bool>& operator+=(bool bit);
+    String<bool>& operator+=(const String<bool> &ot);
+    String<bool> operator+(bool bit) const;
+    String<bool> operator+(const String<bool> &ot) const;
     bool operator==(const String<bool> &ot) const;
     bool operator[](int i) const;
+    void set(int i, bool bit);
+
     int size() const;
     void clear();
     void resize(int n);
+    String <Symbol> toSymb() const;
+
+  private:
+    std::vector <bool> str_;
 };
 
 template class String<Symbol>;
