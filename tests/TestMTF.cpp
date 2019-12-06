@@ -1,7 +1,7 @@
 #include "gtest/gtest.h"
-
-#include "String.h"
 #include "MTF.h"
+
+#include "AString.h"
 
 TEST(MTFTests, testEncode) {
     std::string sdata = "abacabadaca";
@@ -42,9 +42,9 @@ TEST(MTFTests, testEncodeDecode) {
         data.add(rand() % 256);
     }
 
-    String <Symbol> dataCopy = data;
+    String <Symbol> data_copy = data;
     MTF().encode(data);
     MTF().decode(data);
 
-    ASSERT_EQ(data, dataCopy);
+    ASSERT_EQ(data, data_copy);
 }

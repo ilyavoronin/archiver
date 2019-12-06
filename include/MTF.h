@@ -1,10 +1,10 @@
 #ifndef ARCHIVER_MTF_H
 #define ARCHIVER_MTF_H
 
-#include <Astring.h>
+#include "AString.h"
 
 class MTF {
-public:
+  public:
     void encode(String <Symbol> &data); //overwrites data
     void decode(String <Symbol> &data); //overwrites data
 };
