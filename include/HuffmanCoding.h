@@ -1,19 +1,20 @@
 #ifndef ARCHIVER_HUFFMANCODING_H
 #define ARCHIVER_HUFFMANCODING_H
 
+#include <vector>
+#include <map>
+
 #include "Symbol.h"
 #include "AString.h"
 #include "DataInfo.h"
 
-#include <vector>
-#include <map>
-
 class HuffmanCoding {
-private:
-    const int ALPH_SIZE = 256;
-public:
-    void encode(String <Symbol> &data, DataInfo &dataInfo);   //overwriting data
-    void decode(String <Symbol> &data, DataInfo &dataInfo);   //overwriting data
+  public:
+    void encode(String <Symbol> &data, DataInfo &data_info);   //overwriting data
+    void decode(String <Symbol> &data, DataInfo &data_info);   //overwriting data
+
+  private:
+    const int kAlphabetSize = 256;
 };
 
 

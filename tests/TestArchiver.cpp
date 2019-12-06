@@ -4,7 +4,7 @@
 #include <fstream>
 
 class ArchiverTests : public ::testing::Test {
-protected:
+  protected:
     std::string input_filename = "in.tmp";
     std::string archived_filename = "arc.tmp";
     std::string output_file_name = "out.tmp";
