@@ -1,4 +1,5 @@
 #include "Archiver.h"
+
 #include "Symbol.h"
 #include "Reader.h"
 #include "Writer.h"
@@ -6,51 +7,50 @@
 #include "BWT.h"
 #include "MTF.h"
 
-
-void Archiver::zip_block(String <Symbol> &block, DataInfo &dataInfo) {
-    dataInfo.beginNewBlock();
-    BWT().encode(block, dataInfo);
-
-    dataInfo.beginNewBlock();
-    MTF().encode(block);
-
-    dataInfo.beginNewBlock();
-    HuffmanCoding().encode(block, dataInfo);
+void Archiver::zip(std::string input_file_name, std::string output_file_name) {
+    String <Symbol> block(kBlockSize);
+    Reader reader(input_file_name, kBlockSize, Reader::Mode::BIN);
+    Writer writer(output_file_name, kBlockSize, Writer::Mode::BIN);
+    while(!reader.isEOF()) {
+        DataInfo data_info;
+        reader.read(block, kBlockSize);
+        zipBlock(block, data_info);
+        writer.write(int{block.size()});
+        writer.write(block);
+        data_info.writeToFile(writer);
+    }
 }
 
-void Archiver::unzip_block(String <Symbol> &block, DataInfo &dataInfo) {
-    HuffmanCoding().decode(block, dataInfo);
+void Archiver::unzip(std::string input_file_name, std::string output_file_name) {
+    String <Symbol> block;
+    Reader reader(input_file_name, kBlockSize, Reader::Mode::BIN);
+    Writer writer(output_file_name, kBlockSize, Writer::Mode::BIN);
+    while(!reader.isEOF()) {
+        DataInfo data_info;
+        int input_size;
+        reader.read(input_size);
+        reader.read(block, input_size);
+        data_info.readFromFile(reader);
+        unzipBlock(block, data_info);
+        writer.write(block);
+    }
+}
+
+void Archiver::zipBlock(String <Symbol> &block, DataInfo &data_info) {
+    data_info.beginNewBlock();
+    BWT().encode(block, data_info);
+
+    data_info.beginNewBlock();
+    MTF().encode(block);
+
+    data_info.beginNewBlock();
+    HuffmanCoding().encode(block, data_info);
+}
+
+void Archiver::unzipBlock(String <Symbol> &block, DataInfo &data_info) {
+    HuffmanCoding().decode(block, data_info);
 
     MTF().decode(block);
 
-    BWT().decode(block, dataInfo);
-}
-
-void Archiver::zip(std::string inputFileName, std::string outputFileName) {
-    String <Symbol> block(BLOCK_SIZE);
-    Reader reader(inputFileName, BLOCK_SIZE, Reader::Mode::BIN);
-    Writer writer(outputFileName, BLOCK_SIZE, Writer::Mode::BIN);
-    while(!reader.isEOF()) {
-        DataInfo dataInfo;
-        reader.read(block, BLOCK_SIZE);
-        zip_block(block, dataInfo);
-        writer.write((int)block.size());
-        writer.write(block);
-        dataInfo.writeToFile(writer);
-    }
-}
-
-void Archiver::unzip(std::string inputFileName, std::string outputFileName) {
-    String <Symbol> block;
-    Reader reader(inputFileName, BLOCK_SIZE, Reader::Mode::BIN);
-    Writer writer(outputFileName, BLOCK_SIZE, Writer::Mode::BIN);
-    while(!reader.isEOF()) {
-        DataInfo dataInfo;
-        int inputSize;
-        reader.read(inputSize);
-        reader.read(block, inputSize);
-        dataInfo.readFromFile(reader);
-        unzip_block(block, dataInfo);
-        writer.write(block);
-    }
+    BWT().decode(block, data_info);
 }

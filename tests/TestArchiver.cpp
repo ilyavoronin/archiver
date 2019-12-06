@@ -5,15 +5,16 @@
 
 class ArchiverTests : public ::testing::Test {
 protected:
-    std::string inFilename = "in.tmp";
-    std::string arcFileName = "arc.tmp";
-    std::string outFileName = "out.tmp";
+    std::string input_filename = "in.tmp";
+    std::string archived_filename = "arc.tmp";
+    std::string output_file_name = "out.tmp";
     Archiver arc;
-    const int TEST_SIZE = 5e6;
+    const int kTestSize = 5e5;
     void SetUp() override {
-        std::ofstream out(inFilename, std::ios::binary);
-        for (int i = 0; i < TEST_SIZE; i++) {
-            out << char(rand() % 256);
+        std::ofstream out(input_filename, std::ios::binary);
+        srand(17);
+        for (int i = 0; i < kTestSize; i++) {
+            out << static_cast<char>(rand() % 256);
         }
         out.close();
     };
@@ -33,7 +34,8 @@ protected:
 };
 
 TEST_F(ArchiverTests, testZipUnzip) {
-    arc.zip(inFilename, arcFileName);
-    arc.unzip(arcFileName, outFileName);
-    ASSERT_TRUE(cmpFiles(inFilename, outFileName));
+    arc.zip(input_filename, archived_filename);
+    arc.unzip(archived_filename, output_file_name);
+
+    ASSERT_TRUE(cmpFiles(input_filename, output_file_name));
 }
