@@ -7,25 +7,26 @@
 #include "Writer.h"
 
 class DataInfo {
-private:
-    String <Symbol> str;
-    String <Symbol> buf_str;
-    int pos;
-public:
+  public:
     DataInfo();
     void write(short int n);
     void write(int n);
     void write(Symbol c);
-    void write(String <Symbol> &newStr);
-    void write(String <bool> &newStr);
+    void write(String <Symbol> &new_str);
+    void write(String <bool> &new_str);
     void writeToFile(Writer &writer);
-    void readFromFile(Reader &reader);
-    void read(int &n);
     void read(short int &n);
+    void read(int &n);
     void read(String <Symbol> &chars);
     void read(String <bool> &bin);
-    void beginNewBlock();
     Symbol read();
+    void readFromFile(Reader &reader);
+    void beginNewBlock();
+
+  private:
+    String <Symbol> str_;
+    String <Symbol> buf_str_;
+    int pos_;
 };
 
 

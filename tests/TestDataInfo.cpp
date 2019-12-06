@@ -1,9 +1,12 @@
 #include "gtest/gtest.h"
+
 #include "DataInfo.h"
-#include "Reader.h"
-#include "Writer.h"
+
 #include <string>
 #include <cstdio>
+
+#include "Reader.h"
+#include "Writer.h"
 
 TEST(DataInfoTests, testWriteReadShort) {
     DataInfo d;
@@ -86,7 +89,7 @@ TEST(DataInfoTests, testWriteReadBoolString) {
 TEST(DataInfoTests, testWriteReadToFile) {
     DataInfo d, d2;
 
-    std::string tmpFilename = "a.tmp";
+    std::string tmp_file_name = "a.tmp";
     String <Symbol> expected1(10);
     for (int i = 0; i < 10; i++) {
         expected1[i] = 'a' + i;
@@ -94,16 +97,16 @@ TEST(DataInfoTests, testWriteReadToFile) {
     int expected2 = 2000;
     d.write(expected1);
     d.write(expected2);
-    Writer writer(tmpFilename, 100, Writer::Mode::BIN);
+    Writer writer(tmp_file_name, 100, Writer::Mode::BIN);
     d.writeToFile(writer);
     writer.close();
-    Reader reader(tmpFilename, 100, Reader::Mode::BIN);
+    Reader reader(tmp_file_name, 100, Reader::Mode::BIN);
     d2.readFromFile(reader);
     String <Symbol> actual1;
     int actual2;
     d2.read(actual1);
     d2.read(actual2);
-    remove(tmpFilename.c_str());
+    remove(tmp_file_name.c_str());
 
     ASSERT_EQ(actual1, expected1);
     ASSERT_EQ(actual2, expected2);
