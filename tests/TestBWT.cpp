@@ -3,34 +3,34 @@
 
 TEST(BWTTests, testEncode) {
     std::vector <char> vdata = {'a', 'b', 'a', 'c', 'a', 'b', 'a'};
-    DataInfo dataInfo;
+    DataInfo data_info;
     String <Symbol> data;
     for (auto z : vdata) {
         data.add(z);
     }
 
     std::vector <char> expected = {char(255), 'c', 'b', 'b', 'a', 'a', 'a', 'a'};
-    BWT().encode(data, dataInfo);
+    BWT().encode(data, data_info);
 
     for (int i = 0; i < 8; i++) {
         ASSERT_EQ(data[i].toChar(), expected[i]);
     }
-    int firstSuffixNumber;
-    dataInfo.read(firstSuffixNumber);
-    ASSERT_EQ(firstSuffixNumber, 0);
+    int first_suffix_number;
+    data_info.read(first_suffix_number);
+    ASSERT_EQ(first_suffix_number, 0);
 }
 
 TEST(BWTTests, testDecode) {
     std::vector <char> vdata = {char(255), 'c', 'b', 'b', 'a', 'a', 'a', 'a'};
-    DataInfo dataInfo;
-    dataInfo.write((int)0);
+    DataInfo data_info;
+    data_info.write((int)0);
     String <Symbol> data;
     for (auto z : vdata) {
         data.add(z);
     }
 
     std::vector <char> expected = {'a', 'b', 'a', 'c', 'a', 'b', 'a'};
-    BWT().decode(data, dataInfo);
+    BWT().decode(data, data_info);
 
     for (int i = 0; i < 7; i++) {
         ASSERT_EQ(data[i].toChar(), expected[i]);
@@ -39,15 +39,15 @@ TEST(BWTTests, testDecode) {
 
 TEST(BWTTests, testEncodeDecode) {
     srand(17);
-    DataInfo dataInfo;
+    DataInfo data_info;
     String <Symbol> data(1000);
     for (int i = 0; i < 1000; i++) {
         data[i] = Symbol((char)(rand() % 256));
     }
 
-    String <Symbol> dataCopy = data;
-    BWT().encode(data, dataInfo);
-    BWT().decode(data, dataInfo);
+    String <Symbol> data_copy = data;
+    BWT().encode(data, data_info);
+    BWT().decode(data, data_info);
 
-    ASSERT_EQ(data, dataCopy);
+    ASSERT_EQ(data, data_copy);
 }
