@@ -1,10 +1,10 @@
 #include "gtest/gtest.h"
-
-#include "AString.h"
 #include "HuffmanTree.h"
 
 #include <map>
 #include <cmath>
+
+#include "AString.h"
 
 class HuffmanTreeTests : public ::testing::Test {
 protected:
