@@ -4,17 +4,25 @@
 #include "Writer.h"
 #include "HuffmanCoding.h"
 #include "BWT.h"
+#include "MTF.h"
 
 
 void Archiver::zip_block(String <Symbol> &block, DataInfo &dataInfo) {
     dataInfo.beginNewBlock();
     BWT().encode(block, dataInfo);
+
+    dataInfo.beginNewBlock();
+    MTF().encode(block);
+
     dataInfo.beginNewBlock();
     HuffmanCoding().encode(block, dataInfo);
 }
 
 void Archiver::unzip_block(String <Symbol> &block, DataInfo &dataInfo) {
     HuffmanCoding().decode(block, dataInfo);
+
+    MTF().decode(block);
+
     BWT().decode(block, dataInfo);
 }
 
