@@ -7,8 +7,8 @@
 
 class BWT {
   public:
-    void encode(String <Symbol> &data, DataInfo &data_info); //overwriting data
-    void decode(String <Symbol> &data, DataInfo &data_info); //overwriting data
+    void encode(String <Symbol> &data, DataInfo &data_info); //overwrites data
+    void decode(String <Symbol> &data, DataInfo &data_info); //overwrites data
 };
 
 

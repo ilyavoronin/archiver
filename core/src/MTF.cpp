@@ -3,6 +3,8 @@
 #include <iostream>
 
 void MTF::encode(String <Symbol> &data) {
+
+    //current alphabet permutation
     std::forward_list <Symbol> alph;
     for (int i = 255; i >= 0; i--) {
         alph.push_front(i);
@@ -22,6 +24,8 @@ void MTF::encode(String <Symbol> &data) {
 }
 
 void MTF::decode(String <Symbol> &data) {
+
+    //current alphabet permutation
     std::forward_list <Symbol> alph;
     for (int i = 255; i >= 0; i--) {
         alph.push_front(i);

@@ -34,6 +34,8 @@ void HuffmanTree::writeTree(DataInfo &data_info) {
 void HuffmanTree::readTree(DataInfo &data_info) {
     String <Symbol> chars;
     String <bool> euler;
+
+    //correspond to values that `getEulerDfs` returns
     data_info.read(euler);
     data_info.read(chars);
 

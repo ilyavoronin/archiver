@@ -6,6 +6,8 @@ void HuffmanCoding::encode(String<Symbol> &data, DataInfo &data_info) {
     HuffmanTree huffman_tree(data);
     std::map <Symbol, String<bool> > codes_map = huffman_tree.getCodes();
 
+    //map is replaces with vector in order to get string for symbol faster
+    //codes[i] -- string that corresponds to Symbol(i)
     std::vector <String<bool> > codes(kAlphabetSize);
     for (auto elem : codes_map) {
         codes[(elem.first).get()] = elem.second;    //index is the symbol number

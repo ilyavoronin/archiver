@@ -28,6 +28,9 @@ class String {
     void clear();
     void resize(int n);
     void insertBegin(const String <T> &other);
+
+    //This method implemented only for Symbol
+    //for other types returns empty String<bool>
     String <bool> toBool() const;
 
   private:

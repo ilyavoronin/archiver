@@ -21,10 +21,18 @@ class DataInfo {
     void read(String <bool> &bin);
     Symbol read();
     void readFromFile(Reader &reader);
+
+    //When unzipping we run decoders in reversed order,
+    //so when zipping we need to store information in the beginning of the DataInfo.
+    //It is necessary to run this method before every data transformation
+    //This method is automatically called when any read method is called
     void beginNewBlock();
 
   private:
     String <Symbol> str_;
+
+    //All data at first is writen to the buf_str_
+    //When beginNewBlock is called, buf_str is copying in the beginning of str_
     String <Symbol> buf_str_;
     int pos_;
 };
