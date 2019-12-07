@@ -4,33 +4,33 @@
 
 Writer::Writer(std::string outputFileName, int bufSize_, Mode mode = STD) {
     if (mode == STD) {
-        out.open(outputFileName);
+        out_.open(outputFileName);
     }
     if (mode == BIN) {
-        out.open(outputFileName, std::ios::binary);
+        out_.open(outputFileName, std::ios::binary);
     }
     if (mode == APP) {
-        out.open(outputFileName, std::ios::app);
+        out_.open(outputFileName, std::ios::app);
     }
     if (mode == BINAPP) {
-        out.open(outputFileName, std::ios::binary | std::ios::app);
+        out_.open(outputFileName, std::ios::binary | std::ios::app);
     }
-    bufSize = bufSize_;
-    buf = new char[bufSize];
+    buf_size_ = bufSize_;
+    buf_ = new char[buf_size_];
 }
 
 Writer::~Writer() {
-    delete[] buf;
-    if (out.is_open()) {
-        out.close();
+    delete[] buf_;
+    if (out_.is_open()) {
+        out_.close();
     }
 }
 
 void Writer::write(String <Symbol> &output) {
     for (int i = 0; i < (int)output.size(); i++) {
-        buf[i] = output[i].get_char();
+        buf_[i] = output[i].get_char();
     }
-    out.write(buf, output.size());
+    out_.write(buf_, output.size());
 }
 
 void Writer::write(int n) {
@@ -41,10 +41,10 @@ void Writer::write(int n) {
                 c |= (1 << j);
             }
         }
-        out << c;
+        out_ << c;
     }
 }
 
 void Writer::close() {
-    out.close();
+    out_.close();
 }
