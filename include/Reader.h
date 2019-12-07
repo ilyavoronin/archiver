@@ -3,23 +3,28 @@
 
 #include <fstream>
 #include <vector>
+
 #include "Symbol.h"
 #include "AString.h"
 
 class Reader {
-private:
-    char *buf;
-    int bufSize;
-    int cntRead;
-    std::ifstream in;
-public:
+  public:
     enum Mode{STD = 0, BIN = 1};
-    Reader(std::string inputFileName, int bufSize_, Mode mode);
+
+    Reader(std::string input_file_name, int buf_size, Mode mode);
+
     ~Reader();
-    bool read(String <Symbol> &input, int inputSize);
-    bool isEOF();
+
+    bool read(String <Symbol> &input, int input_size);
     void read(int &n);
+    bool isEOF();
     void close();
+
+  private:
+    char *buf_;
+    int bufSize_;
+    int cntRead_;
+    std::ifstream in_;
 };
 
 
