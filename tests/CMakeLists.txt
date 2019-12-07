@@ -4,12 +4,17 @@ include_directories(${gtest_SOURCE_DIR}/include ${gtest_SOURCE_DIR})
 
 
 add_executable(archiver_tests_run
-        ../src/Archiver.cpp ../include/Archiver.h
-        ../src/Symbol.cpp ../include/Symbol.h
-        ../src/Reader.cpp ../include/Reader.h
-        ../src/Writer.cpp ../include/Writer.h
-        ../src/HuffmanCoding.cpp ../include/HuffmanCoding.h
-        ../src/DataInfo.cpp ../include/DataInfo.h
-        ../src/AString.cpp ../include/AString.h
-        test.cpp TestSymbol.cpp TestString.cpp TestDataInfo.cpp TestReaderWriter.cpp ../src/HuffmanTree.cpp ../include/HuffmanTree.h TestHuffmanTree.cpp TestArchiver.cpp ../src/BWT.cpp ../include/BWT.h ../src/SuffixSort.cpp ../include/SuffixSort.h TestSuffixSort.cpp TestBWT.cpp ../src/MTF.cpp ../include/MTF.h TestMTF.cpp)
+        ../core/src/Archiver.cpp ../core/include/Archiver.h
+        ../core/src/Symbol.cpp ../core/include/Symbol.h
+        ../core/src/Reader.cpp ../core/include/Reader.h
+        ../core/src/Writer.cpp ../core/include/Writer.h
+        ../core/src/HuffmanCoding.cpp ../core/include/HuffmanCoding.h
+        ../core/src/DataInfo.cpp ../core/include/DataInfo.h
+        ../core/src/AString.cpp ../core/include/AString.h
+        test.cpp TestSymbol.cpp TestString.cpp TestDataInfo.cpp
+        TestReaderWriter.cpp ../core/src/HuffmanTree.cpp
+        ../core/include/HuffmanTree.h TestHuffmanTree.cpp
+        TestArchiver.cpp ../core/src/BWT.cpp ../core/include/BWT.h
+        ../core/src/SuffixSort.cpp ../core/include/SuffixSort.h TestSuffixSort.cpp
+        TestBWT.cpp ../core/src/MTF.cpp ../core/include/MTF.h TestMTF.cpp)
 target_link_libraries(archiver_tests_run gtest gtest_main)
