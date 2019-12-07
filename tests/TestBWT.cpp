@@ -13,7 +13,7 @@ TEST(BWTTests, testEncode) {
     BWT().encode(data, data_info);
 
     for (int i = 0; i < 8; i++) {
-        ASSERT_EQ(data[i].toChar(), expected[i]);
+        ASSERT_EQ(data[i].get_char(), expected[i]);
     }
     int first_suffix_number;
     data_info.read(first_suffix_number);
@@ -33,7 +33,7 @@ TEST(BWTTests, testDecode) {
     BWT().decode(data, data_info);
 
     for (int i = 0; i < 7; i++) {
-        ASSERT_EQ(data[i].toChar(), expected[i]);
+        ASSERT_EQ(data[i].get_char(), expected[i]);
     }
 }
 

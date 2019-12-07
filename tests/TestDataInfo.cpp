@@ -46,8 +46,8 @@ TEST(DataInfoTests, testWriteReadSymbol) {
     actual1 = d.read();
     actual2 = d.read();
 
-    ASSERT_EQ(actual1.toChar(), expected1.toChar());
-    ASSERT_EQ(actual2.toChar(), expected2.toChar());
+    ASSERT_EQ(actual1.get_char(), expected1.get_char());
+    ASSERT_EQ(actual2.get_char(), expected2.get_char());
 }
 
 TEST(DataInfoTests, testWriteReadSymbolString) {

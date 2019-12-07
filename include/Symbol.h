@@ -4,17 +4,22 @@
 #include <cstdint>
 
 class Symbol {
-private:
-    uint8_t ch;
-public:
+  public:
     Symbol(uint8_t ch_ = 0) {
         ch = ch_;
     }
-    char toChar() const;
+    char get_char() const;
     int get() const;
+
     bool operator<(const Symbol &ot) const;
+    bool operator>(const Symbol &ot) const;
+    bool operator<=(const Symbol &ot) const;
+    bool operator>=(const Symbol &ot) const;
     bool operator==(const Symbol &ot) const;
     bool operator!=(const Symbol &ot) const;
+
+  private:
+    uint8_t ch;
 };
 
 

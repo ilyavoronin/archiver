@@ -4,7 +4,7 @@
 TEST(SymbolTests, testToChar) {
     Symbol c(255);
 
-    char actual = c.toChar();
+    char actual = c.get_char();
     char expected = char(255);
 
     ASSERT_EQ(actual, expected);

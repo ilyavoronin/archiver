@@ -28,7 +28,7 @@ Writer::~Writer() {
 
 void Writer::write(String <Symbol> &output) {
     for (int i = 0; i < (int)output.size(); i++) {
-        buf[i] = output[i].toChar();
+        buf[i] = output[i].get_char();
     }
     out.write(buf, output.size());
 }

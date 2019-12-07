@@ -9,7 +9,7 @@ TEST(StringTests, testArraySubscriptOpearator) {
     }
 
     for (int i = 0; i < 10; i++) {
-        ASSERT_EQ(s[i].toChar(), 'a' + i);
+        ASSERT_EQ(s[i].get_char(), 'a' + i);
     }
 }
 
@@ -21,7 +21,7 @@ TEST(StringTests, testAdd) {
     }
 
     for (int i = 0; i < 10; i++) {
-        ASSERT_EQ(s[i].toChar(), 'a' + i);
+        ASSERT_EQ(s[i].get_char(), 'a' + i);
     }
 }
 
@@ -33,7 +33,7 @@ TEST(StringTests, testPlusCharOperator) {
     }
 
     for (int i = 0; i < 10; i++) {
-        ASSERT_EQ(s[i].toChar(),'a' + i);
+        ASSERT_EQ(s[i].get_char(), 'a' + i);
     }
 }
 
@@ -45,7 +45,7 @@ TEST(StringTests, testPlusEqCharOperator) {
     }
 
     for (int i = 0; i < 10; i++) {
-        ASSERT_EQ(s[i].toChar(), 'a' + i);
+        ASSERT_EQ(s[i].get_char(), 'a' + i);
     }
 }
 
@@ -62,7 +62,7 @@ TEST(StringTests, testPlusOperator) {
     std::string expected = "abcdefghijklmnopqrst";
 
     for (int i = 0; i < 20; i++) {
-        ASSERT_EQ(res[i].toChar(), expected[i]);
+        ASSERT_EQ(res[i].get_char(), expected[i]);
     }
 }
 
@@ -79,7 +79,7 @@ TEST(StringTests, testPlusEqOperator) {
     std::string expected = "abcdefghijklmnopqrst";
 
     for (int i = 0; i < 20; i++) {
-        ASSERT_EQ(s1[i].toChar(), expected[i]);
+        ASSERT_EQ(s1[i].get_char(), expected[i]);
     }
 }
 

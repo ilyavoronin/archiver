@@ -66,7 +66,7 @@ void DataInfo::read(short int &n) {
     beginNewBlock();
     n = 0;
     for (int i = 0; i < 2; i++) {
-        char c = str_[pos_++].toChar();
+        char c = str_[pos_++].get_char();
         for (int j = 0; j < 8; j++) {
             if (((1 << j) & c) != 0) {
                 n |= (1 << (i * 8 + j));
@@ -97,7 +97,7 @@ void DataInfo::read(String <bool> &bin) {
     read(size);
     bin.resize(size * 8);
     for (int i = pos_; i < pos_ + size; i++) {
-        char c = str_[i].toChar();
+        char c = str_[i].get_char();
         for (int j = 0; j < 8; j++) {
             if (((1 << j) & c) != 0) {
                 bin.set((i - pos_) * 8 + j, 1);
