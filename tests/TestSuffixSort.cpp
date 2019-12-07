@@ -7,12 +7,12 @@ TEST(SuffixSortTests, testSort) {
     for (auto z : vdata) {
         data.add(z);
     }
-    String <int> sortedSuffixes;
+    String <int> sorted_suffixes;
 
-    SuffixSort().sort(data, sortedSuffixes);
+    SuffixSort().sort(data, sorted_suffixes);
     std::vector <int> expected = {0, 4, 2, 6, 1, 5, 3, 7};
 
     for (int i = 0; i < 8; i++) {
-        ASSERT_EQ(sortedSuffixes[i], expected[i]);
+        ASSERT_EQ(sorted_suffixes[i], expected[i]);
     }
 }
