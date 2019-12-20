@@ -1,48 +1,193 @@
 #include "SuffixSort.h"
 
+
 void SuffixSort::sort(String <Symbol> &data, String <int> &sorted_suffixes) {
-    sorted_suffixes.resize(data.size());
-    for (int i = 0; i < (int)data.size(); i++) {
-        sorted_suffixes[i] = i;
+    std::vector <int> vsorted_suffixes;
+    std::vector <int> vdata(data.size());
+    for (int i = 0; i < data.size(); i++) {
+        vdata[i] = data[i].get() + 1;
     }
-    qsort(data, sorted_suffixes, 0, data.size());
+    //add symbol that is less than others
+    vdata.push_back(0);
+    sortSuffixes(vdata, vsorted_suffixes);
+    sorted_suffixes.resize(vsorted_suffixes.size());
+    for (int i = 0; i < sorted_suffixes.size(); i++) {
+        sorted_suffixes[i] = vsorted_suffixes[i];
+    }
 }
 
-bool SuffixSort::cmp(int i, int j, String <Symbol> &data) {
-    for (;(i < data.size() - 1) && (j < data.size() - 1); i++, j++) {
-        if (data[i] < data[j]) {
-            return true;
-        }
-        if (data[j] < data[i]) {
-            return false;
-        }
-    }
-    return i < j;
-}
-
-void SuffixSort::qsort(String<Symbol> &data, String<int> &sorted_suffixes, int L, int R) {
-    if (R - L <= 1) {
+void SuffixSort::sortSuffixes(std::vector <int> &data, std::vector <int> &sorted_suffixes){
+    if (data.size() == 1) {
+        sorted_suffixes.push_back(0);
         return;
     }
-    int pivot = sorted_suffixes[L];
-    String <int> le;
-    String <int> ge;
-    for (int i = L + 1; i < R; i++) {
-        if (cmp(sorted_suffixes[i], pivot, data)) {
-            le.add(sorted_suffixes[i]);
+    int n = data.size();
+
+    //0 -- type S(suf(i) < suf(i + 1)
+    //1 -- type L(suf(i) > suf(i + 1)
+    std::vector <bool> type(n);
+
+    //i is a LMS(leftmost S) if type[i] = S, type[i - 1] = L
+    std::vector <int> lms_suffixes;
+    std::vector <bool> is_lms(data.size(), false);
+
+    int max_symb_number = 0;
+    for (int i = 0; i < n; i++) {
+        max_symb_number = std::max(data[i], max_symb_number);
+    }
+    max_symb_number++;
+
+    //number of suffixes that starts with symbol `i` and has type S/L
+    std::vector <int> cnt_S(max_symb_number, 0);
+    std::vector <int> cnt_L(max_symb_number, 0);
+
+    std::vector <int> begin_S(max_symb_number, 0);
+    std::vector <int> begin_L(max_symb_number, 0);
+
+    calcuateTypes(data, type, begin_S, begin_L,
+                  cnt_S, cnt_L, max_symb_number,
+                  [&data](int16_t a, int16_t b) { return data[a] < data[b]; });
+
+    for (int i = 0; i < n - 1; i++) {
+        if (type[i] == 1 && type[i + 1] == 0) {
+            lms_suffixes.push_back(i + 1);
+            is_lms[i + 1] = true;
+        }
+    }
+
+    inducedSort(data, type, begin_S,
+        begin_L, cnt_S, lms_suffixes,
+        sorted_suffixes, max_symb_number);
+    std::vector <int> sorted_lms;
+    std::vector <int> eq_class(data.size());
+    int cur_class = 0;
+    eq_class[sorted_suffixes[0]] = cur_class;
+    for (int i = 1; i < sorted_suffixes.size(); i++) {
+        int i1 = sorted_suffixes[i];
+        int i2 = sorted_suffixes[i - 1];
+        bool is_eq = true;
+        if (data[i1] != data[i2]) {
+            is_eq = false;
         }
         else {
-            ge.add(sorted_suffixes[i]);
+            for (int j = 1; j < data.size(); j++) {
+                if (data[i1 + j] != data[i2 + j]) {
+                    is_eq = false;
+                    break;
+                }
+                if (is_lms[i1 + j] || is_lms[i2 + j]) {
+                    if (!is_lms[i1 + j] || !is_lms[i2 + j]) {
+                        is_eq = false;
+                    }
+                    break;
+                }
+            }
+        }
+
+        if (!is_eq) {
+            cur_class++;
+        }
+        eq_class[sorted_suffixes[i]] = cur_class;
+    }
+    std::vector <int> lms_data(lms_suffixes.size());
+    for (int i = 0; i < lms_suffixes.size(); i++) {
+        lms_data[i] = eq_class[lms_suffixes[i]];
+    }
+    sorted_suffixes.clear();
+    sortSuffixes(lms_data, sorted_suffixes);
+    std::vector <int> sorted_lms_suffixes(lms_suffixes.size());
+    for (int i = 0; i < sorted_suffixes.size(); i++) {
+        sorted_lms_suffixes[i] = lms_suffixes[sorted_suffixes[i]];
+    }
+
+    sorted_suffixes.clear();
+    inducedSort(data, type, begin_S, begin_L,
+        cnt_S, sorted_lms_suffixes,
+        sorted_suffixes, max_symb_number);
+}
+
+
+void SuffixSort::inducedSort(std::vector <int> &data,
+                             std::vector <bool> &type,
+                             std::vector <int> &begin_S,
+                             std::vector <int> &begin_L,
+                             std::vector <int> &cnt_S,
+                             std::vector<int> &lms_suffixes,
+                             std::vector<int> &sorted_suffixes,
+                             int max_symb_number) {
+    sorted_suffixes.assign(data.size(), -1);
+    //how many symbols have been added to the S block of corresponding symbol
+    std::vector <int> cur_shift_S(max_symb_number, 0);
+
+    for (auto suffix : lms_suffixes) {
+        int symb = data[suffix];
+        sorted_suffixes[begin_S[symb] + cur_shift_S[symb]] = suffix;
+        cur_shift_S[symb]++;
+    }
+
+    //find positions for L-suffixes
+    std::vector <int> cur_shift_L(max_symb_number, 0);
+    for (int i = 0; i < sorted_suffixes.size(); i++) {
+        if (sorted_suffixes[i] != -1 && sorted_suffixes[i] != 0 &&
+            type[sorted_suffixes[i] - 1] == 1) {
+            int suffix = sorted_suffixes[i] - 1;
+            int symb = data[suffix];
+            sorted_suffixes[begin_L[symb] + cur_shift_L[symb]] = suffix;
+            cur_shift_L[symb]++;
         }
     }
-    int i = L;
-    for (int j = 0; j < le.size(); j++) {
-        sorted_suffixes[i++] = le[j];
+
+    //find positions for S-suffixes
+    cur_shift_S.assign(max_symb_number, 0);
+    for (int i = (int)sorted_suffixes.size() - 1; i >= 0; i--) {
+        if (sorted_suffixes[i] != -1 && sorted_suffixes[i] != 0 &&
+            type[sorted_suffixes[i] - 1] == 0) {
+            int suffix = sorted_suffixes[i] - 1;
+            int symb = data[suffix];
+            int block_end = begin_S[symb] + cnt_S[symb] - 1;
+            sorted_suffixes[block_end - cur_shift_S[symb]] = suffix;
+            cur_shift_S[symb]++;
+        }
     }
-    sorted_suffixes[i++] = pivot;
-    for (int j = 0; j < ge.size(); j++) {
-        sorted_suffixes[i++] = ge[j];
+}
+
+
+void SuffixSort::calcuateTypes(std::vector<int> &data,
+                               std::vector<bool> &type,
+                               std::vector<int> &begin_S,
+                               std::vector<int> &begin_L,
+                               std::vector<int> &cnt_S,
+                               std::vector<int> &cnt_L,
+                               int max_symb_number,
+                               const std::function <bool (int16_t, int16_t)> &cmp) {
+    int n = data.size();
+    type[n - 1] = 0;
+    cnt_S[0] = 1;
+    for (int i = n - 2; i >= 0; i--) {
+        if (cmp(i, i + 1)) {
+            type[i] = 0;
+        }
+        if (cmp(i + 1, i)) {
+            type[i] = 1;
+        }
+        if (data[i] == data[i + 1]) {
+            type[i] = type[i + 1];
+        }
+
+        if (type[i] == 0) {
+            cnt_S[data[i]]++;
+        }
+        else {
+            cnt_L[data[i]]++;
+        }
     }
-    qsort(data, sorted_suffixes, L, L + le.size());
-    qsort(data, sorted_suffixes, L + le.size() + 1, R);
+
+    //position at which the S/L block of corresponding symbol starts
+    int cur_pos = 0;
+    for (int i = 0; i < max_symb_number; i++) {
+        begin_L[i] = cur_pos;
+        cur_pos += cnt_L[i];
+        begin_S[i] = cur_pos;
+        cur_pos += cnt_S[i];
+    }
 }
