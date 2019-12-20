@@ -2,11 +2,7 @@
 #include "SuffixSort.h"
 
 TEST(SuffixSortTests, testSort1) {
-    std::vector <char> vdata = {'a', 'b', 'a', 'c', 'a', 'b', 'a'};
-    String <Symbol> data;
-    for (auto z : vdata) {
-        data.add(z);
-    }
+    std::vector <int> data = {'a', 'b', 'a', 'c', 'a', 'b', 'a', 0};
     String <int> sorted_suffixes;
 
     SuffixSort().sort(data, sorted_suffixes);
@@ -18,11 +14,7 @@ TEST(SuffixSortTests, testSort1) {
 }
 
 TEST(SuffixSortTests, testSort2) {
-    std::vector <char> vdata = {'a', 'c', 'c', 'b', 'c', 'b', 'c', 'b', 'c', 'b', 'a', 'b', 'b', 'c'};
-    String <Symbol> data;
-    for (auto z : vdata) {
-        data.add(z);
-    }
+    std::vector <int> data = {'a', 'c', 'c', 'b', 'c', 'b', 'c', 'b', 'c', 'b', 'a', 'b', 'b', 'c', 0};
     String <int> sorted_suffixes;
 
     SuffixSort().sort(data, sorted_suffixes);

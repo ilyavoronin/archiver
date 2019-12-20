@@ -9,7 +9,7 @@ TEST(BWTTests, testEncode) {
         data.add(z);
     }
 
-    std::vector <char> expected = {char(255), 'c', 'b', 'b', 'a', 'a', 'a', 'a'};
+    std::vector <char> expected = {'a', 'b', 'c', 0, 'b', 'a', 'a', 'a'};
     BWT().encode(data, data_info);
 
     for (int i = 0; i < 8; i++) {
@@ -17,13 +17,15 @@ TEST(BWTTests, testEncode) {
     }
     int first_suffix_number;
     data_info.read(first_suffix_number);
-    ASSERT_EQ(first_suffix_number, 0);
+    ASSERT_EQ(first_suffix_number, 3);
 }
 
 TEST(BWTTests, testDecode) {
-    std::vector <char> vdata = {char(255), 'c', 'b', 'b', 'a', 'a', 'a', 'a'};
+    std::vector <char> vdata = {'a', 'b', 'c', 0, 'b', 'a', 'a', 'a'};
     DataInfo data_info;
-    data_info.write((int)0);
+
+    //first suffix number
+    data_info.write((int)3);
     String <Symbol> data;
     for (auto z : vdata) {
         data.add(z);

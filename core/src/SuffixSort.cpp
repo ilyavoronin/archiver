@@ -1,18 +1,18 @@
 #include "SuffixSort.h"
 
 
-void SuffixSort::sort(String <Symbol> &data, String <int> &sorted_suffixes) {
-    std::vector <int> vsorted_suffixes;
-    std::vector <int> vdata(data.size());
-    for (int i = 0; i < data.size(); i++) {
-        vdata[i] = data[i].get() + 1;
+void SuffixSort::sort(std::vector <int> &data, String <int> &sorted_suffixes) {
+    for (int i = 0; i < (int)data.size() - 1; i++) {
+        data[i]++;
     }
-    //add symbol that is less than others
-    vdata.push_back(0);
-    sortSuffixes(vdata, vsorted_suffixes);
+    std::vector <int> vsorted_suffixes;
+    sortSuffixes(data, vsorted_suffixes);
     sorted_suffixes.resize(vsorted_suffixes.size());
     for (int i = 0; i < sorted_suffixes.size(); i++) {
         sorted_suffixes[i] = vsorted_suffixes[i];
+    }
+    for (int i = 0; i < (int)data.size() - 1; i++) {
+        data[i]--;
     }
 }
 

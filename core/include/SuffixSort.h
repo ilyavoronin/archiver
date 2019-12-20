@@ -7,7 +7,7 @@
 
 class SuffixSort {
   public:
-    void sort(String <Symbol> &data, String <int> &sorted_suffixes);
+    void sort(std::vector <int> &data, String <int> &sorted_suffixes);
     
   private:
     //SA-IS algorithm
