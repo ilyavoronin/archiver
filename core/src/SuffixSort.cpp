@@ -87,10 +87,18 @@ void SuffixSort::sortSuffixes(std::vector <int> &data, std::vector <int> &sorted
     std::vector <int> sorted_lms;
     std::vector <int> eq_class(data.size());
     int cur_class = 0;
-    eq_class[sorted_suffixes[0]] = cur_class;
-    for (int i = 1; i < sorted_suffixes.size(); i++) {
+    int last_lms_index = -1;
+    for (int i = 0; i < sorted_suffixes.size(); i++) {
+        if (!is_lms[sorted_suffixes[i]]) {
+            continue;
+        }
+        if (last_lms_index == -1) {
+            eq_class[sorted_suffixes[i]] = cur_class;
+            last_lms_index = sorted_suffixes[i];
+            continue;
+        }
         int i1 = sorted_suffixes[i];
-        int i2 = sorted_suffixes[i - 1];
+        int i2 = last_lms_index;
         bool is_eq = true;
         if (data[i1] != data[i2]) {
             is_eq = false;
@@ -114,6 +122,7 @@ void SuffixSort::sortSuffixes(std::vector <int> &data, std::vector <int> &sorted
             cur_class++;
         }
         eq_class[sorted_suffixes[i]] = cur_class;
+        last_lms_index = sorted_suffixes[i];
     }
     std::vector <int> lms_data(lms_suffixes.size());
     for (int i = 0; i < lms_suffixes.size(); i++) {
