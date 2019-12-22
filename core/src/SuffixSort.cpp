@@ -44,9 +44,35 @@ void SuffixSort::sortSuffixes(std::vector <int> &data, std::vector <int> &sorted
     std::vector <int> begin_S(max_symb_number, 0);
     std::vector <int> begin_L(max_symb_number, 0);
 
-    calcuateTypes(data, type, begin_S, begin_L,
-                  cnt_S, cnt_L, max_symb_number,
-                  [&data](int16_t a, int16_t b) { return data[a] < data[b]; });
+    type[n - 1] = 0;
+    cnt_S[0] = 1;
+    for (int i = n - 2; i >= 0; i--) {
+        if (data[i] < data[i + 1]) {
+            type[i] = 0;
+        }
+        if (data[i] > data[i + 1]) {
+            type[i] = 1;
+        }
+        if (data[i] == data[i + 1]) {
+            type[i] = type[i + 1];
+        }
+
+        if (type[i] == 0) {
+            cnt_S[data[i]]++;
+        }
+        else {
+            cnt_L[data[i]]++;
+        }
+    }
+
+    //position at which the S/L block of corresponding symbol starts
+    int cur_pos = 0;
+    for (int i = 0; i < max_symb_number; i++) {
+        begin_L[i] = cur_pos;
+        cur_pos += cnt_L[i];
+        begin_S[i] = cur_pos;
+        cur_pos += cnt_S[i];
+    }
 
     for (int i = 0; i < n - 1; i++) {
         if (type[i] == 1 && type[i + 1] == 0) {
@@ -148,46 +174,5 @@ void SuffixSort::inducedSort(std::vector <int> &data,
             sorted_suffixes[block_end - cur_shift_S[symb]] = suffix;
             cur_shift_S[symb]++;
         }
-    }
-}
-
-
-void SuffixSort::calcuateTypes(std::vector<int> &data,
-                               std::vector<bool> &type,
-                               std::vector<int> &begin_S,
-                               std::vector<int> &begin_L,
-                               std::vector<int> &cnt_S,
-                               std::vector<int> &cnt_L,
-                               int max_symb_number,
-                               const std::function <bool (int16_t, int16_t)> &cmp) {
-    int n = data.size();
-    type[n - 1] = 0;
-    cnt_S[0] = 1;
-    for (int i = n - 2; i >= 0; i--) {
-        if (cmp(i, i + 1)) {
-            type[i] = 0;
-        }
-        if (cmp(i + 1, i)) {
-            type[i] = 1;
-        }
-        if (data[i] == data[i + 1]) {
-            type[i] = type[i + 1];
-        }
-
-        if (type[i] == 0) {
-            cnt_S[data[i]]++;
-        }
-        else {
-            cnt_L[data[i]]++;
-        }
-    }
-
-    //position at which the S/L block of corresponding symbol starts
-    int cur_pos = 0;
-    for (int i = 0; i < max_symb_number; i++) {
-        begin_L[i] = cur_pos;
-        cur_pos += cnt_L[i];
-        begin_S[i] = cur_pos;
-        cur_pos += cnt_S[i];
     }
 }
