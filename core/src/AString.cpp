@@ -106,21 +106,32 @@ String<bool> String<Symbol>::toBool() const {
 
 
 String<bool>::String(int size) {
-    str_.resize(size);
+    str_.resize((size - 1) / isize + 1);
+    cur_last_bit = (size - 1) % isize + 1;
+    bit_size = size;
 }
 
 String<bool>& String<bool>::add(bool bit) {
-    str_.push_back(bit);
+    if (cur_last_bit == isize) {
+        str_.push_back(bit);
+    }
+    else {
+        str_[str_.size() - 1] |= (1 << cur_last_bit++);
+    }
+    bit_size++;
     return *this;
 }
 
 String<bool>& String<bool>::operator+=(bool bit) {
     add(bit);
+    bit_size++;
     return *this;
 }
 
-String<bool>& String<bool>::operator+=(const String<bool> &ot) {
-    str_.insert(this->str_.end(), ot.str_.begin(), ot.str_.end());
+String<bool>& String<bool>::operator+=(const String <bool> &ot) {
+    for (int i = 0; i < ot.size(); i++) {
+        add(ot[i]);
+    }
     return *this;
 }
 
@@ -130,14 +141,16 @@ String<bool> String<bool>::operator+(bool symb) const {
     return tmp;
 }
 
-String<bool> String<bool>::operator+(const String<bool> &ot) const {
+String<bool> String<bool>::operator+(const String <bool> &ot) const {
     String<bool> tmp = *this;
-    tmp += ot;
+    for (int i = 0; i < ot.size(); i++) {
+        tmp.add(ot[i]);
+    }
     return tmp;
 }
 
 bool String<bool>::operator==(const String<bool> &ot) const {
-    if (ot.size() != this->size()) {
+    if (ot.bit_size != this->bit_size) {
         return false;
     }
     for (int i = 0; i < ot.size(); i++) {
@@ -149,35 +162,38 @@ bool String<bool>::operator==(const String<bool> &ot) const {
 }
 
 bool String<bool>::operator[](int i) const {
-    return str_[i];
+    return (str_[i / isize] & (1 << (i % isize))) != 0;
 }
 
 void String<bool>::set(int i, bool bit) {
-    str_[i] = bit;
+    str_[i / isize] |= (1 << (i % isize));
 }
 
 int String<bool>::size() const {
-    return str_.size();
+    return bit_size;
 }
 
 void String<bool>::clear() {
     str_.clear();
+    cur_last_bit = 8;
+    bit_size = 0;
 }
 
 void String<bool>::resize(int n) {
-    str_.resize(n);
+    str_.resize((n - 1) / isize + 1);
+    bit_size = n;
+    cur_last_bit = (bit_size - 1) % isize + 1;
+    //the number of extra bits
+    int k = (isize - n % isize) % isize;
+    if (n != 0) {
+        str_[str_.size() - 1] &= (((1 << isize) - 1) << k);
+    }
 }
 
 String<Symbol> String<bool>::toSymb() const {
-    String<Symbol> res(((int)str_.size() - 1) / 8 + 1);
-    for (int i = 0; i < (int)str_.size(); i += 8) {
-        uint8_t c = 0;
-        for (int j = 0; j < 8; j++) {
-            if (i + j < str_.size() && str_[i + j] == 1) {
-                c |= (1 << j);
-            }
-        }
-        res[i / 8] = c;
+    String<Symbol> res(str_.size());
+    for (int i = 0; i < str_.size(); i++) {
+        res[i] = str_[i];
     }
     return res;
 }

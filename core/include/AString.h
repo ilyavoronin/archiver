@@ -23,6 +23,7 @@ class String {
     T& operator[](int i);
     const T& operator[](int i) const;
     bool operator==(const String &ot) const;
+    bool operator!=(const String &ot) const {return (*this) != ot;}
 
     int size() const;
     void clear();
@@ -53,6 +54,7 @@ class String<bool> {
     String<bool> operator+(bool bit) const;
     String<bool> operator+(const String<bool> &ot) const;
     bool operator==(const String<bool> &ot) const;
+    bool operator!=(const String<bool> &ot) const {return (*this) != ot;}
     bool operator[](int i) const;
     void set(int i, bool bit);
 
@@ -62,11 +64,13 @@ class String<bool> {
     String <Symbol> toSymb() const;
 
   private:
-    std::vector <bool> str_;
+    int isize = sizeof(uint32_t);
+    int cur_last_bit;
+    int bit_size;
+    std::vector <uint8_t> str_;
 };
 
 template class String<Symbol>;
-template class String<bool>;
 template class String<int>;
 
 #endif //ARCHIVER_STRING_H
