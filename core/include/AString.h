@@ -42,6 +42,7 @@ template <>
 class String<bool> {
   public:
     explicit String<bool>(int size = 0);
+    String(const std::vector <bool> &ot);
 
     String(const String <bool> &ot) = default;
     String <bool>& operator=(const String <bool> &ot) = default;
@@ -64,7 +65,7 @@ class String<bool> {
     String <Symbol> toSymb() const;
 
   private:
-    int isize = sizeof(uint32_t);
+    int isize = 8;
     int cur_last_bit;
     int bit_size;
     std::vector <uint8_t> str_;
