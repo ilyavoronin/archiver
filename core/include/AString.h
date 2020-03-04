@@ -49,7 +49,7 @@ class String<bool> {
 
     ~String() = default;
 
-    String<bool>& add(bool bit);
+    void add(bool bit);
     String<bool>& operator+=(bool bit);
     String<bool>& operator+=(const String<bool> &ot);
     String<bool> operator+(bool bit) const;
@@ -65,7 +65,8 @@ class String<bool> {
     String <Symbol> toSymb() const;
 
   private:
-    int isize = 8;
+    static const int isize = 8;
+    static const int imod = 0x7;
     int cur_last_bit;
     int bit_size;
     std::vector <uint8_t> str_;

@@ -122,16 +122,15 @@ String<bool>::String(const std::vector <bool> &ot) : String() {
     }
 }
 
-String<bool>& String<bool>::add(bool bit) {
+void String<bool>::add(bool bit) {
     if (cur_last_bit == isize) {
-        str_.push_back((uint8_t)bit);
+        str_.push_back(bit);
         cur_last_bit = 1;
     }
     else {
-        str_[str_.size() - 1] |= (bit << cur_last_bit++);
+        str_.back() |= (bit << cur_last_bit++);
     }
     bit_size++;
-    return *this;
 }
 
 String<bool>& String<bool>::operator+=(bool bit) {
@@ -173,15 +172,15 @@ bool String<bool>::operator==(const String<bool> &ot) const {
 }
 
 bool String<bool>::operator[](int i) const {
-    return (str_[i / isize] & (1 << (i % isize))) != 0;
+    return (str_[i >> 3] >> (i & imod)) & 1;
 }
 
 void String<bool>::set(int i, bool bit) {
     if (bit) {
-        str_[i / isize] |= (1 << (i % isize));
+        str_[i >> 3] |= (1 << (i & imod));
     }
     else {
-        str_[i / isize] &= ~(1 << (i % isize));
+        str_[i >> 3] &= ~(1 << (i & imod));
     }
 }
 
