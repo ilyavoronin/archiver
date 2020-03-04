@@ -15,9 +15,7 @@ class SuffixSort {
 
     //sort suffixes if `lms_suffixes` has been sorted
     void inducedSort(std::vector <int> &data,
-                     std::vector <int> &begin_S,
-                     std::vector <int> &begin_L,
-                     std::vector <int> &cnt_S,
+                     std::vector <int> &block_begin,
                      std::vector <int> &lms_suffixes,
                      std::vector <int> &sorted_suffixes,
                      int max_symb_number);

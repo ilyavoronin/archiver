@@ -48,6 +48,7 @@ add_executable(archiver core/src/main.cpp
         core/src/HuffmanTree.cpp core/include/HuffmanTree.h
         core/src/BWT.cpp core/include/BWT.h
         core/src/SuffixSort.cpp core/include/SuffixSort.h
-        core/src/MTF.cpp core/include/MTF.h)
+        core/src/MTF.cpp core/include/MTF.h
+        core/include/IDataEncoder.h)
 
 add_subdirectory(tests)
