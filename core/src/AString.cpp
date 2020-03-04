@@ -164,7 +164,7 @@ bool String<bool>::operator==(const String<bool> &ot) const {
     if (ot.bit_size != this->bit_size) {
         return false;
     }
-    for (int i = 0; i < ot.size(); i++) {
+    for (int i = 0; i < ot.str_.size(); i++) {
         if (ot.str_[i] != this->str_[i]) {
             return false;
         }
