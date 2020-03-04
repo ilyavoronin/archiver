@@ -5,9 +5,6 @@
 
 #include "ECoders.h"
 #include "Archiver.h"
-#include "BWT.h"
-#include "HuffmanCoding.h"
-#include "MTF.h"
 
 void ConsoleUI::run(int argc, char **argv) {
     argv++;
@@ -28,20 +25,29 @@ void ConsoleUI::run(int argc, char **argv) {
     }
     Archiver arc;
     if (args[0] == "zip") {
+        std::vector <Coders> algorithm;
         if (args[1] != "-c") {
             if (algorithms.count(args[1]) == 0) {
                 std::cout << "Unknown argument '" << args[1] << "'\n";
                 return;
             }
-            auto algorithm = algorithms[args[1]];
-            double t = clock();
-            arc.zip(algorithm, file_path, file_path + ".arc");
-            std::cerr << "zipped in " << (clock() - t)/CLOCKS_PER_SEC << " seconds\n";
-            return;
+            algorithm = algorithms[args[1]];
         }
         else {
-            
+            std::cout << "Enter sequence:\n";
+            std::cout << "0: Burrows-Wheeler transform(BWT)\n";
+            std::cout << "1: Move-to-front transform(MTF)\n";
+            std::cout << "2: Huffman coding\n";
+            std::string seq;
+            std::cin >> seq;
+            for (auto num : seq) {
+                algorithm.push_back(Coders(int(num - '0')));
+            }
         }
+        double t = clock();
+        arc.zip(algorithm, file_path, file_path + ".arc");
+        std::cerr << "zipped in " << (clock() - t) / CLOCKS_PER_SEC << " seconds\n";
+        return;
     }
     if (args[0] == "unzip") {
         double t = clock();
