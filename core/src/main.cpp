@@ -1,18 +1,10 @@
-#include <Archiver.h>
-#include <AString.h>
-#include <iostream>
-#include <ctime>
+#include "ConsoleUI.h"
 
-std::string path = "C:\\Users\\voron\\Documents\\prog\\projects\\archiver\\files\\";
+std::string file_path = "../files/test.txt";
 
 int main() {
-    Archiver archiver;
-
-    double t1 = clock();
-    archiver.zip(path + "test.txt", path + "test_out.txt");
-    std::cerr << "zipped in " << (clock() - t1) / CLOCKS_PER_SEC << " seconds\n";
-    t1 = clock();
-    archiver.unzip(path + "test_out.txt", path + "test_un.txt");
-    std::cerr << "unzipped in " << (clock() - t1) / CLOCKS_PER_SEC << " seconds\n";
+    ConsoleUI ui;
+    ui.run("zip", file_path);
+    ui.run("unzip", file_path + ".arc");
     return 0;
 }

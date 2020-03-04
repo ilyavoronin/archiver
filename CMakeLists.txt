@@ -4,6 +4,7 @@ project(archiver)
 set(CMAKE_CXX_STANDARD 17)
 
 include_directories(core/include/)
+include_directories(ui/include/)
 
 # Download and unpack googletest at configure time
 configure_file(tests/CMakeLists.txt.in googletest-download/CMakeLists.txt)
@@ -49,6 +50,7 @@ add_executable(archiver core/src/main.cpp
         core/src/BWT.cpp core/include/BWT.h
         core/src/SuffixSort.cpp core/include/SuffixSort.h
         core/src/MTF.cpp core/include/MTF.h
-        core/include/IDataEncoder.h)
+        core/include/IDataEncoder.h
+        ui/src/ConsoleUI.cpp ui/include/ConsoleUI.h)
 
 add_subdirectory(tests)
