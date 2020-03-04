@@ -2,7 +2,7 @@
 #include <forward_list>
 #include <iostream>
 
-void MTF::encode(String <Symbol> &data) {
+void MTF::encode(String <Symbol> &data, DataInfo &data_info) {
 
     //current alphabet permutation
     std::forward_list <Symbol> alph;
@@ -23,7 +23,7 @@ void MTF::encode(String <Symbol> &data) {
     }
 }
 
-void MTF::decode(String <Symbol> &data) {
+void MTF::decode(String <Symbol> &data, DataInfo &data_info) {
 
     //current alphabet permutation
     std::forward_list <Symbol> alph;

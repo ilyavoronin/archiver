@@ -41,7 +41,7 @@ void Archiver::zipBlock(String <Symbol> &block, DataInfo &data_info) {
     BWT().encode(block, data_info);
 
     data_info.beginNewBlock();
-    MTF().encode(block);
+    MTF().encode(block, data_info);
 
     data_info.beginNewBlock();
     HuffmanCoding().encode(block, data_info);
@@ -50,7 +50,7 @@ void Archiver::zipBlock(String <Symbol> &block, DataInfo &data_info) {
 void Archiver::unzipBlock(String <Symbol> &block, DataInfo &data_info) {
     HuffmanCoding().decode(block, data_info);
 
-    MTF().decode(block);
+    MTF().decode(block, data_info);
 
     BWT().decode(block, data_info);
 }

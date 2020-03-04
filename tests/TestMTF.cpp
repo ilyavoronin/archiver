@@ -11,7 +11,8 @@ TEST(MTFTests, testEncode) {
         data.add(sdata[i]);
     }
 
-    MTF().encode(data);
+    DataInfo di = DataInfo();
+    MTF().encode(data, di);
     std::vector <int> expected = {(int)'a', (int)'b', 1, (int)'c', 1, 2, 1, (int)'d', 1, 3, 1};
 
     for (int i = 0; i < n; i++) {
@@ -27,7 +28,8 @@ TEST(MTFTests, testDecode) {
         data.add(vdata[i]);
     }
 
-    MTF().decode(data);
+    DataInfo di = DataInfo();
+    MTF().decode(data, di);
     std::string expected = "abacabadaca";
 
     for (int i = 0; i < n; i++) {
@@ -43,8 +45,9 @@ TEST(MTFTests, testEncodeDecode) {
     }
 
     String <Symbol> data_copy = data;
-    MTF().encode(data);
-    MTF().decode(data);
+    DataInfo di = DataInfo();
+    MTF().encode(data, di);
+    MTF().decode(data, di);
 
     ASSERT_EQ(data, data_copy);
 }

@@ -1,14 +1,14 @@
 #ifndef ARCHIVER_BWT_H
 #define ARCHIVER_BWT_H
 
+#include "IDataEncoder.h"
 #include "AString.h"
-
 #include "DataInfo.h"
 
-class BWT {
+class BWT : public IDataEncoder {
   public:
-    void encode(String <Symbol> &data, DataInfo &data_info); //overwrites data
-    void decode(String <Symbol> &data, DataInfo &data_info); //overwrites data
+    void encode(String <Symbol> &data, DataInfo &data_info) override; //overwrites data
+    void decode(String <Symbol> &data, DataInfo &data_info) override; //overwrites data
 };
 
 
