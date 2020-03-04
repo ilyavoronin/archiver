@@ -10,11 +10,13 @@
 #include "MTF.h"
 
 void ConsoleUI::run(int argc, char **argv) {
-    if (argc < 3) {
+    argv++;
+    argc--;
+    if (argc < 2) {
         std::cout << "Not enough arguments\n";
         return;
     }
-    if (argc > 3) {
+    if (argc >= 4) {
         std::cout << "Too many arguments";
         return;
     }
