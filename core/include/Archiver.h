@@ -8,16 +8,22 @@
 
 #include "DataInfo.h"
 #include "AString.h"
+#include "ECoders.h"
+#include "IDataEncoder.h"
 
 class Archiver {
   public:
-    void zip(std::string input_file_name, std::string output_file_name);
+    Archiver();
+    ~Archiver();
+    void zip(std::vector <Coders> algorithm, std::string input_file_name, std::string output_file_name);
     void unzip(std::string input_file_name, std::string output_file_name);
   private:
     const int kBlockSize = (1 << 22);
+    std::map <Coders, IDataEncoder *> coders;
 
-    void zipBlock(String <Symbol> &block, DataInfo &data_info);
-    void unzipBlock(String <Symbol> &block, DataInfo &data_info);
+    void zipBlock(String <Symbol> &block, DataInfo &data_info, std::vector <IDataEncoder *> coding_sequence);
+    void unzipBlock(String <Symbol> &block, DataInfo &data_info, std::vector <IDataEncoder *> coding_sequence);
+    std::vector <IDataEncoder *> toCoderSequence(std::vector <Coders> algorithm);
 };
 
 #endif //ARCHIVER_ARCHIVER_H

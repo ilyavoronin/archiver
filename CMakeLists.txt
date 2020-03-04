@@ -51,6 +51,6 @@ add_executable(archiver core/src/main.cpp
         core/src/SuffixSort.cpp core/include/SuffixSort.h
         core/src/MTF.cpp core/include/MTF.h
         core/include/IDataEncoder.h
-        ui/src/ConsoleUI.cpp ui/include/ConsoleUI.h)
+        ui/src/ConsoleUI.cpp ui/include/ConsoleUI.h core/include/ECoders.h)
 
 add_subdirectory(tests)

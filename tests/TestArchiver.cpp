@@ -1,7 +1,8 @@
 #include "gtest/gtest.h"
 
-#include <Archiver.h>
 #include <fstream>
+
+#include "Archiver.h"
 
 class ArchiverTests : public ::testing::Test {
   protected:
@@ -34,7 +35,7 @@ class ArchiverTests : public ::testing::Test {
 };
 
 TEST_F(ArchiverTests, testZipUnzip) {
-    arc.zip(input_filename, archived_filename);
+    arc.zip({C_BWT, C_MTF, C_HUFFMAN}, input_filename, archived_filename);
     arc.unzip(archived_filename, output_file_name);
 
     ASSERT_TRUE(cmpFiles(input_filename, output_file_name));

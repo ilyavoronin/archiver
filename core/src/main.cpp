@@ -1,10 +1,7 @@
 #include "ConsoleUI.h"
 
-std::string file_path = "../files/test.txt";
-
-int main() {
+int main(int argc, char **argv) {
     ConsoleUI ui;
-    ui.run("zip", file_path);
-    ui.run("unzip", file_path + ".arc");
+    ui.run(argc, argv);
     return 0;
 }

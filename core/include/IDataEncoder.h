@@ -4,6 +4,8 @@
 #include <DataInfo.h>
 
 class IDataEncoder {
+  public:
+    virtual ~IDataEncoder() {}
     virtual void encode(String <Symbol> &data, DataInfo &data_info) = 0;
     virtual void decode(String <Symbol> &data, DataInfo &data_info) = 0;
 };

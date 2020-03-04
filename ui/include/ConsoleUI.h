@@ -2,13 +2,22 @@
 #define ARCHIVER_UI_CONSOLEUI_H_
 
 #include <string>
+#include <map>
+#include <vector>
+
+#include "IDataEncoder.h"
+#include "ECoders.h"
 
 class ConsoleUI {
   public:
-    void run(std::string cmd, std::string file_path);
+    void run(int argc, char **argv);
 
   private:
+    std::vector <std::string> convertToStrings(int argc, char **argv, std::string &filename);
 
+    std::map <std::string, std::vector <Coders> > algorithms {
+        {"-fast", {C_BWT, C_MTF, C_HUFFMAN}}
+    };
 };
 
 #endif //ARCHIVER_UI_CONSOLEUI_H_
