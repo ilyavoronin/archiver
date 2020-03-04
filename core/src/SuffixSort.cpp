@@ -23,10 +23,6 @@ void SuffixSort::sortSuffixes(std::vector <int> &data, std::vector <int> &sorted
     }
     int n = data.size();
 
-    //0 -- type S(suf(i) < suf(i + 1)
-    //1 -- type L(suf(i) > suf(i + 1)
-    std::vector <bool> type(n);
-
     //i is a LMS(leftmost S) if type[i] = S, type[i - 1] = L
     std::vector <int> lms_suffixes;
     std::vector <bool> is_lms(data.size(), false);
@@ -44,26 +40,32 @@ void SuffixSort::sortSuffixes(std::vector <int> &data, std::vector <int> &sorted
     std::vector <int> begin_S(max_symb_number, 0);
     std::vector <int> begin_L(max_symb_number, 0);
 
-    type[n - 1] = 0;
     cnt_S[0] = 1;
+    bool cur_type, last_type = 0;
     for (int i = n - 2; i >= 0; i--) {
         if (data[i] < data[i + 1]) {
-            type[i] = 0;
+            cur_type = 0;
         }
         if (data[i] > data[i + 1]) {
-            type[i] = 1;
+            cur_type = 1;
         }
         if (data[i] == data[i + 1]) {
-            type[i] = type[i + 1];
+            cur_type = last_type;
         }
 
-        if (type[i] == 0) {
+        if (cur_type == 0) {
             cnt_S[data[i]]++;
         }
         else {
             cnt_L[data[i]]++;
+            if (last_type == 0) {
+                lms_suffixes.push_back(i + 1);
+                is_lms[i + 1] = true;
+            }
         }
+        last_type = cur_type;
     }
+    std::reverse(lms_suffixes.begin(), lms_suffixes.end());
 
     //position at which the S/L block of corresponding symbol starts
     int cur_pos = 0;
@@ -74,14 +76,7 @@ void SuffixSort::sortSuffixes(std::vector <int> &data, std::vector <int> &sorted
         cur_pos += cnt_S[i];
     }
 
-    for (int i = 0; i < n - 1; i++) {
-        if (type[i] == 1 && type[i + 1] == 0) {
-            lms_suffixes.push_back(i + 1);
-            is_lms[i + 1] = true;
-        }
-    }
-
-    inducedSort(data, type, begin_S,
+    inducedSort(data, begin_S,
         begin_L, cnt_S, lms_suffixes,
         sorted_suffixes, max_symb_number);
     std::vector <int> sorted_lms;
@@ -136,14 +131,13 @@ void SuffixSort::sortSuffixes(std::vector <int> &data, std::vector <int> &sorted
     }
 
     sorted_suffixes.clear();
-    inducedSort(data, type, begin_S, begin_L,
+    inducedSort(data, begin_S, begin_L,
         cnt_S, sorted_lms_suffixes,
         sorted_suffixes, max_symb_number);
 }
 
 
 void SuffixSort::inducedSort(std::vector <int> &data,
-                             std::vector <bool> &type,
                              std::vector <int> &begin_S,
                              std::vector <int> &begin_L,
                              std::vector <int> &cnt_S,
@@ -164,7 +158,7 @@ void SuffixSort::inducedSort(std::vector <int> &data,
     std::vector <int> cur_shift_L(max_symb_number, 0);
     for (int i = 0; i < sorted_suffixes.size(); i++) {
         if (sorted_suffixes[i] != -1 && sorted_suffixes[i] != 0 &&
-            type[sorted_suffixes[i] - 1] == 1) {
+            data[sorted_suffixes[i] - 1] >= data[sorted_suffixes[i]]) {
             int suffix = sorted_suffixes[i] - 1;
             int symb = data[suffix];
             sorted_suffixes[begin_L[symb] + cur_shift_L[symb]] = suffix;
@@ -175,12 +169,18 @@ void SuffixSort::inducedSort(std::vector <int> &data,
     //find positions for S-suffixes
     cur_shift_S.assign(max_symb_number, 0);
     for (int i = (int)sorted_suffixes.size() - 1; i >= 0; i--) {
-        if (sorted_suffixes[i] != -1 && sorted_suffixes[i] != 0 &&
-            type[sorted_suffixes[i] - 1] == 0) {
+        if (sorted_suffixes[i] <= 0) {
+            continue;
+        }
+        int j = sorted_suffixes[i] - 1;
+        int j1 = sorted_suffixes[i];
+        int symb = data[j];
+        int pos = begin_S[symb] + cnt_S[symb] - 1 - cur_shift_S[symb];
+        //check if `sorted_suffixes[i] - 1` is S-type
+        if (data[j] < data[j1] || data[j] == data[j1] && pos < i) {
             int suffix = sorted_suffixes[i] - 1;
             int symb = data[suffix];
-            int block_end = begin_S[symb] + cnt_S[symb] - 1;
-            sorted_suffixes[block_end - cur_shift_S[symb]] = suffix;
+            sorted_suffixes[pos] = suffix;
             cur_shift_S[symb]++;
         }
     }
