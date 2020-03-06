@@ -34,8 +34,15 @@ class ArchiverTests : public ::testing::Test {
     }
 };
 
-TEST_F(ArchiverTests, testZipUnzip) {
-    arc.zip({C_BWT, C_MTF, C_HUFFMAN}, input_filename, archived_filename);
+TEST_F(ArchiverTests, testZipUnzipFast) {
+    arc.zip({C_BWT, C_MTF, C_RLE2, C_HUFFMAN}, input_filename, archived_filename);
+    arc.unzip(archived_filename, output_file_name);
+
+    ASSERT_TRUE(cmpFiles(input_filename, output_file_name));
+}
+
+TEST_F(ArchiverTests, testZipUnzipComb) {
+    arc.zip({C_BWT, C_MTF, C_RLE2, C_MTF, C_BWT, C_RLE2, C_HUFFMAN}, input_filename, archived_filename);
     arc.unzip(archived_filename, output_file_name);
 
     ASSERT_TRUE(cmpFiles(input_filename, output_file_name));

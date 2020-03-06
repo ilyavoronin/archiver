@@ -38,6 +38,7 @@ void ConsoleUI::run(int argc, char **argv) {
             std::cout << "0: Burrows-Wheeler transform(BWT)\n";
             std::cout << "1: Move-to-front transform(MTF)\n";
             std::cout << "2: Huffman coding\n";
+            std::cout << "3: Run Length Encoding2\n";
             std::string seq;
             std::cin >> seq;
             for (auto num : seq) {

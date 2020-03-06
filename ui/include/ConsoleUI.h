@@ -16,7 +16,7 @@ class ConsoleUI {
     std::vector <std::string> convertToStrings(int argc, char **argv, std::string &filename);
 
     std::map <std::string, std::vector <Coders> > algorithms {
-        {"-fast", {C_BWT, C_MTF, C_HUFFMAN}}
+        {"-fast", {C_BWT, C_MTF, C_RLE2, C_HUFFMAN}}
     };
 };
 

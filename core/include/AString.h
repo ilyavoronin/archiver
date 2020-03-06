@@ -9,6 +9,7 @@ template <typename T>
 class String {
   public:
     explicit String(int size = 0);
+    String(const std::vector <char> &v);
 
     String(const String<T> &ot) = default;
     String <T>& operator=(const String<T> &ot) = default;

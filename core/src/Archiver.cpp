@@ -8,12 +8,14 @@
 #include "HuffmanCoding.h"
 #include "BWT.h"
 #include "MTF.h"
+#include "RLE2.h"
 
 Archiver::Archiver() {
     coders = {
         {C_BWT, new BWT},
         {C_MTF, new MTF},
-        {C_HUFFMAN, new HuffmanCoding}
+        {C_HUFFMAN, new HuffmanCoding},
+        {C_RLE2, new RLE2}
     };
 }
 

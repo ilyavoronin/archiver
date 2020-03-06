@@ -6,9 +6,10 @@
 #include "MTF.h"
 
 enum Coders {
-    C_BWT,
-    C_MTF,
-    C_HUFFMAN
+    C_BWT     = 0,
+    C_MTF     = 1,
+    C_HUFFMAN = 2,
+    C_RLE2    = 3
 };
 
 #endif //ARCHIVER_CORE_INCLUDE_ECODERS_H_

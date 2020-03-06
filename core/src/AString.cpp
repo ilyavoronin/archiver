@@ -6,6 +6,13 @@ String<T>::String(int size) {
 }
 
 template <typename T>
+String<T>::String(const std::vector <char> &v) {
+    for (auto elem : v) {
+        str_.push_back(elem);
+    }
+}
+
+template <typename T>
 String<T>& String<T>::add(T symb) {
     str_.push_back(symb);
     return *this;
