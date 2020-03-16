@@ -4,7 +4,6 @@
 #include <fstream>
 #include <vector>
 
-#include "Symbol.h"
 #include "AString.h"
 
 class Reader {

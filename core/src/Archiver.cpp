@@ -10,6 +10,7 @@
 #include "MTF.h"
 #include "RLE2.h"
 #include "RLE.h"
+#include "ArithmeticCoding.h"
 
 Archiver::Archiver() {
     coders = {
@@ -17,7 +18,8 @@ Archiver::Archiver() {
         {C_MTF, new MTF},
         {C_RLE, new RLE},
         {C_RLE2, new RLE2},
-        {C_HUFFMAN, new HuffmanCoding}
+        {C_HUFFMAN, new HuffmanCoding},
+        {C_ACODING, new ArithmeticCoding}
     };
 }
 

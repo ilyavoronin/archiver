@@ -4,7 +4,7 @@
 
 #include "Archiver.h"
 
-class ArchiverTests : public ::testing::Test {
+class ArchiverRandomTests : public ::testing::Test {
   protected:
     static std::string input_filename;
     static std::string archived_filename;
@@ -34,34 +34,37 @@ class ArchiverTests : public ::testing::Test {
     }
 };
 
-std::string ArchiverTests::input_filename = "in.tmp";
-std::string ArchiverTests::archived_filename = "arc.tmp";
-std::string ArchiverTests::output_file_name = "out.tmp";
+std::string ArchiverRandomTests::input_filename = "in.tmp";
+std::string ArchiverRandomTests::archived_filename = "arc.tmp";
+std::string ArchiverRandomTests::output_file_name = "out.tmp";
 
 
-TEST_F(ArchiverTests, testZipUnzipFast) {
-    arc.zip({C_BWT, C_MTF, C_RLE2, C_HUFFMAN}, 4096, input_filename, archived_filename);
+TEST_F(ArchiverRandomTests, testZipUnzipFast) {
+    arc.zip({C_BWT, C_MTF, C_RLE, C_HUFFMAN}, 4096, input_filename, archived_filename);
     arc.unzip(archived_filename, output_file_name);
 
     ASSERT_TRUE(cmpFiles(input_filename, output_file_name));
 }
 
-TEST_F(ArchiverTests, testZipUnzipComb) {
-    arc.zip({C_BWT, C_MTF, C_RLE2, C_RLE, C_MTF, C_BWT, C_RLE2, C_HUFFMAN, C_RLE}, 4096, input_filename, archived_filename);
+TEST_F(ArchiverRandomTests, testZipUnzipComb) {
+    arc.zip({C_BWT, C_MTF, C_RLE2, C_RLE, C_MTF, C_ACODING, C_BWT, C_RLE2, C_ACODING, C_HUFFMAN, C_RLE},
+        4096, input_filename, archived_filename);
     arc.unzip(archived_filename, output_file_name);
 
     ASSERT_TRUE(cmpFiles(input_filename, output_file_name));
 }
 
-TEST_F(ArchiverTests, testZipUnzipMultipleBlocks) {
-    arc.zip({C_BWT, C_MTF, C_RLE2, C_MTF, C_RLE, C_BWT, C_RLE2, C_HUFFMAN, C_RLE}, 100, input_filename, archived_filename);
+TEST_F(ArchiverRandomTests, testZipUnzipMultipleBlocks) {
+    arc.zip({C_BWT, C_MTF, C_ACODING, C_RLE2, C_MTF, C_RLE, C_BWT, C_RLE2, C_HUFFMAN, C_ACODING, C_RLE},
+        100, input_filename, archived_filename);
     arc.unzip(archived_filename, output_file_name);
 
     ASSERT_TRUE(cmpFiles(input_filename, output_file_name));
 }
 
-TEST_F(ArchiverTests, testZipUnzipMultipleSmallBlocks) {
-    arc.zip({C_BWT, C_RLE, C_MTF, C_RLE2, C_RLE, C_MTF, C_BWT, C_RLE2, C_HUFFMAN, C_RLE}, 10, input_filename, archived_filename);
+TEST_F(ArchiverRandomTests, testZipUnzipMultipleSmallBlocks) {
+    arc.zip({C_BWT, C_RLE, C_MTF, C_ACODING, C_RLE2, C_ACODING, C_RLE, C_MTF, C_BWT, C_RLE2, C_HUFFMAN, C_RLE},
+        10, input_filename, archived_filename);
     arc.unzip(archived_filename, output_file_name);
 
     ASSERT_TRUE(cmpFiles(input_filename, output_file_name));

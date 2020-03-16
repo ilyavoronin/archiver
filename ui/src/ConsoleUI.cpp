@@ -58,6 +58,7 @@ void ConsoleUI::run(int argc, char **argv) {
             std::cout << "2: Run Length Encoding(RLE)\n";
             std::cout << "3: Run Length Encoding 2\n";
             std::cout << "4: Huffman coding\n";
+            std::cout << "5: Arithmetic coding\n";
             std::string seq;
             std::cin >> seq;
             for (auto num : seq) {

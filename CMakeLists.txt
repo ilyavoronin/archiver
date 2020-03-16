@@ -40,7 +40,6 @@ endif()
 
 add_executable(archiver core/src/main.cpp
         core/src/Archiver.cpp core/include/Archiver.h
-        core/src/Symbol.cpp core/include/Symbol.h
         core/src/Reader.cpp core/include/Reader.h
         core/src/Writer.cpp core/include/Writer.h
         core/src/HuffmanCoding.cpp core/include/HuffmanCoding.h
@@ -51,6 +50,10 @@ add_executable(archiver core/src/main.cpp
         core/src/SuffixSort.cpp core/include/SuffixSort.h
         core/src/MTF.cpp core/include/MTF.h
         core/include/IDataEncoder.h
-        ui/src/ConsoleUI.cpp ui/include/ConsoleUI.h core/include/ECoders.h core/src/RLE2.cpp core/include/RLE2.h core/src/RLE.cpp core/include/RLE.h)
+        ui/src/ConsoleUI.cpp ui/include/ConsoleUI.h
+        core/include/ECoders.h
+        core/src/RLE2.cpp core/include/RLE2.h
+        core/src/RLE.cpp core/include/RLE.h
+        core/src/ArithmeticCoding.cpp core/include/ArithmeticCoding.h core/include/mchar.h)
 
 add_subdirectory(tests)

@@ -5,7 +5,6 @@
 #include <map>
 
 #include "IDataEncoder.h"
-#include "Symbol.h"
 #include "AString.h"
 #include "DataInfo.h"
 

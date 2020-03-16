@@ -16,7 +16,8 @@ class ConsoleUI {
     std::vector <std::string> convertToStrings(int argc, char **argv, std::string &filename);
 
     std::map <std::string, std::vector <Coders> > algorithms {
-        {"-fast", {C_BWT, C_MTF, C_RLE, C_HUFFMAN}}
+        {"-fast", {C_BWT, C_MTF, C_RLE, C_HUFFMAN}},
+        {"-comp", {C_BWT, C_MTF, C_RLE, C_ACODING}}
     };
     int block_size = 4096; // in kilobytes;
 };
