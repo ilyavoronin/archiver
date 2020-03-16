@@ -25,18 +25,19 @@ Archiver::~Archiver() {
     }
 }
 
-void Archiver::zip(std::vector <Coders> algorithm, std::string input_file_name, std::string output_file_name) {
+void Archiver::zip(std::vector <Coders> algorithm, int block_size_k, std::string input_file_name, std::string output_file_name) {
+    block_size = block_size_k * 1024;
     auto coding_sequence = toCoderSequence(algorithm);
-    String <Symbol> block(kBlockSize);
-    Reader reader(input_file_name, kBlockSize, Reader::Mode::BIN);
-    Writer writer(output_file_name, kBlockSize, Writer::Mode::BIN);
+    String <Symbol> block(block_size);
+    Reader reader(input_file_name, block_size, Reader::Mode::BIN);
+    Writer writer(output_file_name, block_size, Writer::Mode::BIN);
     writer.write(int(algorithm.size()));
     for (auto encoder : algorithm) {
         writer.write(int(encoder));
     }
     while(!reader.isEOF()) {
         DataInfo data_info;
-        reader.read(block, kBlockSize);
+        reader.read(block, block_size);
         zipBlock(block, data_info, coding_sequence);
         writer.write(int{block.size()});
         writer.write(block);
@@ -46,8 +47,8 @@ void Archiver::zip(std::vector <Coders> algorithm, std::string input_file_name, 
 
 void Archiver::unzip(std::string input_file_name, std::string output_file_name) {
     String <Symbol> block;
-    Reader reader(input_file_name, kBlockSize, Reader::Mode::BIN);
-    Writer writer(output_file_name, kBlockSize, Writer::Mode::BIN);
+    Reader reader(input_file_name, 0, Reader::Mode::BIN);
+    Writer writer(output_file_name, 0, Writer::Mode::BIN);
     std::vector <Coders> algorithm;
     int cnt_coders;
     reader.read(cnt_coders);

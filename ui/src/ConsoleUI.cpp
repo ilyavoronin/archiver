@@ -13,16 +13,34 @@ void ConsoleUI::run(int argc, char **argv) {
         std::cout << "Not enough arguments\n";
         return;
     }
-    if (argc >= 4) {
-        std::cout << "Too many arguments";
-        return;
-    }
     std::string file_path;
     std::vector <std::string> args = convertToStrings(argc, argv, file_path);
     if (file_path == "") {
         std::cout << "Enter the filename\n";
         return;
     }
+
+    for (auto z : args) {
+        if (z[0] == '-' && z[1] == 'b') {
+            std::string ssize = "";
+            if (z.size() <= 3) {
+                std::cout << "-b_ must be followed by an integer";
+                return;
+            }
+            for (int i = 3; i < z.size(); i++) {
+                if (z[i] > '9' || z[i] < '0') {
+                    std::cout << "-b must be followed by an integer";
+                    return;
+                }
+                ssize += z[i];
+            }
+            block_size = std::stoi(ssize);
+            if (z[2] == 'm') {
+                block_size *= 1024;
+            }
+        }
+    }
+
     Archiver arc;
     if (args[0] == "zip") {
         std::vector <Coders> algorithm;
@@ -46,7 +64,7 @@ void ConsoleUI::run(int argc, char **argv) {
             }
         }
         double t = clock();
-        arc.zip(algorithm, file_path, file_path + ".arc");
+        arc.zip(algorithm, block_size, file_path, file_path + ".arc");
         std::cerr << "zipped in " << (clock() - t) / CLOCKS_PER_SEC << " seconds\n";
         return;
     }

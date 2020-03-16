@@ -18,6 +18,7 @@ class ConsoleUI {
     std::map <std::string, std::vector <Coders> > algorithms {
         {"-fast", {C_BWT, C_MTF, C_RLE2, C_HUFFMAN}}
     };
+    int block_size = 4096; // in kilobytes;
 };
 
 #endif //ARCHIVER_UI_CONSOLEUI_H_
