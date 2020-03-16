@@ -43,6 +43,9 @@ TEST(RLETests, testEncodeDecodeBig) {
     for (int i = 0; i < 500; i++) {
         data.add('t');
     }
+    for (int i = 0; i < 130; i++) {
+        data.add('y');
+    }
     data.add('z');
     String <mchar> expected = data;
     DataInfo di;

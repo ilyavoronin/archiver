@@ -46,7 +46,7 @@ void RLE::decode(String <mchar> &data, DataInfo &data_info) {
 //the last bit indicates if it is a last byte in this integer representation
 void RLE::write_int(int n, String <mchar> &res) {
     int bit_length = 1;
-    while ((1 << bit_length) < n) {
+    while ((1 << bit_length) <= n) {
         bit_length++;
     }
     int kbytes = (bit_length - 1) / 7 + 1;
