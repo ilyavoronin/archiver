@@ -8,8 +8,8 @@
 enum Coders {
     C_BWT     = 0,
     C_MTF     = 1,
-    C_HUFFMAN = 2,
-    C_RLE2    = 3
+    C_RLE2    = 2,
+    C_HUFFMAN = 3
 };
 
 #endif //ARCHIVER_CORE_INCLUDE_ECODERS_H_

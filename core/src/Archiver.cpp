@@ -14,8 +14,8 @@ Archiver::Archiver() {
     coders = {
         {C_BWT, new BWT},
         {C_MTF, new MTF},
-        {C_HUFFMAN, new HuffmanCoding},
-        {C_RLE2, new RLE2}
+        {C_RLE2, new RLE2},
+        {C_HUFFMAN, new HuffmanCoding}
     };
 }
 
