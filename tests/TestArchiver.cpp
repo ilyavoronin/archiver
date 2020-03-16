@@ -42,14 +42,14 @@ TEST_F(ArchiverTests, testZipUnzipFast) {
 }
 
 TEST_F(ArchiverTests, testZipUnzipComb) {
-    arc.zip({C_BWT, C_MTF, C_RLE2, C_MTF, C_BWT, C_RLE2, C_HUFFMAN}, 4096, input_filename, archived_filename);
+    arc.zip({C_BWT, C_MTF, C_RLE2, C_RLE, C_MTF, C_BWT, C_RLE2, C_HUFFMAN, C_RLE}, 4096, input_filename, archived_filename);
     arc.unzip(archived_filename, output_file_name);
 
     ASSERT_TRUE(cmpFiles(input_filename, output_file_name));
 }
 
 TEST_F(ArchiverTests, testZipUnzipMultipleBlocks) {
-    arc.zip({C_BWT, C_MTF, C_RLE2, C_MTF, C_BWT, C_RLE2, C_HUFFMAN}, 100, input_filename, archived_filename);
+    arc.zip({C_BWT, C_MTF, C_RLE2, C_MTF, C_RLE, C_BWT, C_RLE2, C_HUFFMAN, C_RLE}, 100, input_filename, archived_filename);
     arc.unzip(archived_filename, output_file_name);
 
     ASSERT_TRUE(cmpFiles(input_filename, output_file_name));

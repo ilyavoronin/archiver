@@ -14,5 +14,5 @@ add_executable(archiver_tests_run
         ../core/include/HuffmanTree.h TestHuffmanTree.cpp
         TestArchiver.cpp ../core/src/BWT.cpp ../core/include/BWT.h
         ../core/src/SuffixSort.cpp ../core/include/SuffixSort.h TestSuffixSort.cpp
-        TestBWT.cpp ../core/src/MTF.cpp ../core/include/MTF.h TestMTF.cpp ../core/src/RLE2.cpp ../core/include/RLE2.h TestRLE2.cpp)
+        TestBWT.cpp ../core/src/MTF.cpp ../core/include/MTF.h TestMTF.cpp ../core/src/RLE2.cpp ../core/include/RLE2.h TestRLE2.cpp ../core/src/RLE.cpp ../core/include/RLE.h TestRLE.cpp)
 target_link_libraries(archiver_tests_run gtest gtest_main)
