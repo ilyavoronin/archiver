@@ -6,12 +6,12 @@
 
 class ArchiverTests : public ::testing::Test {
   protected:
-    std::string input_filename = "in.tmp";
-    std::string archived_filename = "arc.tmp";
-    std::string output_file_name = "out.tmp";
+    static std::string input_filename;
+    static std::string archived_filename;
+    static std::string output_file_name;
     Archiver arc;
-    const int kTestSize = 5e5;
-    void SetUp() override {
+    static const int kTestSize = 5e5;
+    static void SetUpTestSuite() {
         std::ofstream out(input_filename, std::ios::binary);
         srand(17);
         for (int i = 0; i < kTestSize; i++) {
@@ -33,6 +33,11 @@ class ArchiverTests : public ::testing::Test {
         return true;
     }
 };
+
+std::string ArchiverTests::input_filename = "in.tmp";
+std::string ArchiverTests::archived_filename = "arc.tmp";
+std::string ArchiverTests::output_file_name = "out.tmp";
+
 
 TEST_F(ArchiverTests, testZipUnzipFast) {
     arc.zip({C_BWT, C_MTF, C_RLE2, C_HUFFMAN}, 4096, input_filename, archived_filename);
@@ -56,7 +61,7 @@ TEST_F(ArchiverTests, testZipUnzipMultipleBlocks) {
 }
 
 TEST_F(ArchiverTests, testZipUnzipMultipleSmallBlocks) {
-    arc.zip({C_BWT, C_MTF, C_RLE2, C_MTF, C_BWT, C_RLE2, C_HUFFMAN}, 10, input_filename, archived_filename);
+    arc.zip({C_BWT, C_RLE, C_MTF, C_RLE2, C_RLE, C_MTF, C_BWT, C_RLE2, C_HUFFMAN, C_RLE}, 10, input_filename, archived_filename);
     arc.unzip(archived_filename, output_file_name);
 
     ASSERT_TRUE(cmpFiles(input_filename, output_file_name));
