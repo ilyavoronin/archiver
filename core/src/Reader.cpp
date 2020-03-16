@@ -7,9 +7,9 @@ Reader::Reader(std::string input_file_name, int buf_size, Mode mode  = STD) {
     else {
         in_.open(input_file_name);
     }
-    cntRead_ = 0;
-    bufSize_ = buf_size;
-    buf_ = new char[bufSize_];
+    cnt_read_ = 0;
+    buf_size_ = buf_size * 1.1;
+    buf_ = new char[buf_size_];
 }
 
 Reader::~Reader() {
@@ -20,13 +20,18 @@ Reader::~Reader() {
 }
 
 bool Reader::read(String <Symbol> &input, int input_size) {
+    if (input_size > buf_size_) {
+        buf_size_ = input_size;
+        delete[] buf_;
+        buf_ = new char[buf_size_];
+    }
     in_.read(buf_, input_size);
     int sucRead = (int)in_.gcount();
     input.resize(sucRead);
     for (int i = 0; i < sucRead; i++) {
         input[i] = buf_[i];
     }
-    cntRead_ += sucRead;
+    cnt_read_ += sucRead;
     return sucRead == input_size;
 }
 
@@ -40,7 +45,7 @@ void Reader::read(int &n) {
             }
         }
     }
-    cntRead_ += 4;
+    cnt_read_ += 4;
 }
 
 bool Reader::isEOF() {

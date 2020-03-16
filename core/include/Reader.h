@@ -22,8 +22,8 @@ class Reader {
 
   private:
     char *buf_;
-    int bufSize_;
-    int cntRead_;
+    int buf_size_;
+    int cnt_read_;
     std::ifstream in_;
 };
 
