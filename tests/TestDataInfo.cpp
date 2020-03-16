@@ -36,31 +36,31 @@ TEST(DataInfoTests, testWriteReadInt) {
     ASSERT_EQ(actual2, expected2);
 }
 
-TEST(DataInfoTests, testWriteReadSymbol) {
+TEST(DataInfoTests, testWriteReadmchar) {
     DataInfo d;
 
-    Symbol expected1('a'), expected2('b');
+    mchar expected1('a'), expected2('b');
     d.write(expected1);
     d.write(expected2);
-    Symbol actual1, actual2;
+    mchar actual1, actual2;
     actual1 = d.read();
     actual2 = d.read();
 
-    ASSERT_EQ(actual1.get_char(), expected1.get_char());
-    ASSERT_EQ(actual2.get_char(), expected2.get_char());
+    ASSERT_EQ(actual1, expected1);
+    ASSERT_EQ(actual2, expected2);
 }
 
-TEST(DataInfoTests, testWriteReadSymbolString) {
+TEST(DataInfoTests, testWriteReadmcharString) {
     DataInfo d;
 
-    String <Symbol> expected1(10), expected2(10);
+    String <mchar> expected1(10), expected2(10);
     for (int i = 0; i < 10; i++) {
         expected1[i] = 'a' + i;
         expected2[i] = 'j' + i;
     }
     d.write(expected1);
     d.write(expected2);
-    String <Symbol> actual1, actual2;
+    String <mchar> actual1, actual2;
     d.read(actual1);
     d.read(actual2);
 
@@ -71,14 +71,14 @@ TEST(DataInfoTests, testWriteReadSymbolString) {
 TEST(DataInfoTests, testWriteReadBoolString) {
     DataInfo d;
 
-    String <Symbol> expected1(10), expected2(10);
+    String <mchar> expected1(10), expected2(10);
     for (int i = 0; i < 10; i++) {
         expected1[i] = i % 2;
         expected2[i] = (i % 2) ^ 1;
     }
     d.write(expected1);
     d.write(expected2);
-    String <Symbol> actual1, actual2;
+    String <mchar> actual1, actual2;
     d.read(actual1);
     d.read(actual2);
 
@@ -90,7 +90,7 @@ TEST(DataInfoTests, testWriteReadToFile) {
     DataInfo d, d2;
 
     std::string tmp_file_name = "a.tmp";
-    String <Symbol> expected1(10);
+    String <mchar> expected1(10);
     for (int i = 0; i < 10; i++) {
         expected1[i] = 'a' + i;
     }
@@ -102,7 +102,7 @@ TEST(DataInfoTests, testWriteReadToFile) {
     writer.close();
     Reader reader(tmp_file_name, 100, Reader::Mode::BIN);
     d2.readFromFile(reader);
-    String <Symbol> actual1;
+    String <mchar> actual1;
     int actual2;
     d2.read(actual1);
     d2.read(actual2);

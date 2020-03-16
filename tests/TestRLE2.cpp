@@ -2,27 +2,27 @@
 #include "RLE2.h"
 
 TEST(RLE2Tests, testEncode) {
-    String <Symbol> data({'a', 'a', 'a', 'b', 'c', 'd', 'd'});
+    String <mchar> data({'a', 'a', 'a', 'b', 'c', 'd', 'd'});
     DataInfo di;
 
     RLE2().encode(data, di);
-    String <Symbol> expected({0, 0, 1, 0, 'a', 1, 'b', 1, 'c', 0, 1, 'd'});
+    String <mchar> expected({0, 0, 1, 0, 'a', 1, 'b', 1, 'c', 0, 1, 'd'});
 
     ASSERT_EQ(data, expected);
 }
 
 TEST(RLE2Tests, testDecode) {
-    String <Symbol> data({0, 0, 1, 0, 'a', 1, 'b', 1, 'c', 0, 1, 'd'});
+    String <mchar> data({0, 0, 1, 0, 'a', 1, 'b', 1, 'c', 0, 1, 'd'});
     DataInfo di;
 
     RLE2().decode(data, di);
-    String <Symbol> expected({'a', 'a', 'a', 'b', 'c', 'd', 'd'});
+    String <mchar> expected({'a', 'a', 'a', 'b', 'c', 'd', 'd'});
 
     ASSERT_EQ(data, expected);
 }
 
 TEST(RLE2Tests, testEncodeDecode) {
-    String <Symbol> data;
+    String <mchar> data;
     DataInfo di;
     for (int i = 0; i < 256; i++) {
         char c = i;
@@ -33,7 +33,7 @@ TEST(RLE2Tests, testEncodeDecode) {
     for (int i = 0; i < 1060; i++) {
         data += i;
     }
-    String <Symbol> expected = data;
+    String <mchar> expected = data;
 
     RLE2().encode(data, di);
     RLE2().decode(data, di);

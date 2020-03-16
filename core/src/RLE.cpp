@@ -1,8 +1,8 @@
 #include "RLE.h"
 
-void RLE::encode(String <Symbol> &data, DataInfo &data_info) {
+void RLE::encode(String <mchar> &data, DataInfo &data_info) {
     int run_length = 1;
-    String <Symbol> res;
+    String <mchar> res;
     for (int i = 0; i < data.size(); i++) {
         if (i < data.size() - 1 && data[i] == data[i + 1]) {
             run_length++;
@@ -22,15 +22,15 @@ void RLE::encode(String <Symbol> &data, DataInfo &data_info) {
     std::swap(data, res);
 }
 
-void RLE::decode(String <Symbol> &data, DataInfo &data_info) {
-    String <Symbol> res;
+void RLE::decode(String <mchar> &data, DataInfo &data_info) {
+    String <mchar> res;
     int i = 0;
     while (i < data.size()) {
         if (i == data.size() - 1 || data[i] != data[i + 1]) {
             res.add(data[i]);
         }
         else {
-            Symbol symb = data[i];
+            mchar symb = data[i];
             i += 2;
             int run_length = read_int(i, data) + 2;
             for (int j = 0; j < run_length; j++) {
@@ -44,7 +44,7 @@ void RLE::decode(String <Symbol> &data, DataInfo &data_info) {
 
 //we will use only 7 bits of each byte for store integer
 //the last bit indicates if it is a last byte in this integer representation
-void RLE::write_int(int n, String <Symbol> &res) {
+void RLE::write_int(int n, String <mchar> &res) {
     int bit_length = 1;
     while ((1 << bit_length) < n) {
         bit_length++;
@@ -64,16 +64,16 @@ void RLE::write_int(int n, String <Symbol> &res) {
     }
 }
 
-int RLE::read_int(int &i, String <Symbol> &data) {
+int RLE::read_int(int &i, String <mchar> &data) {
     int k = 0;
     int res = 0;
     while (true) {
         for (int j = 0; j < 7; j++) {
-            if ((data[i].get() & (1 << j)) != 0) {
+            if ((data[i] & (1 << j)) != 0) {
                 res |= (1 << (k * 7 + j));
             }
         }
-        if ((data[i].get() & (1 << 7)) != 0) {
+        if ((data[i] & (1 << 7)) != 0) {
             break;
         }
         k++;

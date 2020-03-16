@@ -94,11 +94,11 @@ String<bool> String<T>::toBool() const {
 }
 
 template <>
-String<bool> String<Symbol>::toBool() const {
+String<bool> String<mchar>::toBool() const {
     String <bool> res(str_.size() * 8);
     for (int i = 0; i < str_.size(); i++) {
         for (int j = 0; j < 8; j++) {
-            if (((str_[i].get_char()) & (1 << j)) != 0) {
+            if (((str_[i]) & (1 << j)) != 0) {
                 res.set(i * 8 + j, 1);
             }
             else {
@@ -221,8 +221,8 @@ void String<bool>::resize(int n) {
     str_[str_.size() - 1] &= (((1 << isize) - 1) >> k);
 }
 
-String<Symbol> String<bool>::toSymb() const {
-    String<Symbol> res(str_.size());
+String<mchar> String<bool>::toSymb() const {
+    String<mchar> res(str_.size());
     for (int i = 0; i < str_.size(); i++) {
         res[i] = str_[i];
     }

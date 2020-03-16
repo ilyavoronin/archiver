@@ -26,14 +26,14 @@ Writer::~Writer() {
     }
 }
 
-void Writer::write(String <Symbol> &output) {
+void Writer::write(String <mchar> &output) {
     if (buf_size_ < output.size()) {
         delete [] buf_;
         buf_size_ = output.size();
         buf_ = new char[buf_size_];
     }
     for (int i = 0; i < (int)output.size(); i++) {
-        buf_[i] = output[i].get_char();
+        buf_[i] = output[i];
     }
     out_.write(buf_, output.size());
 }

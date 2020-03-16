@@ -6,8 +6,8 @@
 
 class MTF : public IDataEncoder {
   public:
-    void encode(String <Symbol> &data, DataInfo &data_info) override; //overwrites data
-    void decode(String <Symbol> &data, DataInfo &data_info) override; //overwrites data
+    void encode(String <mchar> &data, DataInfo &data_info) override; //overwrites data
+    void decode(String <mchar> &data, DataInfo &data_info) override; //overwrites data
 };
 
 

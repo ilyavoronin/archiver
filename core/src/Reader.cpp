@@ -19,7 +19,7 @@ Reader::~Reader() {
     }
 }
 
-bool Reader::read(String <Symbol> &input, int input_size) {
+bool Reader::read(String <mchar> &input, int input_size) {
     if (input_size > buf_size_) {
         buf_size_ = input_size;
         delete[] buf_;

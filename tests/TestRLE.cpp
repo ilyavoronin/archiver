@@ -5,8 +5,8 @@
 #include "AString.h"
 
 TEST(RLETests, testEncode) {
-    String <Symbol> data({'a', 'a', 'b', 'c', 'a', 'a', 'a', 'a'});
-    String <Symbol> expected({'a', 'a', (char)128, 'b', 'c', 'a', 'a', (char)130});
+    String <mchar> data({'a', 'a', 'b', 'c', 'a', 'a', 'a', 'a'});
+    String <mchar> expected({'a', 'a', (char)128, 'b', 'c', 'a', 'a', (char)130});
     DataInfo di;
 
     RLE().encode(data, di);
@@ -15,8 +15,8 @@ TEST(RLETests, testEncode) {
 }
 
 TEST(RLETests, testDecode) {
-    String <Symbol> data({'a', 'a', (char)128, 'b', 'c', 'a', 'a', (char)130});
-    String <Symbol> expected({'a', 'a', 'b', 'c', 'a', 'a', 'a', 'a'});
+    String <mchar> data({'a', 'a', (char)128, 'b', 'c', 'a', 'a', (char)130});
+    String <mchar> expected({'a', 'a', 'b', 'c', 'a', 'a', 'a', 'a'});
     DataInfo di;
 
     RLE().decode(data, di);
@@ -25,8 +25,8 @@ TEST(RLETests, testDecode) {
 }
 
 TEST(RLETests, testEncodeDecodeSmall) {
-    String <Symbol> data({'a', 'a', 'b', 'c', 'a', 'a', 'a', 'a'});
-    String <Symbol> expected = data;
+    String <mchar> data({'a', 'a', 'b', 'c', 'a', 'a', 'a', 'a'});
+    String <mchar> expected = data;
     DataInfo di;
 
     RLE().encode(data, di);
@@ -36,7 +36,7 @@ TEST(RLETests, testEncodeDecodeSmall) {
 }
 
 TEST(RLETests, testEncodeDecodeBig) {
-    String <Symbol> data({'a', 'b', 'c', 'c', 'c', 'a', 'a', 'd'});
+    String <mchar> data({'a', 'b', 'c', 'c', 'c', 'a', 'a', 'd'});
     for (int i = 0; i < 10000; i++) {
         data.add('z');
     }
@@ -44,7 +44,7 @@ TEST(RLETests, testEncodeDecodeBig) {
         data.add('t');
     }
     data.add('z');
-    String <Symbol> expected = data;
+    String <mchar> expected = data;
     DataInfo di;
 
     RLE().encode(data, di);

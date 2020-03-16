@@ -4,7 +4,7 @@
 TEST(BWTTests, testEncode) {
     std::vector <char> vdata = {'a', 'b', 'a', 'c', 'a', 'b', 'a'};
     DataInfo data_info;
-    String <Symbol> data;
+    String <mchar> data;
     for (auto z : vdata) {
         data.add(z);
     }
@@ -13,7 +13,7 @@ TEST(BWTTests, testEncode) {
     BWT().encode(data, data_info);
 
     for (int i = 0; i < 8; i++) {
-        ASSERT_EQ(data[i].get_char(), expected[i]);
+        ASSERT_EQ(data[i], expected[i]);
     }
     int first_suffix_number;
     data_info.read(first_suffix_number);
@@ -26,7 +26,7 @@ TEST(BWTTests, testDecode) {
 
     //first suffix number
     data_info.write((int)3);
-    String <Symbol> data;
+    String <mchar> data;
     for (auto z : vdata) {
         data.add(z);
     }
@@ -35,19 +35,19 @@ TEST(BWTTests, testDecode) {
     BWT().decode(data, data_info);
 
     for (int i = 0; i < 7; i++) {
-        ASSERT_EQ(data[i].get_char(), expected[i]);
+        ASSERT_EQ(data[i], expected[i]);
     }
 }
 
 TEST(BWTTests, testEncodeDecode) {
     srand(17);
     DataInfo data_info;
-    String <Symbol> data(1000);
+    String <mchar> data(1000);
     for (int i = 0; i < 1000; i++) {
-        data[i] = Symbol((char)(rand() % 256));
+        data[i] = mchar((char)(rand() % 256));
     }
 
-    String <Symbol> data_copy = data;
+    String <mchar> data_copy = data;
     BWT().encode(data, data_info);
     BWT().decode(data, data_info);
 

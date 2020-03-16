@@ -16,7 +16,7 @@ class Writer {
 
     ~Writer();
 
-    void write(String <Symbol> &output);
+    void write(String <mchar> &output);
     void write(int n);
     void close();
 

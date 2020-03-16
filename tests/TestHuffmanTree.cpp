@@ -8,7 +8,7 @@
 
 class HuffmanTreeTests : public ::testing::Test {
 protected:
-    String <Symbol> s{1000};
+    String <mchar> s{1000};
     HuffmanTree *ht;
     void SetUp() override {
         int i = 0;
@@ -38,7 +38,7 @@ protected:
 };
 
 TEST_F(HuffmanTreeTests, testGetCodesCheckOptimum) {
-    std::map <Symbol, String <bool> > codes = ht->getCodes();
+    std::map <mchar, String <bool> > codes = ht->getCodes();
     long double actual = 0;
     for (auto &p : codes) {
         actual += pow(2, -p.second.size());
@@ -48,7 +48,7 @@ TEST_F(HuffmanTreeTests, testGetCodesCheckOptimum) {
 }
 
 TEST_F(HuffmanTreeTests, testGetCodesCheckPrefix) {
-    std::map <Symbol, String <bool> > codes = ht->getCodes();
+    std::map <mchar, String <bool> > codes = ht->getCodes();
     long double actual = 0;
     std::vector <String <bool> > vcodes;
     for (auto &p : codes) {
@@ -80,7 +80,7 @@ TEST_F(HuffmanTreeTests, testWriteReadTree) {
     }
 }
 
-TEST_F(HuffmanTreeTests, testGetNextSymbol) {
+TEST_F(HuffmanTreeTests, testGetNextmchar) {
     String <bool> bs;
     auto codes = ht->getCodes();
     for (auto elem : codes) {
@@ -89,6 +89,6 @@ TEST_F(HuffmanTreeTests, testGetNextSymbol) {
 
     int i = 0;
     for (auto elem : codes) {
-        ASSERT_EQ(elem.first, ht->getNextSymbol(bs, i));
+        ASSERT_EQ(elem.first, ht->getNextmchar(bs, i));
     }
 }

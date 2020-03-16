@@ -1,8 +1,8 @@
 #include "RLE2.h"
 
-void RLE2::encode(String <Symbol> &data, DataInfo &data_info) {
+void RLE2::encode(String <mchar> &data, DataInfo &data_info) {
     int run_length = 1;
-    String <Symbol> res;
+    String <mchar> res;
     for (int i = 0; i < data.size(); i++) {
         if (i < data.size() - 1 && data[i] == data[i + 1]) {
             run_length++;
@@ -32,8 +32,8 @@ void RLE2::encode(String <Symbol> &data, DataInfo &data_info) {
     std::swap(data, res);
 }
 
-void RLE2::decode(String <Symbol> &data, DataInfo &data_info) {
-    String <Symbol> res;
+void RLE2::decode(String <mchar> &data, DataInfo &data_info) {
+    String <mchar> res;
     int i = 0;
     while (i < data.size()) {
         int bit_length = 0;
@@ -47,7 +47,7 @@ void RLE2::decode(String <Symbol> &data, DataInfo &data_info) {
         }
         else {
             for (int j = i; j < i + bit_length; j++) {
-                run_length = run_length*2 + data[j].get();
+                run_length = run_length*2 + data[j];
             }
             i += bit_length;
         }

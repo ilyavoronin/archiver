@@ -3,7 +3,7 @@
 
 #include <vector>
 
-#include "Symbol.h"
+#include "mchar.h"
 
 template <typename T>
 class String {
@@ -31,7 +31,7 @@ class String {
     void resize(int n);
     void insertBegin(const String <T> &other);
 
-    //This method implemented only for Symbol
+    //This method implemented only for mchar
     //for other types returns empty String<bool>
     String <bool> toBool() const;
 
@@ -63,7 +63,7 @@ class String<bool> {
     int size() const;
     void clear();
     void resize(int n);
-    String <Symbol> toSymb() const;
+    String <mchar> toSymb() const;
 
   private:
     static const int isize = 8;
@@ -73,7 +73,7 @@ class String<bool> {
     std::vector <uint8_t> str_;
 };
 
-template class String<Symbol>;
+template class String<mchar>;
 template class String<int>;
 
 #endif //ARCHIVER_STRING_H

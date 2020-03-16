@@ -2,10 +2,10 @@
 #include <forward_list>
 #include <iostream>
 
-void MTF::encode(String <Symbol> &data, DataInfo &data_info) {
+void MTF::encode(String <mchar> &data, DataInfo &data_info) {
 
     //current alphabet permutation
-    std::forward_list <Symbol> alph;
+    std::forward_list <mchar> alph;
     for (int i = 255; i >= 0; i--) {
         alph.push_front(i);
     }
@@ -23,15 +23,15 @@ void MTF::encode(String <Symbol> &data, DataInfo &data_info) {
     }
 }
 
-void MTF::decode(String <Symbol> &data, DataInfo &data_info) {
+void MTF::decode(String <mchar> &data, DataInfo &data_info) {
 
     //current alphabet permutation
-    std::forward_list <Symbol> alph;
+    std::forward_list <mchar> alph;
     for (int i = 255; i >= 0; i--) {
         alph.push_front(i);
     }
     for (int i = 0; i < data.size(); i++) {
-        auto iter = std::next(alph.before_begin(), data[i].get());
+        auto iter = std::next(alph.before_begin(), data[i]);
         auto next_iter = std::next(iter);
         data[i] = *next_iter;
         alph.erase_after(iter);

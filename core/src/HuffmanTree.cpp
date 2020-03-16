@@ -2,7 +2,7 @@
 
 #include <set>
 
-HuffmanTree::HuffmanTree(const String<Symbol> &data) {
+HuffmanTree::HuffmanTree(const String<mchar> &data) {
     root_ = buildTree(data);
 }
 
@@ -24,7 +24,7 @@ HuffmanTree::~HuffmanTree() {
 }
 
 void HuffmanTree::writeTree(DataInfo &data_info) {
-    String <Symbol> chars;
+    String <mchar> chars;
     String <bool> euler;
     getEulerDfs(root_, chars, euler);
     data_info.write(euler);
@@ -32,7 +32,7 @@ void HuffmanTree::writeTree(DataInfo &data_info) {
 }
 
 void HuffmanTree::readTree(DataInfo &data_info) {
-    String <Symbol> chars;
+    String <mchar> chars;
     String <bool> euler;
 
     //correspond to values that `getEulerDfs` returns
@@ -70,13 +70,13 @@ void HuffmanTree::readTree(DataInfo &data_info) {
     this->root_ = new_root;
 }
 
-std::map<Symbol, String<bool> > HuffmanTree::getCodes() {
-    std::map <Symbol, String<bool> > res;
+std::map<mchar, String<bool> > HuffmanTree::getCodes() {
+    std::map <mchar, String<bool> > res;
     getCodesDfs(root_, String<bool>(), res);
     return res;
 }
 
-Symbol HuffmanTree::getNextSymbol(String<bool> &data, int &pos) {
+mchar HuffmanTree::getNextmchar(String<bool> &data, int &pos) {
     Node *cur = root_;
     while (true) {
         if (cur->is_leaf) {
@@ -94,7 +94,7 @@ Symbol HuffmanTree::getNextSymbol(String<bool> &data, int &pos) {
     }
 }
 
-HuffmanTree::Node::Node(Symbol symb_, Node *left_, Node *right_) {
+HuffmanTree::Node::Node(mchar symb_, Node *left_, Node *right_) {
     is_leaf = false;
     left = left_;
     right = right_;
@@ -102,8 +102,8 @@ HuffmanTree::Node::Node(Symbol symb_, Node *left_, Node *right_) {
     pr = nullptr;
 }
 
-HuffmanTree::Node* HuffmanTree::buildTree(const String <Symbol> &data) {
-    std::map <Symbol, int> freqs;
+HuffmanTree::Node* HuffmanTree::buildTree(const String <mchar> &data) {
+    std::map <mchar, int> freqs;
     for (int i = 0; i < (int)data.size(); i++) {
         freqs[data[i]]++;
     }
@@ -124,7 +124,7 @@ HuffmanTree::Node* HuffmanTree::buildTree(const String <Symbol> &data) {
 }
 
 void HuffmanTree::getCodesDfs(HuffmanTree::Node *cur_vert, String<bool> cur_str,
-                              std::map<Symbol, String<bool> > &res) {
+                              std::map<mchar, String<bool> > &res) {
     if (cur_vert->is_leaf) {
         res[cur_vert->symb] = cur_str;
         return;
@@ -137,7 +137,7 @@ void HuffmanTree::getCodesDfs(HuffmanTree::Node *cur_vert, String<bool> cur_str,
     }
 }
 
-void HuffmanTree::getEulerDfs(HuffmanTree::Node *cur_vert, String <Symbol> &chars, String <bool> &euler) {
+void HuffmanTree::getEulerDfs(HuffmanTree::Node *cur_vert, String <mchar> &chars, String <bool> &euler) {
     if (cur_vert->is_leaf) {
         chars.add(cur_vert->symb);
     }

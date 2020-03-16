@@ -2,95 +2,95 @@
 #include "AString.h"
 
 TEST(StringTests, testArraySubscriptOpearator) {
-    String <Symbol> s(10);
+    String <mchar> s(10);
 
     for (int i = 0; i < 10; i++) {
         s[i] = 'a' + i;
     }
 
     for (int i = 0; i < 10; i++) {
-        ASSERT_EQ(s[i].get_char(), 'a' + i);
+        ASSERT_EQ(s[i], 'a' + i);
     }
 }
 
 TEST(StringTests, testAdd) {
-    String <Symbol> s(0);
+    String <mchar> s(0);
 
     for (int i = 0; i < 10; i++) {
-        s.add(Symbol('a' + i));
+        s.add(mchar('a' + i));
     }
 
     for (int i = 0; i < 10; i++) {
-        ASSERT_EQ(s[i].get_char(), 'a' + i);
+        ASSERT_EQ(s[i], 'a' + i);
     }
 }
 
 TEST(StringTests, testPlusCharOperator) {
-    String <Symbol> s(0);
+    String <mchar> s(0);
 
     for (int i = 0; i < 10; i++) {
-        s = s + Symbol('a' + i);
+        s = s + mchar('a' + i);
     }
 
     for (int i = 0; i < 10; i++) {
-        ASSERT_EQ(s[i].get_char(), 'a' + i);
+        ASSERT_EQ(s[i], 'a' + i);
     }
 }
 
 TEST(StringTests, testPlusEqCharOperator) {
-    String <Symbol> s(0);
+    String <mchar> s(0);
 
     for (int i = 0; i < 10; i++) {
-        s += Symbol('a' + i);
+        s += mchar('a' + i);
     }
 
     for (int i = 0; i < 10; i++) {
-        ASSERT_EQ(s[i].get_char(), 'a' + i);
+        ASSERT_EQ(s[i], 'a' + i);
     }
 }
 
 TEST(StringTests, testPlusOperator) {
-    String <Symbol> s1(10), s2(10);
+    String <mchar> s1(10), s2(10);
     for (int i = 0; i < 10; i++) {
-        s1[i] = Symbol('a' + i);
+        s1[i] = mchar('a' + i);
     }
     for (int j = 0; j < 10; j++) {
-        s2[j] = Symbol('a' + 10 + j);
+        s2[j] = mchar('a' + 10 + j);
     }
 
     String res = s1 + s2;
     std::string expected = "abcdefghijklmnopqrst";
 
     for (int i = 0; i < 20; i++) {
-        ASSERT_EQ(res[i].get_char(), expected[i]);
+        ASSERT_EQ(res[i], expected[i]);
     }
 }
 
 TEST(StringTests, testPlusEqOperator) {
-    String <Symbol> s1(10), s2(10);
+    String <mchar> s1(10), s2(10);
     for (int i = 0; i < 10; i++) {
-        s1[i] = Symbol('a' + i);
+        s1[i] = mchar('a' + i);
     }
     for (int j = 0; j < 10; j++) {
-        s2[j] = Symbol('a' + 10 + j);
+        s2[j] = mchar('a' + 10 + j);
     }
 
     s1 += s2;
     std::string expected = "abcdefghijklmnopqrst";
 
     for (int i = 0; i < 20; i++) {
-        ASSERT_EQ(s1[i].get_char(), expected[i]);
+        ASSERT_EQ(s1[i], expected[i]);
     }
 }
 
 TEST(StringTests, testSize) {
-    String <Symbol> s(10);
+    String <mchar> s(10);
 
     ASSERT_EQ(s.size(), 10);
 }
 
 TEST(StringTests, testClear) {
-    String <Symbol> s(10);
+    String <mchar> s(10);
 
     s.clear();
 
@@ -98,7 +98,7 @@ TEST(StringTests, testClear) {
 }
 
 TEST(StringTests, testResize) {
-    String <Symbol> s(10);
+    String <mchar> s(10);
 
     s.resize(20);
 

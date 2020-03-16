@@ -17,18 +17,18 @@ TEST(IOTests, testWriteReadInt) {
     ASSERT_EQ(actual, expected);
 }
 
-TEST(IOTests, testsWriteReadSymbolString) {
+TEST(IOTests, testsWriteReadmcharString) {
     std::string tmpFileName = "f.tmp";
     Reader reader(tmpFileName, 100, Reader::Mode::BIN);
     Writer writer(tmpFileName, 100, Writer::Mode::BIN);
 
-    String <Symbol> expected(10);
+    String <mchar> expected(10);
     for (int i = 0; i < 10; i++) {
-        expected[i] = Symbol(i);
+        expected[i] = mchar(i);
     }
     writer.write(expected);
     writer.close();
-    String <Symbol> actual;
+    String <mchar> actual;
     reader.read(actual, 10);
 
     ASSERT_EQ(actual, expected);

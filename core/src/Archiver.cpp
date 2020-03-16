@@ -2,7 +2,7 @@
 
 #include <algorithm>
 
-#include "Symbol.h"
+#include "mchar.h"
 #include "Reader.h"
 #include "Writer.h"
 #include "HuffmanCoding.h"
@@ -30,7 +30,7 @@ Archiver::~Archiver() {
 void Archiver::zip(std::vector <Coders> algorithm, int block_size_k, std::string input_file_name, std::string output_file_name) {
     block_size = block_size_k * 1024;
     auto coding_sequence = toCoderSequence(algorithm);
-    String <Symbol> block(block_size);
+    String <mchar> block(block_size);
     Reader reader(input_file_name, block_size, Reader::Mode::BIN);
     Writer writer(output_file_name, block_size, Writer::Mode::BIN);
     writer.write(int(algorithm.size()));
@@ -48,7 +48,7 @@ void Archiver::zip(std::vector <Coders> algorithm, int block_size_k, std::string
 }
 
 void Archiver::unzip(std::string input_file_name, std::string output_file_name) {
-    String <Symbol> block;
+    String <mchar> block;
     Reader reader(input_file_name, 0, Reader::Mode::BIN);
     Writer writer(output_file_name, 0, Writer::Mode::BIN);
     std::vector <Coders> algorithm;
@@ -72,14 +72,14 @@ void Archiver::unzip(std::string input_file_name, std::string output_file_name) 
     }
 }
 
-void Archiver::zipBlock(String <Symbol> &block, DataInfo &data_info, std::vector <IDataEncoder *> coding_sequence) {
+void Archiver::zipBlock(String <mchar> &block, DataInfo &data_info, std::vector <IDataEncoder *> coding_sequence) {
     for (auto encoder : coding_sequence) {
         data_info.beginNewBlock();
         encoder->encode(block, data_info);
     }
 }
 
-void Archiver::unzipBlock(String <Symbol> &block, DataInfo &data_info, std::vector <IDataEncoder *> decoding_sequence) {
+void Archiver::unzipBlock(String <mchar> &block, DataInfo &data_info, std::vector <IDataEncoder *> decoding_sequence) {
     for (auto decoder : decoding_sequence) {
         decoder->decode(block, data_info);
     }

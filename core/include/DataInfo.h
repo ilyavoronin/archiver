@@ -2,7 +2,7 @@
 #define ARCHIVER_DATAINFO_H
 
 #include "AString.h"
-#include "Symbol.h"
+#include "mchar.h"
 #include "Reader.h"
 #include "Writer.h"
 
@@ -11,15 +11,15 @@ class DataInfo {
     DataInfo();
     void write(short int n);
     void write(int n);
-    void write(Symbol c);
-    void write(String <Symbol> &new_str);
+    void write(mchar c);
+    void write(String <mchar> &new_str);
     void write(String <bool> &new_str);
     void writeToFile(Writer &writer);
     void read(short int &n);
     void read(int &n);
-    void read(String <Symbol> &chars);
+    void read(String <mchar> &chars);
     void read(String <bool> &bin);
-    Symbol read();
+    mchar read();
     void readFromFile(Reader &reader);
 
     //When unzipping we run decoders in reversed order,
@@ -29,11 +29,11 @@ class DataInfo {
     void beginNewBlock();
 
   private:
-    String <Symbol> str_;
+    String <mchar> str_;
 
     //All data at first is writen to the buf_str_
     //When beginNewBlock is called, buf_str is copying in the beginning of str_
-    String <Symbol> buf_str_;
+    String <mchar> buf_str_;
     int pos_;
 };
 

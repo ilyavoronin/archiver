@@ -15,7 +15,7 @@ class Reader {
 
     ~Reader();
 
-    bool read(String <Symbol> &input, int input_size);
+    bool read(String <mchar> &input, int input_size);
     void read(int &n);
     bool isEOF();
     void close();
