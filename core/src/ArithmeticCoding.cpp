@@ -7,16 +7,26 @@ void ArithmeticCoding::encode(String <mchar> &data, DataInfo &data_info) {
     }
     unsigned long long left = 0, right = (1ll << kBinaryBlockSize) - 1;
     std::vector <long long> probability;
-    //we maintain symbol frequencies in the window with size = `kWindowSize'
-    std::vector <long long> freq(alph_size, 0);
+    std::vector <long long> freq(256, 0);
+
+    int alph_size = 0;
+    for (int i = 0; i < data.size(); i++) {
+        freq[data[i]]++;
+        alph_size = std::max(alph_size, (int)data[i]);
+    }
+    alph_size++;
+
     int input_size = (int)data.size();
     data_info.write(alph_size);
+    for (int i = 0; i < alph_size; i++) {
+        data_info.write((int)freq[i]);
+    }
     data_info.write(input_size);
 
     //initialize probabilities
     probability.push_back(0);
-    for (int i = 0; i < alph_size; i++) {
-        probability.push_back(probability[i] + ((N - 2) >> kWindowBin));
+    for (int j = 0; j < alph_size; j++) {
+        probability.push_back(probability[j] + ((N - 2) * (freq[j] + 1) / data.size()));
     }
     for (int j = 0; j < alph_size + 1; j++) {
         probability[j] = probability[j] * (N - 2) / probability[alph_size];
@@ -24,27 +34,6 @@ void ArithmeticCoding::encode(String <mchar> &data, DataInfo &data_info) {
 
     std::vector <bool> result;
     for (int i = 0; i < input_size; i++) {
-        if (i % bound == 0 && i != 0) {
-            //then redefine probabilities
-            probability.clear();
-            probability.push_back(0);
-            for (int j = 0; j < alph_size; j++) {
-                probability.push_back(probability[j] + ((N - 2) * (freq[j] + 1) >> kWindowBin));
-            }
-            for (int j = 0; j < alph_size + 1; j++) {
-                probability[j] = probability[j] * (N - 2) / probability[alph_size];
-            }
-        }
-
-        //move window
-        if (i >= kWindowSize) {
-            freq[data[i - kWindowSize]]--;
-            freq[data[i]]++;
-        }
-        else {
-            freq[data[i]]++;
-        }
-
         unsigned long long prev_left = left;
         left = prev_left + (((right - prev_left + 1) * probability[data[i]]) >> kBinaryBlockSize);
         right = prev_left + (((right - prev_left + 1) * probability[data[i] + 1]) >> kBinaryBlockSize);
@@ -92,10 +81,8 @@ void ArithmeticCoding::encode(String <mchar> &data, DataInfo &data_info) {
 }
 
 void ArithmeticCoding::decode(String <mchar> &data, DataInfo &data_info) {
-    int string_size, decoded_string_size;
+    int string_size, decoded_string_size, alph_size;
     data_info.read(alph_size);
-    data_info.read(decoded_string_size);
-    data_info.read(string_size);
     unsigned long long left = 0, right = (1ll << kBinaryBlockSize) - 1;
     std::vector <long long> probability;
     std::vector <bool> bit_data;
@@ -108,6 +95,11 @@ void ArithmeticCoding::decode(String <mchar> &data, DataInfo &data_info) {
     }
 
     freq.resize(alph_size);
+    for (int i = 0; i < alph_size; i++) {
+        data_info.read(freq[i]);
+    }
+    data_info.read(decoded_string_size);
+    data_info.read(string_size);
     for (int i = 0; i < string_size; i++) {
         uint8_t symbol = data[i];
         for (int j = 0; j < 8; j++) {
@@ -118,8 +110,8 @@ void ArithmeticCoding::decode(String <mchar> &data, DataInfo &data_info) {
 
     //initialize probabilities
     probability.push_back(0);
-    for (int i = 0; i < alph_size; i++) {
-        probability.push_back(probability[i] + (N - 2) / kWindowSize);
+    for (int j = 0; j < alph_size; j++) {
+        probability.push_back(probability[j] + ((N - 2) * (freq[j] + 1) / decoded_string_size));
     }
     for (int j = 0; j < alph_size + 1; j++) {
         probability[j] = probability[j] * (N - 2) / probability[alph_size];
@@ -137,18 +129,6 @@ void ArithmeticCoding::decode(String <mchar> &data, DataInfo &data_info) {
     }
 
     while (decoded_string.size() < decoded_string_size) {
-        //redefine probabilities
-        if ((int)decoded_string.size() % bound == 0 && decoded_string.size() != 0) {
-            probability.clear();
-            probability.push_back(0);
-            for (int j = 0; j < alph_size; j++) {
-                probability.push_back(probability[j] + (N - 2) * (freq[j] + 1) / kWindowSize);
-            }
-            for (int j = 0; j < alph_size + 1; j++) {
-                probability[j] = probability[j] * (N - 2) / probability[alph_size];
-            }
-        }
-
         int symbol = 0;
         int left_binary = 0, right_binary = alph_size + 1;
         while (right_binary - left_binary != 1) {
@@ -162,15 +142,6 @@ void ArithmeticCoding::decode(String <mchar> &data, DataInfo &data_info) {
             }
         }
         symbol = right_binary - 1;
-
-        //move window
-        if ((int)decoded_string.size() >= kWindowSize) {
-            freq[decoded_string[(int)decoded_string.size() - kWindowSize]]--;
-            freq[symbol]++;
-        }
-        else {
-            freq[symbol]++;
-        }
 
         long long prev_left = left;
         left = prev_left + (((right - prev_left + 1) * probability[symbol]) >> kBinaryBlockSize);

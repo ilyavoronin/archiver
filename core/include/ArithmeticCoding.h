@@ -13,14 +13,7 @@ class ArithmeticCoding : public IDataEncoder {
     void decode(String <mchar> &data, DataInfo &data_info) override;
 
   private:
-    const int kEpsSize = 18,
-              kBinaryBlockSize = 30,
-              kWindowBin = 9,
-              kWindowSize = (1ll << kWindowBin),
-              bound = 100,
-              tbound1 = 900;
-
-    int alph_size = 256;
+    const int kEpsSize = 18, kBinaryBlockSize = 30;
 
     const unsigned long long MOD = (1ll << (kBinaryBlockSize - 1)),
                              N = (1ll << kBinaryBlockSize),
