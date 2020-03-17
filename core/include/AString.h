@@ -30,6 +30,7 @@ class String {
     void clear();
     void resize(int n);
     void insertBegin(const String <T> &other);
+    T back() {return str_[str_.size() - 1];}
 
     //This method implemented only for mchar
     //for other types returns empty String<bool>

@@ -11,6 +11,7 @@
 #include "RLE2.h"
 #include "RLE.h"
 #include "ArithmeticCoding.h"
+#include "IFC.h"
 
 Archiver::Archiver() {
     coders = {
@@ -19,7 +20,8 @@ Archiver::Archiver() {
         {C_RLE, new RLE},
         {C_RLE2, new RLE2},
         {C_HUFFMAN, new HuffmanCoding},
-        {C_ACODING, new ArithmeticCoding}
+        {C_ACODING, new ArithmeticCoding},
+        {C_IFC, new IFC}
     };
 }
 

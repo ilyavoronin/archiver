@@ -11,7 +11,8 @@ enum Coders {
     C_RLE     = 2,
     C_RLE2    = 3,
     C_HUFFMAN = 4,
-    C_ACODING = 5
+    C_ACODING = 5,
+    C_IFC     = 6
 };
 
 #endif //ARCHIVER_CORE_INCLUDE_ECODERS_H_

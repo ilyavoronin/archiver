@@ -59,6 +59,7 @@ void ConsoleUI::run(int argc, char **argv) {
             std::cout << "3: Run Length Encoding 2\n";
             std::cout << "4: Huffman coding\n";
             std::cout << "5: Arithmetic coding\n";
+            std::cout << "6: Incremental Frequency Count(IFC)\n";
             std::string seq;
             std::cin >> seq;
             for (auto num : seq) {

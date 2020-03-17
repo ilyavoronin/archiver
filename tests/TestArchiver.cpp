@@ -46,8 +46,15 @@ TEST_F(ArchiverRandomTests, testZipUnzipFast) {
     ASSERT_TRUE(cmpFiles(input_filename, output_file_name));
 }
 
+TEST_F(ArchiverRandomTests, testZipUnzipComp) {
+    arc.zip({C_BWT, C_RLE, C_IFC, C_ACODING}, 4096, input_filename, archived_filename);
+    arc.unzip(archived_filename, output_file_name);
+
+    ASSERT_TRUE(cmpFiles(input_filename, output_file_name));
+}
+
 TEST_F(ArchiverRandomTests, testZipUnzipComb) {
-    arc.zip({C_BWT, C_MTF, C_RLE2, C_RLE, C_MTF, C_ACODING, C_BWT, C_RLE2, C_ACODING, C_HUFFMAN, C_RLE},
+    arc.zip({C_BWT, C_MTF, C_RLE2, C_IFC, C_RLE, C_MTF, C_ACODING, C_BWT, C_IFC, C_RLE2, C_ACODING, C_HUFFMAN, C_RLE},
         4096, input_filename, archived_filename);
     arc.unzip(archived_filename, output_file_name);
 
@@ -55,7 +62,8 @@ TEST_F(ArchiverRandomTests, testZipUnzipComb) {
 }
 
 TEST_F(ArchiverRandomTests, testZipUnzipMultipleBlocks) {
-    arc.zip({C_BWT, C_MTF, C_ACODING, C_RLE2, C_MTF, C_RLE, C_BWT, C_RLE2, C_HUFFMAN, C_ACODING, C_RLE},
+    arc.zip({C_BWT, C_IFC, C_MTF, C_ACODING, C_RLE2, C_MTF,
+             C_RLE, C_BWT, C_RLE2, C_HUFFMAN, C_ACODING, C_IFC, C_RLE},
         100, input_filename, archived_filename);
     arc.unzip(archived_filename, output_file_name);
 
@@ -63,7 +71,8 @@ TEST_F(ArchiverRandomTests, testZipUnzipMultipleBlocks) {
 }
 
 TEST_F(ArchiverRandomTests, testZipUnzipMultipleSmallBlocks) {
-    arc.zip({C_BWT, C_RLE, C_MTF, C_ACODING, C_RLE2, C_ACODING, C_RLE, C_MTF, C_BWT, C_RLE2, C_HUFFMAN, C_RLE},
+    arc.zip({C_BWT, C_RLE, C_MTF, C_ACODING, C_IFC, C_IFC, C_RLE2,
+             C_ACODING, C_RLE, C_MTF, C_BWT, C_RLE2, C_HUFFMAN, C_RLE},
         10, input_filename, archived_filename);
     arc.unzip(archived_filename, output_file_name);
 
