@@ -39,6 +39,7 @@ void DataInfo::write(String <mchar> &new_str) {
 
 void DataInfo::write(String <bool> &new_str) {
     auto charStr = new_str.toSymb();
+    write(new_str.size());
     write(int{charStr.size()});
     buf_str_ += charStr;
 }
@@ -93,12 +94,16 @@ void DataInfo::read(String <mchar> &chars) {
 
 void DataInfo::read(String <bool> &bin) {
     beginNewBlock();
-    int size;
+    int size, bin_size;
+    read(bin_size);
     read(size);
-    bin.resize(size * 8);
+    bin.resize(bin_size);
     for (int i = pos_; i < pos_ + size; i++) {
         char c = str_[i];
         for (int j = 0; j < 8; j++) {
+            if ((i - pos_) * 8 + j >= bin_size) {
+                break;
+            }
             if (((1 << j) & c) != 0) {
                 bin.set((i - pos_) * 8 + j, 1);
             }

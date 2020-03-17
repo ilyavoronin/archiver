@@ -17,7 +17,7 @@ class ConsoleUI {
 
     std::map <std::string, std::vector <Coders> > algorithms {
         {"-fast", {C_BWT, C_MTF, C_RLE, C_HUFFMAN}},
-        {"-comp", {C_BWT, C_MTF, C_RLE, C_ACODING}}
+        {"-comp", {C_BWT, C_MTF, C_RLE2, C_ACODING}}
     };
     int block_size = 4096; // in kilobytes;
 };

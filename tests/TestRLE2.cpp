@@ -1,19 +1,30 @@
 #include "gtest/gtest.h"
 #include "RLE2.h"
+#include "ArithmeticCoding.h"
 
 TEST(RLE2Tests, testEncode) {
     String <mchar> data({'a', 'a', 'a', 'b', 'c', 'd', 'd'});
     DataInfo di;
 
     RLE2().encode(data, di);
-    String <mchar> expected({0, 0, 1, 0, 'a', 1, 'b', 1, 'c', 0, 1, 'd'});
+    String <mchar> expected({'a', 'b', 'c', 'd'});
+    String <bool> expected_runs({0, 0, 1, 0, 1, 1, 0, 1});
+    DataInfo di1;
+    ArithmeticCoding().encodeBinary(expected_runs, di1);
+    String <bool> runs;
+    di.read(runs);
 
     ASSERT_EQ(data, expected);
+    ASSERT_EQ(runs, expected_runs);
 }
 
 TEST(RLE2Tests, testDecode) {
-    String <mchar> data({0, 0, 1, 0, 'a', 1, 'b', 1, 'c', 0, 1, 'd'});
+    String <mchar> data({'a', 'b', 'c', 'd'});
+    String <bool> runs({0, 0, 1, 0, 1, 1, 0, 1});
     DataInfo di;
+    ArithmeticCoding().encodeBinary(runs, di);
+    di.beginNewBlock();
+    di.write(runs);
 
     RLE2().decode(data, di);
     String <mchar> expected({'a', 'a', 'a', 'b', 'c', 'd', 'd'});
