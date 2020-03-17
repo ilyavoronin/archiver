@@ -13,6 +13,17 @@ TEST(ArithmeticCodingTests, testEncodeDecode) {
     ASSERT_EQ(data, expected);
 }
 
+TEST(ArithmeticCodingTests, testEncodeDecode2) {
+    String <mchar> data({(char)128, (char)130});
+    DataInfo di;
+    String <mchar> expected = data;
+
+    ArithmeticCoding().encode(data, di);
+    ArithmeticCoding().decode(data, di);
+
+    ASSERT_EQ(data, expected);
+}
+
 TEST(ArithmeticCodingTests, testEncodeDecodeBig) {
     srand(17);
     String <mchar> data({'a', 'b', 'c', 'd', 'a', 'a', 'a', 'd', 'd', 'a', 'a', 'a'});

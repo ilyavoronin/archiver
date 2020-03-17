@@ -26,7 +26,7 @@ void ArithmeticCoding::encode(String <mchar> &data, DataInfo &data_info) {
     //initialize probabilities
     probability.push_back(0);
     for (int j = 0; j < alph_size; j++) {
-        probability.push_back(probability[j] + ((N - 2) * (freq[j] + 1) / data.size()));
+        probability.push_back(probability[j] + ((N - 2) * (freq[j]) / (long long)data.size()));
     }
     for (int j = 0; j < alph_size + 1; j++) {
         probability[j] = probability[j] * (N - 2) / probability[alph_size];
@@ -112,7 +112,7 @@ void ArithmeticCoding::decode(String <mchar> &data, DataInfo &data_info) {
     //initialize probabilities
     probability.push_back(0);
     for (int j = 0; j < alph_size; j++) {
-        probability.push_back(probability[j] + ((N - 2) * (freq[j] + 1) / decoded_string_size));
+        probability.push_back(probability[j] + ((N - 2) * (freq[j]) / decoded_string_size));
     }
     for (int j = 0; j < alph_size + 1; j++) {
         probability[j] = probability[j] * (N - 2) / probability[alph_size];
