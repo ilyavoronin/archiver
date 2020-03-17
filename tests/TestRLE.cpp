@@ -4,26 +4,6 @@
 
 #include "AString.h"
 
-TEST(RLETests, testEncode) {
-    String <mchar> data({'a', 'a', 'b', 'c', 'a', 'a', 'a', 'a'});
-    String <mchar> expected({'a', 'a', (char)128, 'b', 'c', 'a', 'a', (char)130});
-    DataInfo di;
-
-    RLE().encode(data, di);
-
-    ASSERT_EQ(data, expected);
-}
-
-TEST(RLETests, testDecode) {
-    String <mchar> data({'a', 'a', (char)128, 'b', 'c', 'a', 'a', (char)130});
-    String <mchar> expected({'a', 'a', 'b', 'c', 'a', 'a', 'a', 'a'});
-    DataInfo di;
-
-    RLE().decode(data, di);
-
-    ASSERT_EQ(data, expected);
-}
-
 TEST(RLETests, testEncodeDecodeSmall) {
     String <mchar> data({'a', 'a', 'b', 'c', 'a', 'a', 'a', 'a'});
     String <mchar> expected = data;

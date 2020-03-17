@@ -3,6 +3,10 @@
 #include "HuffmanTree.h"
 
 void HuffmanCoding::encode(String<mchar> &data, DataInfo &data_info) {
+    data_info.write((int)data.size());
+    if (data.size() == 0) {
+        return;
+    }
     HuffmanTree huffman_tree(data);
     std::map <mchar, String<bool> > codes_map = huffman_tree.getCodes();
 
@@ -24,6 +28,11 @@ void HuffmanCoding::encode(String<mchar> &data, DataInfo &data_info) {
 
 
 void HuffmanCoding::decode(String<mchar> &data, DataInfo &data_info) {
+    int data_size;
+    data_info.read(data_size);
+    if (data_size == 0) {
+        return;
+    }
     HuffmanTree huffman_tree;
     huffman_tree.readTree(data_info);
 

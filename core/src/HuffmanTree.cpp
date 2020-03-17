@@ -107,6 +107,19 @@ HuffmanTree::Node* HuffmanTree::buildTree(const String <mchar> &data) {
     for (int i = 0; i < (int)data.size(); i++) {
         freqs[data[i]]++;
     }
+    if (freqs.size() == 1) {
+        //if data consists of only one symbol
+        Node *root = new Node;
+        Node *one_leaf = new Node(data[0]);
+        Node *empty_leaf = new Node(0);
+        one_leaf->is_leaf = true;
+        empty_leaf->is_leaf = true;
+        one_leaf->pr = root;
+        empty_leaf->pr = root;
+        root->left = one_leaf;
+        root->right = empty_leaf;
+        return root;
+    }
     std::set <std::pair <int, Node*> > sorted_freqs;
     for (auto elem : freqs) {
         Node *new_node = new Node(elem.first);
