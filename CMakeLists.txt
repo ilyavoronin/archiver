@@ -54,6 +54,7 @@ add_executable(archiver core/src/main.cpp
         core/include/ECoders.h
         core/src/RLE2.cpp core/include/RLE2.h
         core/src/RLE.cpp core/include/RLE.h
-        core/src/ArithmeticCoding.cpp core/include/ArithmeticCoding.h core/include/mchar.h)
+        core/src/ArithmeticCoding.cpp core/include/ArithmeticCoding.h
+        core/include/mchar.h)
 
 add_subdirectory(tests)

@@ -12,8 +12,12 @@ class ArithmeticCoding : public IDataEncoder {
 
     void decode(String <mchar> &data, DataInfo &data_info) override;
 
+    void encodeBinary(String <bool> &data, DataInfo &data_info);
+
+    void decodeBinary(String <bool> &data, DataInfo &data_info);
+
   private:
-    const int kEpsSize = 18, kBinaryBlockSize = 30;
+    const int kEpsSize = 18, kBinaryBlockSize = 30, tbound1 = 900;
 
     const unsigned long long MOD = (1ll << (kBinaryBlockSize - 1)),
                              N = (1ll << kBinaryBlockSize),

@@ -38,3 +38,28 @@ TEST(ArithmeticCodingTests, testEncodeDecodeBig) {
 
     ASSERT_EQ(data, expected);
 }
+
+TEST(ArithmeticCodingTests, testBinaryEncodeDecodeBig) {
+    srand(17);
+    String <bool> data;
+    for (int i = 0; i < 10000; i++) {
+        data.add(rand() % 2);
+    }
+    for (int i = 0; i < 10000; i++) {
+        data.add(0);
+    }
+    for (int i = 0; i < 10000; i++) {
+        data.add(rand() % 2);
+    }
+    for (int i = 0; i < 10000; i++) {
+        data.add(1);
+    }
+    data.add(0);
+    String <bool> expected = data;
+    DataInfo di;
+
+    ArithmeticCoding().encodeBinary(data, di);
+    ArithmeticCoding().decodeBinary(data, di);
+
+    ASSERT_EQ(data, expected);
+}
